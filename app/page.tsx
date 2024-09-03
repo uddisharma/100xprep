@@ -8,10 +8,9 @@ async function getUser() {
 }
 export default async function Home() {
   const session = await getUser();
+  console.log(session)
   return (
     <main className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02]">
-      {/* {JSON.stringify(session)} */}
-
       <HeroSection />
     </main>
   );

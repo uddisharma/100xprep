@@ -8,12 +8,12 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
+  id            String          @id @default(uuid())
+  email         String          @unique
   password      String
   fullName      String
-  phoneNumber   String   @unique
-  isWorking     Boolean  @default(false)
+  phoneNumber   String          @unique
+  isWorking     Boolean         @default(false)
   experience    Int?
   company       String?
   role          String?
@@ -22,11 +22,70 @@ model User {
   expectedCTC   Int?
   resume        String
   photo         String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
   interviewPairings1 InterviewPairing[] @relation("User1Interviews")
   interviewPairings2 InterviewPairing[] @relation("User2Interviews")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
 }
 
 model InterviewPairing {
@@ -40,31 +99,33 @@ model InterviewPairing {
   scheduledAt DateTime
   emailLogs   EmailLog[]
   isCompleted Boolean    @default(false)
-  ratingUser1 Json? // technical, communication, problem solving, completed
+  // rating : technical, communication, problem solving, completed
+  ratingUser1 Json?
   ratingUser2 Json?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
 
 model Job {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  location    String
-  company     String
-  link        String
-  startDate   DateTime
-  endDate     DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  location     String
+  salary       String
+  company      String
+  link         String
+  requirements String[]
+  startDate    DateTime
+  endDate      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model EmailLog {
-  id                 String @id @default(uuid())
+  id                 String           @id @default(uuid())
   interviewPairingId String
-
-  interviewPairing InterviewPairing @relation(fields: [interviewPairingId], references: [id])
-  emailSentAt      DateTime         @default(now())
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+  interviewPairing   InterviewPairing @relation(fields: [interviewPairingId], references: [id])
+  emailSentAt        DateTime         @default(now())
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
 }
