@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  fullName      String
+  phoneNumber   String   @unique
+  isWorking     Boolean  @default(false)
+  experience    Int?
+  company       String?
+  role          String?
+  preferredRole String?
+  currentCTC    Int?
+  expectedCTC   Int?
+  resume        String
+  photo         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  interviewPairings1 InterviewPairing[] @relation("User1Interviews")
+  interviewPairings2 InterviewPairing[] @relation("User2Interviews")
+}
+
+model InterviewPairing {
+  id      String @id @default(uuid())
+  user1Id String
+  user2Id String
+
+  user1 User @relation("User1Interviews", fields: [user1Id], references: [id])
+  user2 User @relation("User2Interviews", fields: [user2Id], references: [id])
+
+  scheduledAt DateTime
+  emailLogs   EmailLog[]
+  isCompleted Boolean    @default(false)
+  ratingUser1 Json? // technical, communication, problem solving, completed
+  ratingUser2 Json?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Job {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  location    String
+  company     String
+  link        String
+  startDate   DateTime
+  endDate     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model EmailLog {
+  id                 String @id @default(uuid())
+  interviewPairingId String
+
+  interviewPairing InterviewPairing @relation(fields: [interviewPairingId], references: [id])
+  emailSentAt      DateTime         @default(now())
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
