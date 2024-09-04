@@ -13,6 +13,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useSession } from 'next-auth/react';
 
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
@@ -54,11 +55,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         },
     ];
     const [open, setOpen] = useState(false);
+    const { data: session, status } = useSession();
     return (
         <div>
             <div
                 className={cn(
-                    "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 max-w-7xl mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+                    "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
                     "h-[100vh]"
                 )}
             >
@@ -75,17 +77,20 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                         <div>
                             <SidebarLink
                                 link={{
-                                    label: "User Name",
+                                    label: session?.user?.name ?? 'Unknown User',
                                     href: "/dashboard/profile",
                                     icon: (
-                                        <IconUserShield className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-                                        // <Image
-                                        //     src="https://assets.aceternity.com/manu.png"
-                                        //     className="h-7 w-7 flex-shrink-0 rounded-full"
-                                        //     width={50}
-                                        //     height={50}
-                                        //     alt="Avatar"
-                                        // />
+                                        <>
+                                            {session?.user?.image ? (
+                                                <img
+                                                    src={session.user?.image!}
+                                                    className="h-7 w-7 flex-shrink-0 rounded-full"
+                                                    alt="Avatar"
+                                                />
+                                            ) : (
+                                                <IconUserShield className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                                            )}
+                                        </>
                                     ),
                                 }}
                             />

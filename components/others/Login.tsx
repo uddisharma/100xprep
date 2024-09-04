@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
     IconBrandGithub,
@@ -11,28 +11,50 @@ import {
 import BottomGradient from "./BottomGradient";
 import LabelInputContainer from "./LabelnputContainer";
 import Link from "next/link";
+import { toast } from "sonner";
+import { loginSchema } from "@/types/auth";
 
 export function Login() {
+
+    const { status } = useSession()
     const router = useRouter();
+
+    // useEffect(() => {
+    //     if (status === "authenticated") {
+    //         router.push("/")
+    //     }
+    // }, [status])
+
     const [credentials, setCredentials] = React.useState({
-        email: "",
+        username: "",
         password: ""
     })
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
         e.preventDefault();
-        signIn("credentials", {
-            username: credentials.email,
-            password: credentials.password,
+
+        const parsed_data = loginSchema.safeParse(credentials);
+
+        if (!parsed_data.success) {
+            return toast.error(parsed_data.error.errors[0].message)
+        }
+
+        const res = await signIn("credentials", {
+            username: parsed_data.data.username,
+            password: parsed_data.data.password,
             redirect: false
         })
-            .then((res) => {
-                if (res?.ok) {
-                    router.push("/")
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+
+        if (res?.ok) {
+            toast.success("Login Successful")
+            router.push("/dashboard")
+        }
+
+        if (res?.error) {
+            toast.error(res.error)
+        }
+
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +78,7 @@ export function Login() {
 
                 <LabelInputContainer className="mb-4">
                     <Label htmlFor="email">Email Address</Label>
-                    <Input value={credentials.email} name="email" placeholder="projectmayhem@fc.com" onChange={handleChange} type="email" />
+                    <Input value={credentials.username} name="username" placeholder="name@example.com" onChange={handleChange} type="email" />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-4">
                     <Label htmlFor="password">Password</Label>
@@ -91,33 +113,48 @@ export function Login() {
                         </Link>
                     </p>
                 </div>
-
-                <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-4 h-[1px] w-full" />
-
-                <div className="flex flex-col space-y-4">
-                    <button
-                        className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-                        type="submit"
-                    >
-                        <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                        <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                            GitHub
-                        </span>
-                        <BottomGradient />
-                    </button>
-                    <button
-                        className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-                        type="submit"
-                    >
-                        <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                        <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                            Google
-                        </span>
-                        <BottomGradient />
-                    </button>
-
-                </div>
             </form>
+            <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-4 h-[1px] w-full" />
+            <div className="flex flex-col space-y-4">
+                <button
+                    className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
+                    onClick={() => {
+                        signIn('github').then((res) => {
+                            console.log("github", res)
+                            toast.success("Signed in successfully !")
+
+                        })
+                            .catch((error) => {
+                                toast.error(error.message || "Something went wrong !")
+                            })
+                    }}
+                >
+                    <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+                    <span className="text-neutral-700 dark:text-neutral-300 text-sm">
+                        GitHub
+                    </span>
+                    <BottomGradient />
+                </button>
+                <button
+                    className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
+                    onClick={() => {
+                        signIn('google').then((res) => {
+                            console.log("google", res)
+                            toast.success("Signed in successfully !")
+                        })
+                            .catch((error) => {
+                                toast.error(error.message || "Something went wrong !")
+                            })
+                    }}
+                >
+                    <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+                    <span className="text-neutral-700 dark:text-neutral-300 text-sm">
+                        Google
+                    </span>
+                    <BottomGradient />
+                </button>
+            </div>
+
         </div>
     );
 }

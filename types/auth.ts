@@ -1,18 +1,20 @@
+import { messages } from '@/config/messages';
 import z from 'zod';
 
 const loginSchema = z.object({
-    username: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+    username: z.string().min(1, { message: messages.emailIsRequired }).email({ message: messages.emailValidation }),
+    password: z.string().min(8, { message: messages.passwordValidation }),
 });
 
 export type LoginType = z.infer<typeof loginSchema>;
 
 const registerSchema = z.object({
-    email: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
-    name: z.string().min(1, { message: "Name is required" }),
+    name: z.string().min(1, { message: messages.nameValidation }),
+    username: z.string().email({ message: messages.emailValidation }),
+    password: z.string().min(8, { message: messages.passwordValidation }),
+    confirmPassword: z.string().min(8, { message: messages.passwordValidation }),
 });
 
-export type Register = z.infer<typeof registerSchema>;
+export type RegisterType = z.infer<typeof registerSchema>;
 
 export { loginSchema, registerSchema };

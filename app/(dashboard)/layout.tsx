@@ -4,11 +4,9 @@ import DashboardLayout from '@/layouts/UserDashboard';
 const Layout = ({ children }: { children: React.ReactNode }) => {
 
     return (
-        <div>
-            <DashboardLayout>
-                {children}
-            </DashboardLayout>
-        </div>
+        <DashboardLayout>
+            {children}
+        </DashboardLayout>
     )
 }
 export default Layout
