@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
     IconBrandGithub,
@@ -15,15 +15,7 @@ import { toast } from "sonner";
 import { loginSchema } from "@/types/auth";
 
 export function Login() {
-
-    const { status } = useSession()
     const router = useRouter();
-
-    // useEffect(() => {
-    //     if (status === "authenticated") {
-    //         router.push("/")
-    //     }
-    // }, [status])
 
     const [credentials, setCredentials] = React.useState({
         username: "",

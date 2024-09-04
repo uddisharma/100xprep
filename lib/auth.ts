@@ -12,7 +12,6 @@ async function hashPassword(password: string): Promise<string> {
     return hashedPassword;
 }
 
-
 export const NEXT_AUTH_CONFIG = {
     providers: [
         GitHubProvider({
@@ -133,7 +132,7 @@ export const NEXT_AUTH_CONFIG = {
                         id: newUser.id,
                         email: newUser.email,
                         name: newUser.fullName,
-                        photo: null
+                        photo: null,
                     };
                 }
             },
@@ -145,12 +144,22 @@ export const NEXT_AUTH_CONFIG = {
         jwt: async ({ user, token }: any) => {
             if (user) {
                 token.uid = user.id;
+                token.role = user.role = process.env.ADMINS?.split(',').includes(
+                    user?.email,
+                )
+                    ? 'admin'
+                    : 'user';
             }
             return token;
         },
         session: async ({ session, token }: any) => {
             if (session.user) {
                 session.user.id = token.uid;
+                session.user.role = process.env.ADMINS?.split(',').includes(
+                    session.user?.email,
+                )
+                    ? 'admin'
+                    : 'user';
             }
             return session;
         }

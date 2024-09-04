@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import BottomGradient from "./BottomGradient";
 import Link from "next/link";
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { registerSchema, RegisterType } from "@/types/auth";
@@ -23,14 +23,7 @@ export function Register() {
     confirmPassword: ""
   })
 
-  const { status } = useSession()
   const router = useRouter();
-
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //     router.push("/")
-  //   }
-  // }, [status])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
