@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./provider";
 import { Toaster } from 'sonner'
 import { siteConfig } from "@/config/site-config";
-// import "@uploadthing/react/styles.css";
+import { SessionRootLayout } from "@/lib/providers/session";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark ">
-      <body  className={inter.className}>
-        <Providers>
+      <body className={inter.className}>
+        <SessionRootLayout>
           <Toaster />
           {children}
-        </Providers>
+        </SessionRootLayout>
       </body>
     </html>
   );

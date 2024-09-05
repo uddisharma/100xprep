@@ -14,7 +14,7 @@ import { IconLoader, IconUpload } from '@tabler/icons-react'
 
 const Inputs = ({ user }: { user: UserProfile }) => {
 
-    const { handleFileChange, handleUpload } = useFileUpload();
+    const { handleFileChange, uploadAllFiles } = useFileUpload();
 
     const [loading, setLoading] = useState<{ photo: boolean, resume: boolean, update: boolean }>({
         photo: false,
@@ -56,7 +56,7 @@ const Inputs = ({ user }: { user: UserProfile }) => {
 
         if (selectedFile?.photo) {
             setLoading({ ...loading, photo: true });
-            const promise = () => handleUpload();
+            const promise = () => uploadAllFiles("photo");
             toast.promise(promise, {
                 loading: 'Uploading profile photo...',
                 success: (res) => {
@@ -75,7 +75,7 @@ const Inputs = ({ user }: { user: UserProfile }) => {
 
         if (selectedFile?.resume) {
             setLoading({ ...loading, resume: true });
-            const promise = () => handleUpload();
+            const promise = () => uploadAllFiles("pdf");
             toast.promise(promise, {
                 loading: 'Uploading resume...',
                 success: (res) => {
@@ -112,8 +112,6 @@ const Inputs = ({ user }: { user: UserProfile }) => {
             return toast.error("Please upload your resume")
         }
 
-        console.log(data)
-
         setLoading({ ...loading, update: true });
 
         updateUser({ ...data, experience: Number(data.experience) })
@@ -139,7 +137,7 @@ const Inputs = ({ user }: { user: UserProfile }) => {
         <>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                 <LabelInputContainer>
-                    <Input value={data?.fullName} id="fullname" onChange={handleChange} placeholder="Full Name" type="text" />
+                    <Input value={data?.fullName} id="fullName" onChange={handleChange} placeholder="Full Name" type="text" />
                 </LabelInputContainer>
                 <LabelInputContainer>
                     <Input readOnly value={data?.email} id="email" placeholder="Email" type="email" onChange={handleChange} />
@@ -189,7 +187,7 @@ const Inputs = ({ user }: { user: UserProfile }) => {
                     <div className={`flex gap-2`}>
                         <div className={`flex-none ${selectedFile?.photo ? "w-[85%]" : "w-[100%]"}`}>
                             <Input onChange={(e) => {
-                                handleFileChange(e)
+                                handleFileChange(e, "photo")
                                 setSelectedFile({ ...selectedFile, photo: true })
                             }} id="profile" placeholder="Profile" type="file" />
                         </div>
@@ -216,7 +214,7 @@ const Inputs = ({ user }: { user: UserProfile }) => {
                     <div className={`flex gap-2`}>
                         <div className={`flex-none ${selectedFile?.resume ? "w-[85%]" : "w-[100%]"}`}>
                             <Input onChange={(e) => {
-                                handleFileChange(e)
+                                handleFileChange(e, "pdf")
                                 setSelectedFile({ ...selectedFile, resume: true })
                             }} id="profile" placeholder="Profile" type="file" />
                         </div>

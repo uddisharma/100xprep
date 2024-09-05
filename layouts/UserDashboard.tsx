@@ -14,9 +14,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useSession } from 'next-auth/react';
+import { UserProfile } from '@/types/user';
 
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = ({ user, children }: { user: UserProfile, children: React.ReactNode }) => {
     const links = [
         {
             label: "Dashboard",
@@ -77,15 +78,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                         <div>
                             <SidebarLink
                                 link={{
-                                    label: session?.user?.name ?? 'Unknown User',
+                                    label: user?.fullName ?? 'Unknown User',
                                     href: "/dashboard/profile",
                                     icon: (
                                         <>
-                                            {session?.user?.image ? (
-                                                <img
-                                                    src={session.user?.image!}
+                                            {user?.photo ? (
+                                                <Image
+                                                    src={user?.photo}
                                                     className="h-7 w-7 flex-shrink-0 rounded-full"
-                                                    alt="Avatar"
+                                                    alt={user?.fullName ?? 'Unknown User'}
+                                                    height={50}
+                                                    width={50}
                                                 />
                                             ) : (
                                                 <IconUserShield className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />

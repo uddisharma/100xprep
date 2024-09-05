@@ -1,26 +1,17 @@
 import BottomGradient from "@/components/others/BottomGradient";
 import Profile from "@/components/others/profile/Profile";
-import { prisma } from "@/db/db";
+import { getUserDetails } from "@/lib/getDetails";
 import { UserProfile } from "@/types/user";
-import { getToken } from "next-auth/jwt";
-import { headers } from 'next/headers';
+import { headers } from "next/headers";
 import Link from "next/link";
-
-const getUserDetails = async (req: any) => {
-    const token = await getToken({ req: req, secret: process.env.NEXTAUTH_SECRET });
-    const user = await prisma.user.findFirst({
-        where: {
-            id: (token?.sub || token?.uid) as string,
-        },
-    });
-    return user;
-};
 
 export default async function InterviewProfile() {
     const req: any = {
         headers: headers(),
     };
+
     const user = await getUserDetails(req);
+
     if (!user) {
         return (
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center">

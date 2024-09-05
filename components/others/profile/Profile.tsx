@@ -14,7 +14,7 @@ const Profile = ({ user }: { user: UserProfile }) => {
                         height={300}
                         width={300}
                         loading='lazy'
-                        src={user?.photo ?? "/logo.jpg?height=200&width=200"}
+                        src={user?.photo ?? "/user.png?height=200&width=200"}
                         alt="Deepak"
                         className="w-full h-auto object-cover"
                     />
@@ -26,7 +26,7 @@ const Profile = ({ user }: { user: UserProfile }) => {
                         type="button"
                     >
                         <span className="text-neutral-700 dark:text-neutral-300 text-sm text-center">
-                            Download Resume
+                            View Resume
                         </span>
                         <BottomGradient />
                     </button>
