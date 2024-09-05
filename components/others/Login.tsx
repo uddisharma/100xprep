@@ -16,6 +16,7 @@ import { loginSchema } from "@/types/auth";
 
 export function Login() {
     const router = useRouter();
+    const [loading, setLoading] = React.useState<Boolean>(false);
 
     const [credentials, setCredentials] = React.useState({
         username: "",
@@ -26,12 +27,13 @@ export function Login() {
 
         e.preventDefault();
 
+
         const parsed_data = loginSchema.safeParse(credentials);
 
         if (!parsed_data.success) {
             return toast.error(parsed_data.error.errors[0].message)
         }
-
+        setLoading(true)
         const res = await signIn("credentials", {
             username: parsed_data.data.username,
             password: parsed_data.data.password,
@@ -41,10 +43,12 @@ export function Login() {
         if (res?.ok) {
             toast.success("Login Successful")
             router.push("/dashboard")
+            setLoading(false)
         }
 
         if (res?.error) {
             toast.error(res.error)
+            setLoading(false)
         }
 
     };
@@ -81,7 +85,7 @@ export function Login() {
                     className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
                     type="submit"
                 >
-                    Login &rarr;
+                    {loading ? "Loading..." : "Login \u2192"}
                     <BottomGradient />
                 </button>
 

@@ -175,7 +175,7 @@ const Inputs = ({ user }: { user: UserProfile }) => {
 
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                 <LabelInputContainer>
-                    <Label htmlFor="experience" >Experience</Label>
+                    <Label htmlFor="experience" >Experience (in Years)</Label>
                     <Input id="experience" value={data?.experience ?? ""} placeholder="Experience in Years" type="number" onChange={handleChange} />
                 </LabelInputContainer>
                 <LabelInputContainer>

@@ -1,12 +1,13 @@
 import { prisma } from "@/db/db";
-import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth";
+import { NEXT_AUTH_CONFIG } from "../auth";
 
-export const getUserDetails = async (req: any) => {
-    const token = await getToken({ req: req, secret: process.env.NEXTAUTH_SECRET });
+export const getUserDetails = async () => {
+    const session = await getServerSession(NEXT_AUTH_CONFIG)
     const user = await prisma.user.findFirst({
         where: {
-            id: (token?.sub || token?.uid) as string,
+            id: session?.user?.id
         },
     });
     return user;
-};0
+}; 0

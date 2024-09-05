@@ -13,11 +13,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { useSession } from 'next-auth/react';
 import { UserProfile } from '@/types/user';
 
 
 const DashboardLayout = ({ user, children }: { user: UserProfile, children: React.ReactNode }) => {
+    console.log(user)
     const links = [
         {
             label: "Dashboard",
@@ -56,7 +56,6 @@ const DashboardLayout = ({ user, children }: { user: UserProfile, children: Reac
         },
     ];
     const [open, setOpen] = useState(false);
-    const { data: session, status } = useSession();
     return (
         <div>
             <div

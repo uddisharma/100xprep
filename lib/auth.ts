@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 
 const comparePassword = bcrypt.compare;
 
-async function hashPassword(password: string): Promise<string> {
+export async function hashPassword(password: string): Promise<string> {
     const hashedPassword = await bcrypt.hash(password, 10);
     return hashedPassword;
 }
@@ -84,6 +84,8 @@ export const NEXT_AUTH_CONFIG = {
                 if (!parsed_data.success) throw new Error(parsed_data.error.message);
 
                 const existingUser = await prisma.user.findUnique({ where: { email: credentials.username }, include: { accounts: true } });
+
+                
 
                 if (existingUser) {
 
