@@ -1,4 +1,5 @@
 import { OptionType } from '@/data/interviewfor';
+import { UserProfile } from '@/types/user';
 import React from 'react';
 import Select, { StylesConfig } from 'react-select';
 
@@ -21,8 +22,6 @@ const customStyles: StylesConfig<OptionType, true> = {
         border: '0.5px solid #71717a',
         borderRadius: '5px',
         marginTop: '2px'
-
-
     }),
     menu: (provided) => ({
         ...provided,
@@ -73,11 +72,15 @@ const customStyles: StylesConfig<OptionType, true> = {
 };
 
 
-export default function ReactSelectSingle() {
+export default function ReactSelectSingle({ data, setData }: { data: UserProfile, setData: any }) {
 
     return (
         <>
             <Select
+                value={data?.isWorking ? { value: "Yes", label: "Yes" } : { value: "No", label: "No" }}
+                onChange={() => {
+                    setData({ ...data, isWorking: !data.isWorking })
+                }}
                 className="basic-single w-full"
                 classNamePrefix="select"
                 placeholder="Currently Working"
@@ -85,8 +88,6 @@ export default function ReactSelectSingle() {
                 options={options}
                 styles={customStyles}
             />
-
-
         </>
     );
 };

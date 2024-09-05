@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./provider";
 import { Toaster } from 'sonner'
 import { siteConfig } from "@/config/site-config";
+// import "@uploadthing/react/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

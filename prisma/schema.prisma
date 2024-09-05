@@ -8,25 +8,25 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(uuid())
-  email         String          @unique
+  id            String    @id @default(uuid())
+  email         String    @unique
   password      String?
   fullName      String
-  phoneNumber   String?         @unique
-  isWorking     Boolean?        @default(false)
+  phoneNumber   String?   @unique
+  isWorking     Boolean?  @default(false)
   experience    Int?
   company       String?
   role          String?
   preferredRole String?
-  currentCTC    Int?
-  expectedCTC   Int?
+  currentCTC    String?
+  expectedCTC   String?
   resume        String?
   photo         String?
   accounts      Account[]
   // Optional for WebAuthn support
   // Authenticator Authenticator[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   interviewPairings1 InterviewPairing[] @relation("User1Interviews")
   interviewPairings2 InterviewPairing[] @relation("User2Interviews")
@@ -37,8 +37,8 @@ model Account {
   provider          String
   providerAccountId String
   expires_at        Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
