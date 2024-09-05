@@ -10,7 +10,3 @@ export const getUserDetails = async (req: any) => {
     });
     return user;
 };
-
-export const getUserDetailsBySessions = async (req: any) => {
-   
-}

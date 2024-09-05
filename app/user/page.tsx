@@ -1,13 +1,28 @@
 'use client'
-import { userAtom } from '@/store/userAtom'
+import { addJob } from '@/actions/jobs'
 import React from 'react'
-import { useRecoilValue } from 'recoil'
 
 const Page = () => {
-    // const user = useRecoilValue(userAtom)
-    // console.log(user)
     return (
-        <div>page</div>
+        <div>
+            <button
+                onClick={async () => {
+                    const res = await addJob({
+                        id: 'your_id_here',
+                        company: 'company',
+                        description: 'description',
+                        link: 'link',
+                        location: 'location',
+                        requirements: ['requirements'],
+                        salary: 'salary',
+                        startDate: new Date(),
+                        endDate: new Date(),
+                        title: 'title',
+                    });
+                    console.log(res)
+                }}
+            >Add Job</button>
+        </div>
     )
 }
 

@@ -22,6 +22,7 @@ model User {
   expectedCTC   String?
   resume        String?
   photo         String?
+  techstacks    String[]
   accounts      Account[]
   // Optional for WebAuthn support
   // Authenticator Authenticator[]

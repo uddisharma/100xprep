@@ -144,22 +144,15 @@ export const NEXT_AUTH_CONFIG = {
         jwt: async ({ user, token }: any) => {
             if (user) {
                 token.uid = user.id;
-                token.role = user.role = process.env.ADMINS?.split(',').includes(
-                    user?.email,
-                )
-                    ? 'admin'
-                    : 'user';
+                token.role = process.env.ADMINS?.split(',').includes(user.email) ? 'admin' : 'user';
+                user.role = process.env.ADMINS?.split(',').includes(user.email) ? 'admin' : 'user';
             }
             return token;
         },
         session: async ({ session, token }: any) => {
             if (session.user) {
                 session.user.id = token.uid;
-                session.user.role = process.env.ADMINS?.split(',').includes(
-                    session.user?.email,
-                )
-                    ? 'admin'
-                    : 'user';
+                session.user.role = token.role;
             }
             return session;
         }
