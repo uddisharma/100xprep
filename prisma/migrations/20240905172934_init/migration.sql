@@ -14,6 +14,7 @@ CREATE TABLE "User" (
     "expectedCTC" TEXT,
     "resume" TEXT,
     "photo" TEXT,
+    "techstacks" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

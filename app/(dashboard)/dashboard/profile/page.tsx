@@ -1,6 +1,6 @@
 import BottomGradient from "@/components/others/BottomGradient";
 import Profile from "@/components/others/profile/Profile";
-import { getUserDetails } from "@/lib/getDetails";
+import { getUserDetails } from "@/lib/getDetails/user";
 import { UserProfile } from "@/types/user";
 import { headers } from "next/headers";
 import Link from "next/link";

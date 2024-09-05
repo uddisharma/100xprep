@@ -9,4 +9,4 @@ export const getUserDetails = async (req: any) => {
         },
     });
     return user;
-};
+};0

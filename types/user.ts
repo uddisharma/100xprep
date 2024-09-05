@@ -13,4 +13,5 @@ export type UserProfile = {
     expectedCTC: string | null;
     resume: string | null;
     photo: string;
+    techstacks: string[];
 };

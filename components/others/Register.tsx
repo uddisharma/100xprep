@@ -137,7 +137,6 @@ export function Register() {
           className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
           onClick={() => {
             signIn('github').then((res) => {
-              console.log("github", res)
               toast.success("Signed in successfully !")
 
             })
@@ -156,7 +155,7 @@ export function Register() {
           className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
           onClick={() => {
             signIn('google').then((res) => {
-              console.log("google", res)
+
               toast.success("Signed in successfully !")
             })
               .catch((error) => {

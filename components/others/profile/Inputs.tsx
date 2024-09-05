@@ -11,6 +11,7 @@ import { updateUser } from '@/actions/user'
 import { toast } from 'sonner'
 import useFileUpload from '@/lib/file-upload'
 import { IconLoader, IconUpload } from '@tabler/icons-react'
+import TechStacks from '../TechStacks'
 
 const Inputs = ({ user }: { user: UserProfile }) => {
 
@@ -45,6 +46,7 @@ const Inputs = ({ user }: { user: UserProfile }) => {
         expectedCTC: user?.expectedCTC || "",
         resume: user?.resume || "",
         photo: user?.photo || "",
+        techstacks: user?.techstacks || []
     })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -115,13 +117,16 @@ const Inputs = ({ user }: { user: UserProfile }) => {
         setLoading({ ...loading, update: true });
 
         updateUser({ ...data, experience: Number(data.experience) })
-            .then((res) => {
-                if (res) {
-                    toast("Profile updated successfully")
-                    setData(res)
+            .then((res: any) => {
+                if (!res) {
+                    toast.error("Something went wrong")
                     return
+                }
+                if (typeof res === 'object') {
+                    setData(res)
+                    toast.success("Profile updated successfully !")
                 } else {
-                    toast.warning("Something went wrong")
+                    toast.error(res)
                 }
             })
             .catch((err) => {
@@ -137,47 +142,62 @@ const Inputs = ({ user }: { user: UserProfile }) => {
         <>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                 <LabelInputContainer>
+                    <Label htmlFor="fullName" >Full Name</Label>
                     <Input value={data?.fullName} id="fullName" onChange={handleChange} placeholder="Full Name" type="text" />
                 </LabelInputContainer>
                 <LabelInputContainer>
+                    <Label htmlFor="email" >Email</Label>
                     <Input readOnly value={data?.email} id="email" placeholder="Email" type="email" onChange={handleChange} />
                 </LabelInputContainer>
             </div>
 
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                 <LabelInputContainer>
+                    <Label htmlFor="phoneNumber" >Phone Number</Label>
                     <Input value={data?.phoneNumber ?? ""} id="phoneNumber" placeholder="Phone Number" type="number" onChange={handleChange} />
                 </LabelInputContainer>
                 <LabelInputContainer>
+                    <Label htmlFor="role" >Current Role</Label>
                     <Input value={data?.role ?? ""} id="role" placeholder="Current Role" type="text" onChange={handleChange} />
                 </LabelInputContainer>
             </div>
 
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                 <LabelInputContainer className="mb-3 lg:mb-0">
+                    <Label htmlFor="working" >Working ?</Label>
                     <ReactSelectSingle data={data} setData={setData} />
                 </LabelInputContainer>
                 <LabelInputContainer>
+                    <Label htmlFor="company" >Company</Label>
                     <Input id="company" value={data?.company ?? ""} placeholder="Company Name" type="text" onChange={handleChange} />
                 </LabelInputContainer>
             </div>
 
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                 <LabelInputContainer>
+                    <Label htmlFor="experience" >Experience</Label>
                     <Input id="experience" value={data?.experience ?? ""} placeholder="Experience in Years" type="number" onChange={handleChange} />
                 </LabelInputContainer>
                 <LabelInputContainer>
+                    <Label htmlFor="preferredRole" >Preffered Role</Label>
                     <Input id="preferredRole" value={data?.preferredRole ?? ""} placeholder="Preffered Role" type="text" onChange={handleChange} />
                 </LabelInputContainer>
             </div>
 
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                 <LabelInputContainer>
+                    <Label htmlFor="currentCTC" >Current CTC</Label>
                     <Input id="currentCTC" value={data?.currentCTC ?? ""} placeholder="Current CTC" type="text" onChange={handleChange} />
                 </LabelInputContainer>
                 <LabelInputContainer>
+                    <Label htmlFor="expectedCTC" >Expected CTC</Label>
                     <Input id="expectedCTC" value={data?.expectedCTC ?? ""} placeholder="Expected CTC" type="text" onChange={handleChange} />
                 </LabelInputContainer>
+            </div>
+
+            <div className='space-y-2 md:space-y-0 md:space-x-2 mb-4 w-full'>
+                <Label htmlFor="techstacks" >Tech Stacks</Label>
+                <TechStacks data={data} setData={setData} />
             </div>
 
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">

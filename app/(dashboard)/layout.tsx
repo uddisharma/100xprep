@@ -1,8 +1,8 @@
 import React from 'react'
 import DashboardLayout from '@/layouts/UserDashboard';
 import { headers } from 'next/headers';
-import { getUserDetails } from '@/lib/getDetails';
 import { UserProfile } from '@/types/user';
+import { getUserDetails } from '@/lib/getDetails/user';
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
 
