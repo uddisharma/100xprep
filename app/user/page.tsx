@@ -1,29 +1,16 @@
-'use client'
-import { addJob } from '@/actions/jobs'
 import React from 'react'
 
-const Page = () => {
-    return (
-        <div>
-            <button
-                onClick={async () => {
-                    const res = await addJob({
-                        id: 'your_id_here',
-                        company: 'company',
-                        description: 'description',
-                        link: 'link',
-                        location: 'location',
-                        requirements: ['requirements'],
-                        salary: 'salary',
-                        startDate: new Date(),
-                        endDate: new Date(),
-                        title: 'title',
-                    });
-                    console.log(res)
-                }}
-            >Add Job</button>
+const page = () => {
+  return (
+    <div className="relative">
+      <div className="before:absolute before:bottom-0 before:left-0 before:h-1 before:w-full before:bg-gradient-to-r before:from-purple-400 before:via-pink-500 before:to-red-500">
+        <div className="bg-white p-6">
+          Your content here
         </div>
-    )
+      </div>
+    </div>
+
+  )
 }
 
-export default Page
+export default page

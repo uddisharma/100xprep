@@ -1,5 +1,6 @@
 import InterviewTaken from "@/components/others/InterviewTakenCard";
 import { RequestInterview } from "@/components/others/RequestInterview";
+import { Cover } from "@/components/ui/cover";
 import { GlowingStarsDescription, GlowingStarsTitle } from "@/components/ui/globalstars";
 
 const Page = () => {
@@ -14,14 +15,14 @@ const Page = () => {
                 </div>
 
                 <div className="w-full flex justify-between flex-wrap items-center">
-                    <div>
+                    <Cover>
                         <GlowingStarsTitle>
                             Interviews Taken
                         </GlowingStarsTitle>
                         <GlowingStarsDescription className="text-[14px] font-normal w-full text-[#71717a]">
                             Interviews you have taken
                         </GlowingStarsDescription>
-                    </div>
+                    </Cover>
                     <RequestInterview />
                 </div>
 

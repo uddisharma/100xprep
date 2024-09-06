@@ -2,9 +2,7 @@ import BottomGradient from "@/components/others/BottomGradient";
 import { Spotlight } from "@/components/ui/Spotlight";
 import { IconBuilding, IconCash, IconMapPin } from "@tabler/icons-react";
 
-
 export default async function JobDetails({ params }: { params: { id: string } }) {
-
     return (
         <div className="h-full rounded-md flex flex-col items-left justify-center relative overflow-hidden mx-auto py-10 md:py-0 p-6  overflow-y-scroll w-full">
             <Spotlight
@@ -12,8 +10,9 @@ export default async function JobDetails({ params }: { params: { id: string } })
                 fill="white"
             />
             <h1
-                className="w-full text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mt-[400px] lg:mt-0"
-            >Full Stack developer</h1>
+                className="w-full text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mt-[400px] lg:mt-10"
+            >
+                Full Stack developer</h1>
             <div className="rounded-lg mt-5">
                 <p className="text-white mb-4 flex gap-2 items-center"> <IconBuilding className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
                     1doc healthcare pvt ltd

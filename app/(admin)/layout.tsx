@@ -26,3 +26,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 }
 export default Layout
 
+// all access ( online , offline , score , user login/not )
+// job post ( CRUD )
+// manually interview schedule 
+

@@ -1,4 +1,3 @@
-
 import { atom, selector } from 'recoil'
 
 export const userAtom = atom({

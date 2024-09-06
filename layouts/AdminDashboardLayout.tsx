@@ -19,24 +19,17 @@ import { useSession } from 'next-auth/react';
 const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
     const links = [
         {
-            label: "Admin Dashboard",
-            href: "/dashboard",
+            label: "Dashboard",
+            href: "/admin",
             icon: (
                 <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Interviews",
-            href: "/dashboard/interviews",
+            href: "/admin/interviews",
             icon: (
                 <IconDeviceDesktop className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-            ),
-        },
-        {
-            label: "Interviews Taken",
-            href: "/dashboard/interviews-taken",
-            icon: (
-                <IconDeviceDesktopCheck className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
@@ -46,6 +39,14 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 <IconBriefcase className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
+        {
+            label: "Users",
+            href: "/dashboard/jobs",
+            icon: (
+                <IconUserShield className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+            ),
+        },
+
         {
             label: "Logout",
             href: "/logout",
