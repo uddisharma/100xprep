@@ -23,7 +23,9 @@ const Page = () => {
                             Interviews you have taken
                         </GlowingStarsDescription>
                     </Cover>
-                    <RequestInterview />
+                    <div className="w-full md:w-[270px]">
+                        <RequestInterview />
+                    </div>
                 </div>
 
                 {[...new Array(10)].map((i) => (

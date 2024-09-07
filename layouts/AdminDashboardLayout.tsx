@@ -6,7 +6,8 @@ import {
     IconBrandTabler,
     IconBriefcase,
     IconDeviceDesktop,
-    IconDeviceDesktopCheck,
+    IconNotes,
+    IconPencil,
     IconUserShield,
 } from "@tabler/icons-react";
 import Link from "next/link";
@@ -14,7 +15,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useSession } from 'next-auth/react';
-
 
 const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
     const links = [
@@ -33,20 +33,33 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
             ),
         },
         {
+            label: "Handbooks",
+            href: "/admin/handbooks",
+            icon: (
+                <IconNotes className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+            ),
+        },
+        {
             label: "Jobs",
-            href: "/dashboard/jobs",
+            href: "/admin/jobs",
             icon: (
                 <IconBriefcase className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {
             label: "Users",
-            href: "/dashboard/jobs",
+            href: "/admin/users",
             icon: (
                 <IconUserShield className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
-
+        {
+            label: "Handbook Requests",
+            href: "/admin/handbook/requests",
+            icon: (
+                <IconPencil className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+            ),
+        },
         {
             label: "Logout",
             href: "/logout",
@@ -83,10 +96,12 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
                                     icon: (
                                         <>
                                             {session?.user?.image ? (
-                                                <img
+                                                <Image
                                                     src={session.user?.image!}
                                                     className="h-7 w-7 flex-shrink-0 rounded-full"
-                                                    alt="Avatar"
+                                                    alt={session.user?.image!}
+                                                    height={50}
+                                                    width={50}
                                                 />
                                             ) : (
                                                 <IconUserShield className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />

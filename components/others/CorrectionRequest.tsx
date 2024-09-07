@@ -11,10 +11,10 @@ import BottomGradient from "./BottomGradient";
 import LabelInputContainer from "./LabelnputContainer";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import ReactSelect from "./React-Select";
-import { IconDeviceDesktopCheck } from "@tabler/icons-react";
+import { IconPencil } from "@tabler/icons-react";
+import { Textarea } from "../ui/textarea";
 
-export function RequestInterview() {
+export function RequestCorrection() {
 
     return (
         <div className="flex items-center justify-center w-full  ">
@@ -23,8 +23,8 @@ export function RequestInterview() {
                     <button
                         className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 dark:bg-zinc-800 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] px-2 w-full mt-5 lg:mt-0 flex items-center justify-center gap-2"
                     >
-                        <IconDeviceDesktopCheck className="w-4 h-4" />
-                        <span className="flex-shrink-0">Schedule your Interview</span>
+                        <IconPencil className="w-4 h-4" />
+                        <span className="flex-shrink-0">Request Correction</span>
                         <BottomGradient />
                     </button>
 
@@ -32,12 +32,12 @@ export function RequestInterview() {
                 <ModalBody>
                     <ModalContent>
                         <LabelInputContainer className="mb-4">
-                            <Label htmlFor="email">Interview For</Label>
-                            <ReactSelect />
+                            <Label htmlFor="topic">Topic Name</Label>
+                            <Input id="topic" type="text" placeholder="Enter Topic" />
                         </LabelInputContainer>
                         <LabelInputContainer className="mb-4 w-full">
-                            <Label htmlFor="password">Timing</Label>
-                            <Input id="email" type="datetime-local" />
+                            <Label htmlFor="content" >Content</Label>
+                            <Textarea id="content" className="h-full w-full min-h-[200px]" placeholder="Enter Content" />
                         </LabelInputContainer>
                     </ModalContent>
                     <ModalFooter className="gap-4">

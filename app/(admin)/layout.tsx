@@ -10,7 +10,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
         return redirect('/signin');
     }
 
-    if (process.env.LOCAL_CMS_PROVIDER=="true") {
+    if (process.env.LOCAL_CMS_PROVIDER == "true") {
         return <>{children}</>;
     }
 
@@ -29,4 +29,7 @@ export default Layout
 // all access ( online , offline , score , user login/not )
 // job post ( CRUD )
 // manually interview schedule 
-
+//  top performer of the week 
+// interview content 
+//  welcome email ,
+//  interview request mail to opposite person , after reject/accept send to same person , interview completed with rating with the interviewer name 

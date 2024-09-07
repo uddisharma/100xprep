@@ -8,7 +8,7 @@ const options: OptionType[] = [
     { value: "No", label: "No" },
 ]
 
-const customStyles: StylesConfig<OptionType, true> = {
+export const customStyles: StylesConfig<OptionType, true> = {
     control: (provided, state) => ({
         ...provided,
         backgroundColor: '#27272a',

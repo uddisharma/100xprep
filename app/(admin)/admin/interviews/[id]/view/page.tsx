@@ -3,13 +3,12 @@
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { IconCalendar, IconClock, IconFileText, IconMapPin, IconNotebook, IconPencil, IconVideo } from '@tabler/icons-react'
 import { Cover } from '@/components/ui/cover'
 import BottomGradient from '@/components/others/BottomGradient'
 import { Button } from '@/components/ui/button'
+import { Select } from '@/components/ui/select'
 
 
 export default function InterviewDetails() {
@@ -111,7 +110,7 @@ export default function InterviewDetails() {
                                 <CardTitle>Interview Status</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <Select value={status} onValueChange={setStatus}>
+                                {/* <Select value={status} onValueChange={setStatus}>
                                     <SelectTrigger>
                                         <SelectValue />
                                     </SelectTrigger>
@@ -133,6 +132,11 @@ export default function InterviewDetails() {
                                             Cancelled
                                         </SelectItem>
                                     </SelectContent>
+                                </Select> */}
+                                <Select id="status" className="min-h-[40px]">
+                                    <option value="scheduled">Scheduled</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
                                 </Select>
                                 <button
                                     className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600  dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] flex justify-center items-center gap-4 mt-5"

@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { IconCalendar } from '@tabler/icons-react'
 import { Cover } from '@/components/ui/cover'
-import { Select } from '@/components/ui/select'
 
 export default function UpdateInterview() {
     const [date, setDate] = useState<Date>()
@@ -20,7 +19,7 @@ export default function UpdateInterview() {
                 <div className="flex justify-between items-center mt-2 lg:mt-0 lg:mb-5 flex-wrap gap-2">
                     <h2 className="text-3xl font-bold text-white">
                         <Cover>
-                            Interview Update
+                            Edit Job
                         </Cover>
                     </h2>
                     <div className="grid grid-cols-2 gap-2 lg:flex lg:space-x-2">
@@ -43,21 +42,19 @@ export default function UpdateInterview() {
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="interviewee">Interviewee</Label>
-                                    <Input id="interviewee" placeholder="Jane Smith" />
+                                    <Input
+                                        id="date"
+                                        type="date"
+                                        onChange={(e) => setDate(new Date(e.target.value))}
+                                    />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="job-title">Job Title</Label>
-                                    <Select id="status" className="min-h-[40px]">
-                                        <option value="scheduled">Scheduled</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="cancelled">Cancelled</option>
-                                    </Select>
+                                    <Input id="job-title" placeholder="Senior React Developer" />
                                 </div>
-
                                 <div className="space-y-2">
-                                    <Label>Pick Date & Time</Label>
-                                    <Input id="company" placeholder="Tech Corp" type='datetime-local' />
-
+                                    <Label htmlFor="company">Company</Label>
+                                    <Input id="company" placeholder="Tech Corp" />
                                 </div>
                             </CardContent>
                         </Card>
@@ -72,15 +69,8 @@ export default function UpdateInterview() {
                                     <Textarea
                                         id="description"
                                         placeholder="Enter any additional details about the interview..."
-                                        className="min-h-[150px]"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="notes">Interviewer Notes</Label>
-                                    <Textarea
-                                        id="notes"
-                                        placeholder="Enter any notes for the interviewer..."
-                                        className="min-h-[150px]"
+                                        className="min-h-[200px]"
+                                        rows={15}
                                     />
                                 </div>
                             </CardContent>
@@ -91,7 +81,7 @@ export default function UpdateInterview() {
 
                     <div className="mt-6 flex justify-end space-x-4">
                         <Button variant="outline">Cancel</Button>
-                        <Button type="submit">Update Interview</Button>
+                        <Button type="submit">Update Job</Button>
                     </div>
                 </form>
             </div>

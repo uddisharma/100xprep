@@ -12,6 +12,7 @@ import { toast } from 'sonner'
 import useFileUpload from '@/lib/file-upload'
 import { IconLoader, IconUpload } from '@tabler/icons-react'
 import TechStacks from '../TechStacks'
+import { Select } from '@/components/ui/select'
 
 const Inputs = ({ user }: { user: UserProfile }) => {
 
@@ -165,7 +166,13 @@ const Inputs = ({ user }: { user: UserProfile }) => {
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
                 <LabelInputContainer className="mb-3 lg:mb-0">
                     <Label htmlFor="working" >Working ?</Label>
-                    <ReactSelectSingle data={data} setData={setData} />
+                    <Select value={data?.isWorking ? "true" : "false"}
+                        onChange={() => {
+                            setData({ ...data, isWorking: !data.isWorking })
+                        }} id="working" className="min-h-[40px]">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </Select>
                 </LabelInputContainer>
                 <LabelInputContainer>
                     <Label htmlFor="company" >Company</Label>

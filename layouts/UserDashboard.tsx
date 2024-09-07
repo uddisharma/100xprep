@@ -7,6 +7,7 @@ import {
     IconBriefcase,
     IconDeviceDesktop,
     IconDeviceDesktopCheck,
+    IconNotes,
     IconUserShield,
 } from "@tabler/icons-react";
 import Link from "next/link";
@@ -17,7 +18,7 @@ import { UserProfile } from '@/types/user';
 
 
 const DashboardLayout = ({ user, children }: { user: UserProfile, children: React.ReactNode }) => {
-    console.log(user)
+
     const links = [
         {
             label: "Dashboard",
@@ -27,7 +28,7 @@ const DashboardLayout = ({ user, children }: { user: UserProfile, children: Reac
             ),
         },
         {
-            label: "Interviews",
+            label: "Interviews Given",
             href: "/dashboard/interviews",
             icon: (
                 <IconDeviceDesktop className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
@@ -38,6 +39,13 @@ const DashboardLayout = ({ user, children }: { user: UserProfile, children: Reac
             href: "/dashboard/interviews-taken",
             icon: (
                 <IconDeviceDesktopCheck className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+            ),
+        },
+        {
+            label: "Handbooks",
+            href: "/dashboard/handbooks",
+            icon: (
+                <IconNotes className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {

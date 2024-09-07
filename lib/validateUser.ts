@@ -1,5 +1,3 @@
-
-
 export async function validateUser(
     email: string,
     password: string,

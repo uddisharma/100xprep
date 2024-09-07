@@ -84,7 +84,7 @@ body {
 
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  transform-origin: 20px 20px; 
+  transform-origin: 20px 20px;
 }
 
 .lds-roller div:after {
@@ -95,7 +95,7 @@ body {
   height: 3.6px; /* Reduced size */
   border-radius: 50%;
   background: currentColor;
-  margin: -1.8px 0 0 -1.8px; 
+  margin: -1.8px 0 0 -1.8px;
 }
 
 .lds-roller div:nth-child(1) {
@@ -103,8 +103,8 @@ body {
 }
 
 .lds-roller div:nth-child(1):after {
-  top: 31.31371px; 
-  left: 31.31371px; 
+  top: 31.31371px;
+  left: 31.31371px;
 }
 
 .lds-roller div:nth-child(2) {
@@ -112,8 +112,8 @@ body {
 }
 
 .lds-roller div:nth-child(2):after {
-  top: 33.85641px; 
-  left: 28px; 
+  top: 33.85641px;
+  left: 28px;
 }
 
 .lds-roller div:nth-child(3) {
@@ -121,8 +121,8 @@ body {
 }
 
 .lds-roller div:nth-child(3):after {
-  top: 35.45481px; 
-  left: 24.1411px; 
+  top: 35.45481px;
+  left: 24.1411px;
 }
 
 .lds-roller div:nth-child(4) {
@@ -130,8 +130,8 @@ body {
 }
 
 .lds-roller div:nth-child(4):after {
-  top: 36px; 
-  left: 20px; 
+  top: 36px;
+  left: 20px;
 }
 
 .lds-roller div:nth-child(5) {
@@ -139,8 +139,8 @@ body {
 }
 
 .lds-roller div:nth-child(5):after {
-  top: 35.45481px; 
-  left: 15.8589px; 
+  top: 35.45481px;
+  left: 15.8589px;
 }
 
 .lds-roller div:nth-child(6) {
@@ -148,8 +148,8 @@ body {
 }
 
 .lds-roller div:nth-child(6):after {
-  top: 33.85641px; 
-  left: 12px; 
+  top: 33.85641px;
+  left: 12px;
 }
 
 .lds-roller div:nth-child(7) {
@@ -157,8 +157,8 @@ body {
 }
 
 .lds-roller div:nth-child(7):after {
-  top: 31.31371px; 
-  left: 8.68629px; 
+  top: 31.31371px;
+  left: 8.68629px;
 }
 
 .lds-roller div:nth-child(8) {
@@ -166,8 +166,8 @@ body {
 }
 
 .lds-roller div:nth-child(8):after {
-  top: 28px; 
-  left: 6.14359px; 
+  top: 28px;
+  left: 6.14359px;
 }
 
 @keyframes lds-roller {
@@ -177,6 +177,24 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #262626;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
 

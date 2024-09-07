@@ -20,7 +20,7 @@ export default function UpdateInterview() {
                 <div className="flex justify-between items-center mt-2 lg:mt-0 lg:mb-5 flex-wrap gap-2">
                     <h2 className="text-3xl font-bold text-white">
                         <Cover>
-                            Interview Update
+                            Create Handbook
                         </Cover>
                     </h2>
                     <div className="grid grid-cols-2 gap-2 lg:flex lg:space-x-2">

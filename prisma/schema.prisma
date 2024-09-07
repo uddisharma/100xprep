@@ -8,26 +8,29 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  password      String?
-  fullName      String
-  phoneNumber   String?   @unique
-  isWorking     Boolean?  @default(false)
-  experience    Int?
-  company       String?
-  role          String?
-  preferredRole String?
-  currentCTC    String?
-  expectedCTC   String?
-  resume        String?
-  photo         String?
-  techstacks    String[]
-  accounts      Account[]
+  id              String    @id @default(uuid())
+  email           String    @unique
+  password        String?
+  fullName        String
+  phoneNumber     String?   @unique
+  isWorking       Boolean?  @default(false)
+  experience      Int?
+  company         String?
+  role            String?
+  preferredRole   String?
+  currentCTC      String?
+  expectedCTC     String?
+  resume          String?
+  photo           String?
+  techstacks      String[]
+  accounts        Account[]
+  // accpectanceRate Float?
+  // rejectionRate   Float?
+
   // Optional for WebAuthn support
   // Authenticator Authenticator[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   interviewPairings1 InterviewPairing[] @relation("User1Interviews")
   interviewPairings2 InterviewPairing[] @relation("User2Interviews")
@@ -71,6 +74,7 @@ model InterviewPairing {
   user2 User @relation("User2Interviews", fields: [user2Id], references: [id])
 
   scheduledAt DateTime
+  // accepted_for_Different_time : DateTime
   emailLogs   EmailLog[]
   isCompleted Boolean    @default(false)
   // rating : technical, communication, problem solving, completed
