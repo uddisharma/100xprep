@@ -1,13 +1,19 @@
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from '@/components/ui/button'
 import { IconPlus } from '@tabler/icons-react'
 import { Cover } from '@/components/ui/cover'
 import Link from 'next/link'
 import { PaginationDemo } from '@/components/others/Pagination'
+import { getHandbooks } from '@/lib/getDetails/handbooks'
+import { HandbookType } from '@/types'
+import Actions from '@/components/others/hanbook/actions'
 
-const Page = () => {
+const Page = async () => {
+
+    const handbooks = await getHandbooks({ page: 1, limit: 1 });
+
     return (
         <main className="flex flex-1">
             <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full overflow-y-scroll max-h-[100vh] ">
@@ -32,39 +38,40 @@ const Page = () => {
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Date</TableHead>
-                                    <TableHead>Interviewer</TableHead>
-                                    <TableHead>Interviewee</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead>Interviewer</TableHead>
-                                    <TableHead>Interviewee</TableHead>
-                                    <TableHead>Status</TableHead>
+                                    <TableHead>Title</TableHead>
+                                    <TableHead>Description</TableHead>
+                                    <TableHead>Notion Id</TableHead>
+                                    <TableHead>Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {[...new Array(5)].map((i, index) => (
+                                {handbooks ? handbooks?.map((handbook: HandbookType, index) => (
                                     <TableRow key={index} style={{ borderBottom: "1px solid #525252", borderTop: index == 0 ? "1px solid #525252" : "none" }}>
 
-                                        <TableCell>2023-06-13</TableCell>
-                                        <TableCell>Emma Brown</TableCell>
-                                        <TableCell>Michael Davis</TableCell>
-                                        <TableCell>Cancelled</TableCell>
-                                        <TableCell>John Doe</TableCell>
                                         <TableCell>
-                                            <Link href="/admin/handbooks/1/edit">Edit</Link>
+                                            {handbook?.title}
                                         </TableCell>
+
                                         <TableCell>
-                                            <Link href="/dashboard/handbooks/1">View</Link>
+                                            {handbook?.description?.slice(0, 20)}{handbook?.description?.length > 50 ? "..." : ""}
+                                        </TableCell>
+
+                                        <TableCell>
+                                            {handbook?.link}
+                                        </TableCell>
+
+                                        <TableCell>
+                                            <Actions handbook={handbook} />
                                         </TableCell>
                                     </TableRow>
-                                ))}
+                                )) : ""}
                             </TableBody>
                         </Table>
                     </CardContent>
                     <PaginationDemo />
                 </Card>
             </div>
-        </main>
+        </main >
     )
 }
 

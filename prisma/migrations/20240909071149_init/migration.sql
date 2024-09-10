@@ -15,6 +15,9 @@ CREATE TABLE "User" (
     "resume" TEXT,
     "photo" TEXT,
     "techstacks" TEXT[],
+    "incomingInterviewReqs" INTEGER,
+    "accepted" INTEGER,
+    "rejected" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -26,7 +29,7 @@ CREATE TABLE "Account" (
     "userId" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
     "providerAccountId" TEXT NOT NULL,
-    "expires_at" INTEGER,
+    "expiresAt" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -34,18 +37,21 @@ CREATE TABLE "Account" (
 );
 
 -- CreateTable
-CREATE TABLE "InterviewPairing" (
+CREATE TABLE "Interviews" (
     "id" TEXT NOT NULL,
-    "user1Id" TEXT NOT NULL,
-    "user2Id" TEXT NOT NULL,
+    "intervieweeId" TEXT NOT NULL,
+    "interviewerId" TEXT NOT NULL,
     "scheduledAt" TIMESTAMP(3) NOT NULL,
+    "accepted_For_Time" TIMESTAMP(3),
+    "techstack" TEXT[],
     "isCompleted" BOOLEAN NOT NULL DEFAULT false,
-    "ratingUser1" JSONB,
-    "ratingUser2" JSONB,
+    "rating" INTEGER,
+    "feedback" TEXT,
+    "allRating" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "InterviewPairing_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Interviews_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -69,12 +75,24 @@ CREATE TABLE "Job" (
 -- CreateTable
 CREATE TABLE "EmailLog" (
     "id" TEXT NOT NULL,
-    "interviewPairingId" TEXT NOT NULL,
+    "interviewId" TEXT NOT NULL,
     "emailSentAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "EmailLog_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Handbook" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "link" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Handbook_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -87,10 +105,10 @@ CREATE UNIQUE INDEX "User_phoneNumber_key" ON "User"("phoneNumber");
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InterviewPairing" ADD CONSTRAINT "InterviewPairing_user1Id_fkey" FOREIGN KEY ("user1Id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Interviews" ADD CONSTRAINT "Interviews_interviewerId_fkey" FOREIGN KEY ("interviewerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InterviewPairing" ADD CONSTRAINT "InterviewPairing_user2Id_fkey" FOREIGN KEY ("user2Id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Interviews" ADD CONSTRAINT "Interviews_intervieweeId_fkey" FOREIGN KEY ("intervieweeId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EmailLog" ADD CONSTRAINT "EmailLog_interviewPairingId_fkey" FOREIGN KEY ("interviewPairingId") REFERENCES "InterviewPairing"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "EmailLog" ADD CONSTRAINT "EmailLog_interviewId_fkey" FOREIGN KEY ("interviewId") REFERENCES "Interviews"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

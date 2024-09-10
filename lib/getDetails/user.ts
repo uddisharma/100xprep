@@ -10,4 +10,4 @@ export const getUserDetails = async () => {
         },
     });
     return user;
-}; 0
+}; 
