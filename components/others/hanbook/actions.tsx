@@ -19,7 +19,7 @@ const Actions = ({ handbook }: { handbook: HandbookType }) => {
     return (
         <div className='flex justify-start gap-4'>
 
-            <Link href={`/dashboard/handbooks/${handbook?.id}`}>
+            <Link href={`/dashboard/handbooks/view?notionId=${handbook?.link}`}>
                 <IconEye className="h-4 w-4 cursor-pointer" />
             </Link>
 

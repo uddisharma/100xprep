@@ -1,7 +1,7 @@
 import { prisma } from "@/db/db";
 import { HandbookType } from "@/types";
 
-export const getHandbooks = async ({ page = 1, limit = 2, searchQuery = '', createdAt = "desc" }: { page?: number, limit?: number, searchQuery?: string, createdAt?: string }): Promise<HandbookType[] | null> => {
+export const getHandbooks = async ({ page = 1, limit = 2, searchQuery = '', createdAt = "desc", title = "desc" }: { page?: number, limit?: number, searchQuery?: string, createdAt?: string, title?: string }): Promise<{ handbooks: HandbookType[], count: number } | null> => {
 
     try {
         const where = searchQuery
@@ -33,12 +33,14 @@ export const getHandbooks = async ({ page = 1, limit = 2, searchQuery = '', crea
             where,
             orderBy: [
                 { createdAt: createdAt === "desc" ? "desc" : "asc" },
+                { title: title === "desc" ? "desc" : "asc" },
             ],
             skip: (page - 1) * limit,
             take: limit,
         });
+        const count = await prisma.handbook.count();
 
-        return handbooks;
+        return { handbooks, count };
 
     } catch (error) {
         return null;
