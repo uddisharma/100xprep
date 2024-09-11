@@ -11,6 +11,20 @@ export const handbookSchema = zfd.formData({
 
 export type HandbookType = z.infer<typeof handbookSchema>
 
+export const jobSchema = zfd.formData({
+    title: zfd.text(z.string().min(1, { message: messages.titleRequired })),
+    description: zfd.text(z.string().min(1, { message: messages.description })),
+    company: zfd.text(z.string().min(1, { message: messages.company })),
+    location: zfd.text(z.string().min(1, { message: messages.location })),
+    requirements: zfd.text(z.string().min(1, { message: messages.requirements })),
+    salary: zfd.text(z.string().min(1, { message: messages.salary })),
+    startDate: zfd.text(z.string().min(1, { message: messages.startDate })),
+    endDate: zfd.text(z.string().min(1, { message: messages.endDate })),
+    link: zfd.text(z.string().min(1, { message: messages.link })),
+    id: zfd.text(z.string().optional()),
+});
+
+export type JobType = z.infer<typeof jobSchema>
 
 export type ServerActionResponse = {
     result: {
@@ -18,7 +32,6 @@ export type ServerActionResponse = {
             message?: string,
         },
         serverError?: string,
-
         validationErrors?: Record<string, string[] | undefined> | undefined,
 
     }

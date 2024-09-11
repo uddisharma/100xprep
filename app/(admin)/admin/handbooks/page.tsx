@@ -11,6 +11,7 @@ import { HandbookType } from '@/types'
 import Actions from '@/components/others/hanbook/actions'
 import Searchbar from '@/components/others/Searchbar'
 import Sorting from '@/components/others/Sorting'
+import NotFound from './_notFound'
 
 export default async function Hanbooks({
     searchParams,
@@ -21,8 +22,8 @@ export default async function Hanbooks({
     const per_page = searchParams['per_page'] ?? '2'
     const query = searchParams['query']?.toString() ?? '';
     const sort = searchParams['sort']?.toString() ?? '';
-    const title = sort?.split('-')[1] ?? 'desc';
-    const createdAt = sort?.split('-')[1] ?? 'desc';
+    const title = sort?.split('-')[0] == "title" ? sort?.split('-')[1] : 'asc';
+    const createdAt = sort?.split('-')[0] == "createdAt" ? sort?.split('-')[1] : 'desc';
 
     const result = await getHandbooks({ page: Number(page), limit: Number(per_page), searchQuery: query, createdAt, title });
     const { handbooks, count }: { handbooks: HandbookType[], count: number } = result ?? { handbooks: [], count: 0 };
@@ -83,31 +84,39 @@ export default async function Hanbooks({
                                     <TableHead>Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
-                            <TableBody>
-                                {handbooks ? handbooks?.map((handbook: HandbookType, index) => (
-                                    <TableRow key={index} style={{ borderBottom: "1px solid #525252", borderTop: index == 0 ? "1px solid #525252" : "none" }}>
 
-                                        <TableCell>
-                                            {handbook?.title}
-                                        </TableCell>
 
-                                        <TableCell>
-                                            {handbook?.description?.slice(0, 20)}{handbook?.description?.length > 20 ? "..." : ""}
-                                        </TableCell>
+                            {handbooks?.length ?
+                                <TableBody>
+                                    {handbooks?.map((handbook: HandbookType, index) => (
+                                        <TableRow key={index} style={{ borderBottom: "1px solid #525252", borderTop: index == 0 ? "1px solid #525252" : "none" }}>
 
-                                        <TableCell>
-                                            {handbook?.link}
-                                        </TableCell>
+                                            <TableCell>
+                                                {handbook?.title}
+                                            </TableCell>
 
-                                        <TableCell>
-                                            <Actions handbook={handbook} />
-                                        </TableCell>
-                                    </TableRow>
-                                )) : ""}
-                            </TableBody>
+                                            <TableCell>
+                                                {handbook?.description?.slice(0, 20)}{handbook?.description?.length > 20 ? "..." : ""}
+                                            </TableCell>
+
+                                            <TableCell>
+                                                {handbook?.link}
+                                            </TableCell>
+
+                                            <TableCell>
+                                                <Actions handbook={handbook} />
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                                : null
+                            }
                         </Table>
+                        {!handbooks.length ? <NotFound /> : null}
                     </CardContent>
-                    <PaginationDemo count={count} />
+                    {handbooks.length ?
+                        <PaginationDemo count={count} /> : null
+                    }
                 </Card>
             </div>
         </main >

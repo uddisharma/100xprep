@@ -8,5 +8,12 @@ export const messages = {
     titleRequired: "Title is required",
     description: "Description is required",
     notionId: "Notion Id is required",
-    id: "Id is required"
+    id: "Id is required",
+    company: "Company is required",
+    location: "Location is required",
+    requirements: "Requirements is required",
+    salary: "Salary is required",
+    startDate: "Start Date is required",
+    endDate: "End Date is required",
+    link: "Link is required",
 }
