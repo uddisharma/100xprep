@@ -3,7 +3,7 @@ import { JobType } from "@/types/jobs";
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "../auth";
 
-const getJobs = async ({ page = 1, limit = 2, searchQuery = '', dateOrder = "desc", salaryOrder = "desc" }: { page?: number, limit?: number, searchQuery?: string, dateOrder?: string, salaryOrder?: string }): Promise<JobType[] | null> => {
+export const getJobs = async ({ page = 1, limit = 2, searchQuery = '', dateOrder = "desc", salaryOrder = "desc" }: { page?: number, limit?: number, searchQuery?: string, dateOrder?: string, salaryOrder?: string }): Promise<{ jobs: JobType[], count: number } | null> => {
     try {
         const where = searchQuery
             ? {
@@ -45,7 +45,9 @@ const getJobs = async ({ page = 1, limit = 2, searchQuery = '', dateOrder = "des
             take: limit,
         });
 
-        return jobs;
+        const count = await prisma.job.count();
+
+        return { jobs, count };
 
     } catch (error) {
         return null;

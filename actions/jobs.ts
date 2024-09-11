@@ -2,63 +2,56 @@
 
 import { prisma } from "@/db/db";
 import { NEXT_AUTH_CONFIG } from "@/lib/auth";
-import { JobType } from "@/types/jobs";
+import { actionClient } from "@/lib/safe-action";
+import { jobSchema } from "@/types";
 import { getServerSession } from "next-auth";
 
-export async function addJob(job: JobType,): Promise<JobType | null> {
+export const AddJob = actionClient
+    .schema(jobSchema)
+    .action(async ({ parsedInput }) => {
+        const { title, description, company, location, requirements, salary, startDate, endDate, link } = parsedInput;
 
-    try {
-        const session = await getServerSession(NEXT_AUTH_CONFIG)
+        const sessions = await getServerSession(NEXT_AUTH_CONFIG)
 
-        if (!session || session?.user?.role !== 'admin') return null
+        if (!sessions?.user?.email) return { message: "You must be logged in to perform this action" }
 
-        if (!session?.user?.email || !process.env.ADMINS?.split(',').includes(session.user.email!)) return null
+        if (!process.env.ADMINS?.split(',').includes(sessions.user.email!)) return { message: "You must be an admin to perform this action" }
 
-        return await prisma.job.create({
+        await prisma.job.create({
             data: {
-                company: job.company,
-                description: job.description,
-                link: job.link,
-                location: job.location,
-                requirements: job.requirements,
-                salary: job.salary,
-                startDate: job.startDate,
-                endDate: job.endDate,
-                title: job.title,
+                title,
+                description,
+                company,
+                location,
+                requirements: requirements.split(',').map(requirement => requirement.trim()),
+                salary,
+                startDate: new Date(startDate),
+                endDate: new Date(endDate),
+                link
             }
-        });
-
-    } catch (error) {
-        console.error('Error adding job:', error);
-        return null;
-
-    } finally {
-        await prisma.$disconnect();
-    }
-}
-
-export async function UpdateJob(job: JobType): Promise<JobType | null> {
-
-    try {
-        const session = await getServerSession(NEXT_AUTH_CONFIG)
-
-        if (!session || session?.user?.role !== 'admin') return null
-
-        if (!session?.user?.email || !process.env.ADMINS?.split(',').includes(session.user.email!)) return null
-
-        return await prisma.job.update({
-            where: {
-                id: job.id
-            },
-            data: job
         })
+        return { message: "Job created successfully" }
+    })
 
-    } catch (error) {
-        console.error('Error updating job:', error);
-        return null
-
-    } finally {
-        await prisma.$disconnect();
-    }
-
-}
+export const UpdateJob = actionClient
+    .schema(jobSchema)
+    .action(async ({ parsedInput }) => {
+        const { title, description, company, location, requirements, salary, startDate, endDate, link, id } = parsedInput;
+        await prisma.job.update({
+            where: {
+                id
+            },
+            data: {
+                title,
+                description,
+                company,
+                location,
+                requirements: requirements.split(',').map(requirement => requirement.trim()),
+                salary,
+                startDate: new Date(startDate),
+                endDate: new Date(endDate),
+                link
+            }
+        })
+        return { message: "Job updated successfully" }
+    })

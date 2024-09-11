@@ -6,6 +6,7 @@ import { PaginationDemo } from "@/components/others/Pagination";
 import { HandbookType } from "@/types";
 import Searchbar from "@/components/others/Searchbar";
 import Sorting from "@/components/others/Sorting";
+import NotFound from "./_notFound";
 
 export default async function Home({
   searchParams,
@@ -16,8 +17,8 @@ export default async function Home({
   const per_page = searchParams['per_page'] ?? '2'
   const query = searchParams['query']?.toString() ?? '';
   const sort = searchParams['sort']?.toString() ?? '';
-  const title = sort?.split('-')[1] ?? 'desc';
-  const createdAt = sort?.split('-')[1] ?? 'desc';
+  const title = sort?.split('-')[0] == "title" ? sort?.split('-')[1] : 'asc';
+  const createdAt = sort?.split('-')[0] == "createdAt" ? sort?.split('-')[1] : 'desc';
 
   const result = await getHandbooks({ page: Number(page), limit: Number(per_page), searchQuery: query, createdAt, title });
   const { handbooks, count }: { handbooks: HandbookType[], count: number } = result ?? { handbooks: [], count: 0 };
@@ -61,9 +62,14 @@ export default async function Home({
           <Sorting fields={fields} />
         </div>
       </div>
-      <HandbookCards items={handbooks} />
-      <PaginationDemo count={count} />
-    </div>
+      {!handbooks?.length ? <NotFound /> : null}
+      {handbooks?.length ?
+        <>
+          <HandbookCards items={handbooks} />
+          <PaginationDemo count={count} />
+        </>
+        : null}
+    </div >
   );
 }
 
