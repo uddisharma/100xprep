@@ -5,4 +5,8 @@ export const messages = {
     passwordMatch: 'Passwords do not match',
     nameValidation: 'Name must be at least 1 character long',
     errorSendingEmail: 'Error sending email',
+    titleRequired: "Title is required",
+    description: "Description is required",
+    notionId: "Notion Id is required",
+    id: "Id is required"
 }

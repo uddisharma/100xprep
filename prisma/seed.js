@@ -39,214 +39,169 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("@prisma/client");
 var bcrypt = require("bcrypt");
 var prisma = new client_1.PrismaClient();
-function hashPassword(password) {
-    return __awaiter(this, void 0, void 0, function () {
-        var hashedPassword;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, bcrypt.hash(password, 10)];
-                case 1:
-                    hashedPassword = _a.sent();
-                    return [2 /*return*/, hashedPassword];
-            }
-        });
-    });
-}
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var user1, _a, _b, user2, _c, _d, user3, _e, _f, interview1, interview2, interview3;
-        var _g, _h, _j, _k, _l, _m;
-        return __generator(this, function (_o) {
-            switch (_o.label) {
+        var user1, _a, _b, user2, _c, _d, interview1, interview2, job1, handbook1, handbook2;
+        var _e, _f, _g, _h;
+        return __generator(this, function (_j) {
+            switch (_j.label) {
                 case 0:
                     _b = (_a = prisma.user).create;
+                    _e = {};
+                    _f = {
+                        email: 'john.doe@example.com',
+                        fullName: 'John Doe'
+                    };
+                    return [4 /*yield*/, bcrypt.hash("password123", 10)];
+                case 1: return [4 /*yield*/, _b.apply(_a, [(_e.data = (_f.password = _j.sent(),
+                            _f.phoneNumber = '1234567890',
+                            _f.isWorking = true,
+                            _f.experience = 5,
+                            _f.company = 'Tech Corp',
+                            _f.role = 'Software Engineer',
+                            _f.preferredRole = 'Senior Software Engineer',
+                            _f.currentCTC = '100000',
+                            _f.expectedCTC = '120000',
+                            _f.resume = 'resume_link',
+                            _f.photo = 'https://utfs.io/f/b844803f-8735-431e-85da-b96ceda1d1c3-ls6ya1.png',
+                            _f.techstacks = ["HTML CSS", "JavaScript", "TypeScript"],
+                            _f.incomingInterviewReqs = 8,
+                            _f.accepted = 7,
+                            _f.rejected = 1,
+                            _f),
+                            _e)])];
+                case 2:
+                    user1 = _j.sent();
+                    _d = (_c = prisma.user).create;
                     _g = {};
                     _h = {
-                        email: 'user1@example.com',
-                        fullName: 'User One'
+                        email: 'jane.smith@example.com',
+                        fullName: 'Jane Smith'
                     };
-                    return [4 /*yield*/, hashPassword("password1")];
-                case 1: return [4 /*yield*/, _b.apply(_a, [(_g.data = (_h.password = _o.sent(),
-                            _h.phoneNumber = '1234567890',
-                            _h.isWorking = true,
-                            _h.experience = 5,
-                            _h.company = 'Company One',
-                            _h.role = 'Developer',
-                            _h.preferredRole = 'Full Stack Developer',
-                            _h.currentCTC = '100000',
-                            _h.expectedCTC = '150000',
-                            _h.resume = 'resume1.pdf',
+                    return [4 /*yield*/, bcrypt.hash("password123", 10)];
+                case 3: return [4 /*yield*/, _d.apply(_c, [(_g.data = (_h.password = _j.sent(),
+                            _h.phoneNumber = '0987654321',
+                            _h.isWorking = false,
+                            _h.experience = 3,
+                            _h.company = 'Web Solutions',
+                            _h.role = 'Frontend Developer',
+                            _h.preferredRole = 'Fullstack Developer',
+                            _h.currentCTC = '80000',
+                            _h.expectedCTC = '100000',
+                            _h.resume = 'resume_link',
                             _h.photo = 'https://utfs.io/f/b844803f-8735-431e-85da-b96ceda1d1c3-ls6ya1.png',
                             _h.techstacks = ["HTML CSS", "JavaScript", "TypeScript"],
+                            _h.incomingInterviewReqs = 15,
+                            _h.accepted = 10,
+                            _h.rejected = 5,
                             _h),
                             _g)])];
-                case 2:
-                    user1 = _o.sent();
-                    _d = (_c = prisma.user).create;
-                    _j = {};
-                    _k = {
-                        email: 'user2@example.com',
-                        fullName: 'User Two'
-                    };
-                    return [4 /*yield*/, hashPassword("password2")];
-                case 3: return [4 /*yield*/, _d.apply(_c, [(_j.data = (_k.password = _o.sent(),
-                            _k.phoneNumber = '0987654321',
-                            _k.isWorking = false,
-                            _k.experience = 3,
-                            _k.company = 'Company Two',
-                            _k.role = 'Designer',
-                            _k.preferredRole = 'UI/UX Designer',
-                            _k.currentCTC = '80000',
-                            _k.expectedCTC = '120000',
-                            _k.resume = 'resume2.pdf',
-                            _k.photo = 'https://utfs.io/f/b844803f-8735-431e-85da-b96ceda1d1c3-ls6ya1.png',
-                            _k.techstacks = ["React.js", "Next.js", "Zod"],
-                            _k),
-                            _j)])];
                 case 4:
-                    user2 = _o.sent();
-                    _f = (_e = prisma.user).create;
-                    _l = {};
-                    _m = {
-                        email: 'user3@example.com',
-                        fullName: 'User Three'
-                    };
-                    return [4 /*yield*/, hashPassword("password3")];
-                case 5: return [4 /*yield*/, _f.apply(_e, [(_l.data = (_m.password = _o.sent(),
-                            _m.phoneNumber = '1122334455',
-                            _m.isWorking = true,
-                            _m.experience = 7,
-                            _m.company = 'Company Three',
-                            _m.role = 'Manager',
-                            _m.preferredRole = 'Project Manager',
-                            _m.currentCTC = '200000',
-                            _m.expectedCTC = '250000',
-                            _m.resume = 'resume3.pdf',
-                            _m.photo = 'https://utfs.io/f/b844803f-8735-431e-85da-b96ceda1d1c3-ls6ya1.png',
-                            _m.techstacks = ["Redux", "Recoil", "TurboRepo", "Full Frontend"],
-                            _m),
-                            _l)])];
+                    user2 = _j.sent();
+                    return [4 /*yield*/, prisma.interviews.create({
+                            data: {
+                                intervieweeId: user1.id,
+                                interviewerId: user2.id,
+                                scheduledAt: new Date('2023-06-12T10:00:00Z'),
+                                accepted_For_Time: new Date('2023-06-10T10:00:00Z'),
+                                isCompleted: true,
+                                techstack: ['HTML CSS', 'JavaScript', 'TypeScript'],
+                                rating: 5,
+                                feedback: 'Great interview!',
+                                allRating: {
+                                    technical: 5,
+                                    communication: 4,
+                                    problemSolving: 5,
+                                },
+                            },
+                        })];
+                case 5:
+                    interview1 = _j.sent();
+                    return [4 /*yield*/, prisma.interviews.create({
+                            data: {
+                                intervieweeId: user2.id,
+                                interviewerId: user1.id,
+                                scheduledAt: new Date('2023-06-13T14:00:00Z'),
+                                accepted_For_Time: new Date('2023-06-11T14:00:00Z'),
+                                isCompleted: false,
+                                techstack: ['HTML CSS', 'JavaScript', 'TypeScript'],
+                                rating: null,
+                                feedback: null,
+                                allRating: {
+                                    technical: null,
+                                    communication: null,
+                                    problemSolving: null,
+                                },
+                            },
+                        })];
                 case 6:
-                    user3 = _o.sent();
-                    // Create Accounts
-                    return [4 /*yield*/, prisma.account.createMany({
-                            data: [
-                                {
-                                    userId: user1.id,
-                                    provider: 'github',
-                                    providerAccountId: 'github-user1',
-                                    expires_at: null,
-                                },
-                                {
-                                    userId: user2.id,
-                                    provider: 'google',
-                                    providerAccountId: 'google-user2',
-                                    expires_at: null,
-                                },
-                                {
-                                    userId: user3.id,
-                                    provider: 'credentials',
-                                    providerAccountId: 'credentials-user3',
-                                    expires_at: null,
-                                },
-                            ],
+                    interview2 = _j.sent();
+                    return [4 /*yield*/, prisma.job.create({
+                            data: {
+                                title: 'Senior Software Engineer',
+                                description: 'Looking for an experienced software engineer.',
+                                location: 'New York, NY',
+                                salary: '120000',
+                                company: 'Tech Corp',
+                                link: 'https://techcorp.com/jobs/1',
+                                requirements: ['JavaScript', 'React', 'Node.js'],
+                                startDate: new Date('2023-07-01T00:00:00Z'),
+                                endDate: new Date('2023-07-31T00:00:00Z'),
+                            },
                         })];
                 case 7:
-                    // Create Accounts
-                    _o.sent();
-                    // Create Jobs
-                    return [4 /*yield*/, prisma.job.createMany({
-                            data: [
-                                {
-                                    title: 'Frontend Developer',
-                                    description: 'Develop and maintain web applications.',
-                                    location: 'Remote',
-                                    salary: '120000',
-                                    company: 'Tech Corp',
-                                    link: 'https://techcorp.com/jobs/frontend-developer',
-                                    requirements: ['JavaScript', 'React', 'CSS'],
-                                    startDate: new Date('2023-01-01'),
-                                    endDate: new Date('2023-12-31'),
-                                },
-                                {
-                                    title: 'Backend Developer',
-                                    description: 'Develop and maintain server-side applications.',
-                                    location: 'On-site',
-                                    salary: '130000',
-                                    company: 'Backend Inc',
-                                    link: 'https://backendinc.com/jobs/backend-developer',
-                                    requirements: ['Node.js', 'Express', 'MongoDB'],
-                                    startDate: new Date('2023-02-01'),
-                                    endDate: new Date('2023-11-30'),
-                                },
-                                {
-                                    title: 'UI/UX Designer',
-                                    description: 'Design user interfaces and user experiences.',
-                                    location: 'Hybrid',
-                                    salary: '110000',
-                                    company: 'Design Studio',
-                                    link: 'https://designstudio.com/jobs/ui-ux-designer',
-                                    requirements: ['Figma', 'Sketch', 'Adobe XD'],
-                                    startDate: new Date('2023-03-01'),
-                                    endDate: new Date('2023-10-31'),
-                                },
-                            ],
+                    job1 = _j.sent();
+                    return [4 /*yield*/, prisma.job.create({
+                            data: {
+                                title: 'Frontend Developer',
+                                description: 'Looking for a skilled frontend developer.',
+                                location: 'San Francisco, CA',
+                                salary: '100000',
+                                company: 'Web Solutions',
+                                link: 'https://websolutions.com/jobs/2',
+                                requirements: ['HTML', 'CSS', 'JavaScript'],
+                                startDate: new Date('2023-08-01T00:00:00Z'),
+                                endDate: new Date('2023-08-31T00:00:00Z'),
+                            },
                         })];
                 case 8:
-                    // Create Jobs
-                    _o.sent();
-                    return [4 /*yield*/, prisma.interviewPairing.create({
+                    _j.sent();
+                    // Create Email Logs
+                    return [4 /*yield*/, prisma.emailLog.create({
                             data: {
-                                user1Id: user1.id,
-                                user2Id: user2.id,
-                                scheduledAt: new Date('2023-03-01T09:00:00Z'),
-                                isCompleted: true,
+                                interviewId: interview1.id,
+                                emailSentAt: new Date('2023-06-10T12:00:00Z'),
                             },
                         })];
                 case 9:
-                    interview1 = _o.sent();
-                    return [4 /*yield*/, prisma.interviewPairing.create({
+                    // Create Email Logs
+                    _j.sent();
+                    return [4 /*yield*/, prisma.emailLog.create({
                             data: {
-                                user1Id: user2.id,
-                                user2Id: user3.id,
-                                scheduledAt: new Date('2023-04-01T10:00:00Z'),
-                                isCompleted: true,
+                                interviewId: interview2.id,
+                                emailSentAt: new Date('2023-06-11T16:00:00Z'),
                             },
                         })];
                 case 10:
-                    interview2 = _o.sent();
-                    return [4 /*yield*/, prisma.interviewPairing.create({
+                    _j.sent();
+                    return [4 /*yield*/, prisma.handbook.create({
                             data: {
-                                user1Id: user3.id,
-                                user2Id: user1.id,
-                                scheduledAt: new Date('2023-05-01T11:00:00Z'),
-                                isCompleted: true,
+                                title: 'JavaScript Handbook',
+                                description: 'A comprehensive guide to JavaScript.',
+                                link: 'b30b884e53514b13b09b562fc02ad1a3',
                             },
-                        })
-                        // Create Email Logs
-                    ];
+                        })];
                 case 11:
-                    interview3 = _o.sent();
-                    // Create Email Logs
-                    return [4 /*yield*/, prisma.emailLog.createMany({
-                            data: [
-                                {
-                                    interviewPairingId: interview1.id,
-                                    emailSentAt: new Date('2023-04-01T09:00:00Z'),
-                                },
-                                {
-                                    interviewPairingId: interview2.id,
-                                    emailSentAt: new Date('2023-05-01T10:00:00Z'),
-                                },
-                                {
-                                    interviewPairingId: interview3.id,
-                                    emailSentAt: new Date('2023-06-01T11:00:00Z'),
-                                },
-                            ],
+                    handbook1 = _j.sent();
+                    return [4 /*yield*/, prisma.handbook.create({
+                            data: {
+                                title: 'React Handbook',
+                                description: 'A comprehensive guide to React.',
+                                link: '0b97a34530e64029a5c3022a29476fed',
+                            },
                         })];
                 case 12:
-                    // Create Email Logs
-                    _o.sent();
+                    handbook2 = _j.sent();
                     return [2 /*return*/];
             }
         });
@@ -254,7 +209,7 @@ function main() {
 }
 main()
     .then(function () {
-    console.log('Seeding complete!');
+    console.log('Seeded successfully');
 })
     .catch(function (e) {
     console.error(e);

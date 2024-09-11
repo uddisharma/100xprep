@@ -8,80 +8,60 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(uuid())
-  email           String    @unique
-  password        String?
-  fullName        String
-  phoneNumber     String?   @unique
-  isWorking       Boolean?  @default(false)
-  experience      Int?
-  company         String?
-  role            String?
-  preferredRole   String?
-  currentCTC      String?
-  expectedCTC     String?
-  resume          String?
-  photo           String?
-  techstacks      String[]
-  accounts        Account[]
-  // accpectanceRate Float?
-  // rejectionRate   Float?
-
-  // Optional for WebAuthn support
-  // Authenticator Authenticator[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  interviewPairings1 InterviewPairing[] @relation("User1Interviews")
-  interviewPairings2 InterviewPairing[] @relation("User2Interviews")
+  id                      String       @id @default(uuid())
+  email                   String       @unique
+  password                String?
+  fullName                String
+  phoneNumber             String?      @unique
+  isWorking               Boolean?     @default(false)
+  experience              Int?
+  company                 String?
+  role                    String?
+  preferredRole           String?
+  currentCTC              String?
+  expectedCTC             String?
+  resume                  String?
+  photo                   String?
+  techstacks              String[]
+  accounts                Account[]
+  incomingInterviewReqs   Int?
+  accepted                Int?
+  rejected                Int?
+  createdAt               DateTime     @default(now())
+  updatedAt               DateTime     @updatedAt
+  interviewsAsInterviewer Interviews[] @relation("InterviewerRelation")
+  interviewsAsInterviewee Interviews[] @relation("IntervieweeRelation")
 }
 
 model Account {
   userId            String
   provider          String
   providerAccountId String
-  expires_at        Int?
+  expiresAt         Int?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
 
-// Optional for WebAuthn support
-// model Authenticator {
-//   credentialID         String  @unique
-//   userId               String
-//   providerAccountId    String
-//   credentialPublicKey  String
-//   counter              Int
-//   credentialDeviceType String
-//   credentialBackedUp   Boolean
-//   transports           String?
+model Interviews {
+  id                String     @id @default(uuid())
+  intervieweeId     String
+  interviewerId     String
+  scheduledAt       DateTime
+  accepted_For_Time DateTime?
+  techstack         String[]
+  emailLogs         EmailLog[]
+  isCompleted       Boolean    @default(false)
+  rating            Int?
+  feedback          String?
+  allRating         Json?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
 
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@id([userId, credentialID])
-// }
-
-model InterviewPairing {
-  id      String @id @default(uuid())
-  user1Id String
-  user2Id String
-
-  user1 User @relation("User1Interviews", fields: [user1Id], references: [id])
-  user2 User @relation("User2Interviews", fields: [user2Id], references: [id])
-
-  scheduledAt DateTime
-  // accepted_for_Different_time : DateTime
-  emailLogs   EmailLog[]
-  isCompleted Boolean    @default(false)
-  // rating : technical, communication, problem solving, completed
-  ratingUser1 Json?
-  ratingUser2 Json?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  interviewer User @relation("InterviewerRelation", fields: [interviewerId], references: [id])
+  interviewee User @relation("IntervieweeRelation", fields: [intervieweeId], references: [id])
 }
 
 model Job {
@@ -100,10 +80,19 @@ model Job {
 }
 
 model EmailLog {
-  id                 String           @id @default(uuid())
-  interviewPairingId String
-  interviewPairing   InterviewPairing @relation(fields: [interviewPairingId], references: [id])
-  emailSentAt        DateTime         @default(now())
-  createdAt          DateTime         @default(now())
-  updatedAt          DateTime         @updatedAt
+  id          String     @id @default(uuid())
+  interviewId String
+  interview   Interviews @relation(fields: [interviewId], references: [id])
+  emailSentAt DateTime   @default(now())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Handbook {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  link        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

@@ -29,7 +29,7 @@ export const NEXT_AUTH_CONFIG = {
                             create: {
                                 provider: 'github',
                                 providerAccountId: String(profile.id),
-                                expires_at: profile.exp
+                                expiresAt: profile.exp
                             }
                         }
                     }
@@ -52,7 +52,7 @@ export const NEXT_AUTH_CONFIG = {
                             create: {
                                 provider: 'google',
                                 providerAccountId: profile.sub,
-                                expires_at: profile.exp
+                                expiresAt: profile.exp
                             }
                         }
                     }
@@ -124,7 +124,7 @@ export const NEXT_AUTH_CONFIG = {
                                 create: {
                                     provider: 'credentials',
                                     providerAccountId: String(Math.random()),
-                                    expires_at: null
+                                    expiresAt: null
                                 }
                             }
                         }

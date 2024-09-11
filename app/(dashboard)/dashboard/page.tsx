@@ -43,7 +43,7 @@ const Page = async () => {
                             </GlowingStarsDescription>
                         </div>
 
-                        <div className='w-full md:w-8/12 mt-3'>
+                        <div className='w-full md:w-9/12 mt-3'>
                             <RequestInterview />
                         </div>
                     </div>

@@ -1,187 +1,160 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
-
-async function hashPassword(password: string): Promise<string> {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    return hashedPassword;
-}
 
 async function main() {
     // Create Users
     const user1 = await prisma.user.create({
         data: {
-            email: 'user1@example.com',
-            fullName: 'User One',
-            password: await hashPassword("password1"),
+            email: 'john.doe@example.com',
+            fullName: 'John Doe',
+            password: await bcrypt.hash("password123", 10),
             phoneNumber: '1234567890',
             isWorking: true,
             experience: 5,
-            company: 'Company One',
-            role: 'Developer',
-            preferredRole: 'Full Stack Developer',
+            company: 'Tech Corp',
+            role: 'Software Engineer',
+            preferredRole: 'Senior Software Engineer',
             currentCTC: '100000',
-            expectedCTC: '150000',
-            resume: 'resume1.pdf',
+            expectedCTC: '120000',
+            resume: 'resume_link',
             photo: 'https://utfs.io/f/b844803f-8735-431e-85da-b96ceda1d1c3-ls6ya1.png',
             techstacks: ["HTML CSS", "JavaScript", "TypeScript"],
+            incomingInterviewReqs: 8,
+            accepted: 7,
+            rejected: 1,
         },
     });
 
     const user2 = await prisma.user.create({
         data: {
-            email: 'user2@example.com',
-            fullName: 'User Two',
-            password: await hashPassword("password2"),
+            email: 'jane.smith@example.com',
+            fullName: 'Jane Smith',
+            password: await bcrypt.hash("password123", 10),
             phoneNumber: '0987654321',
             isWorking: false,
             experience: 3,
-            company: 'Company Two',
-            role: 'Designer',
-            preferredRole: 'UI/UX Designer',
+            company: 'Web Solutions',
+            role: 'Frontend Developer',
+            preferredRole: 'Fullstack Developer',
             currentCTC: '80000',
-            expectedCTC: '120000',
-            resume: 'resume2.pdf',
+            expectedCTC: '100000',
+            resume: 'resume_link',
             photo: 'https://utfs.io/f/b844803f-8735-431e-85da-b96ceda1d1c3-ls6ya1.png',
-            techstacks: ["React.js", "Next.js", "Zod"]
+            techstacks: ["HTML CSS", "JavaScript", "TypeScript"],
+            incomingInterviewReqs: 15,
+            accepted: 10,
+            rejected: 5,
         },
     });
 
-    const user3 = await prisma.user.create({
+    // Create Interviews
+    const interview1 = await prisma.interviews.create({
         data: {
-            email: 'user3@example.com',
-            fullName: 'User Three',
-            password: await hashPassword("password3"),
-            phoneNumber: '1122334455',
-            isWorking: true,
-            experience: 7,
-            company: 'Company Three',
-            role: 'Manager',
-            preferredRole: 'Project Manager',
-            currentCTC: '200000',
-            expectedCTC: '250000',
-            resume: 'resume3.pdf',
-            photo: 'https://utfs.io/f/b844803f-8735-431e-85da-b96ceda1d1c3-ls6ya1.png',
-            techstacks: ["Redux", "Recoil", "TurboRepo", "Full Frontend"]
+            intervieweeId: user1.id,
+            interviewerId: user2.id,
+            scheduledAt: new Date('2023-06-12T10:00:00Z'),
+            accepted_For_Time: new Date('2023-06-10T10:00:00Z'),
+            isCompleted: true,
+            techstack: ['HTML CSS', 'JavaScript', 'TypeScript'],
+            rating: 5,
+            feedback: 'Great interview!',
+            allRating: {
+                technical: 5,
+                communication: 4,
+                problemSolving: 5,
+            },
         },
     });
 
-    // Create Accounts
-    await prisma.account.createMany({
-        data: [
-            {
-                userId: user1.id,
-                provider: 'github',
-                providerAccountId: 'github-user1',
-                expires_at: null,
+    const interview2 = await prisma.interviews.create({
+        data: {
+            intervieweeId: user2.id,
+            interviewerId: user1.id,
+            scheduledAt: new Date('2023-06-13T14:00:00Z'),
+            accepted_For_Time: new Date('2023-06-11T14:00:00Z'),
+            isCompleted: false,
+            techstack: ['HTML CSS', 'JavaScript', 'TypeScript'],
+            rating: null,
+            feedback: null,
+            allRating: {
+                technical: null,
+                communication: null,
+                problemSolving: null,
             },
-            {
-                userId: user2.id,
-                provider: 'google',
-                providerAccountId: 'google-user2',
-                expires_at: null,
-            },
-            {
-                userId: user3.id,
-                provider: 'credentials',
-                providerAccountId: 'credentials-user3',
-                expires_at: null,
-            },
-        ],
+        },
     });
 
     // Create Jobs
-    await prisma.job.createMany({
-        data: [
-            {
-                title: 'Frontend Developer',
-                description: 'Develop and maintain web applications.',
-                location: 'Remote',
-                salary: '120000',
-                company: 'Tech Corp',
-                link: 'https://techcorp.com/jobs/frontend-developer',
-                requirements: ['JavaScript', 'React', 'CSS'],
-                startDate: new Date('2023-01-01'),
-                endDate: new Date('2023-12-31'),
-            },
-            {
-                title: 'Backend Developer',
-                description: 'Develop and maintain server-side applications.',
-                location: 'On-site',
-                salary: '130000',
-                company: 'Backend Inc',
-                link: 'https://backendinc.com/jobs/backend-developer',
-                requirements: ['Node.js', 'Express', 'MongoDB'],
-                startDate: new Date('2023-02-01'),
-                endDate: new Date('2023-11-30'),
-            },
-            {
-                title: 'UI/UX Designer',
-                description: 'Design user interfaces and user experiences.',
-                location: 'Hybrid',
-                salary: '110000',
-                company: 'Design Studio',
-                link: 'https://designstudio.com/jobs/ui-ux-designer',
-                requirements: ['Figma', 'Sketch', 'Adobe XD'],
-                startDate: new Date('2023-03-01'),
-                endDate: new Date('2023-10-31'),
-            },
-        ],
-    });
-
-    // Create Interview Pairings
-    const interview1 = await prisma.interviewPairing.create({
+    const job1 = await prisma.job.create({
         data: {
-            user1Id: user1.id,
-            user2Id: user2.id,
-            scheduledAt: new Date('2023-03-01T09:00:00Z'),
-            isCompleted: true,
+            title: 'Senior Software Engineer',
+            description: 'Looking for an experienced software engineer.',
+            location: 'New York, NY',
+            salary: '120000',
+            company: 'Tech Corp',
+            link: 'https://techcorp.com/jobs/1',
+            requirements: ['JavaScript', 'React', 'Node.js'],
+            startDate: new Date('2023-07-01T00:00:00Z'),
+            endDate: new Date('2023-07-31T00:00:00Z'),
         },
     });
 
-    const interview2 = await prisma.interviewPairing.create({
+    await prisma.job.create({
         data: {
-            user1Id: user2.id,
-            user2Id: user3.id,
-            scheduledAt: new Date('2023-04-01T10:00:00Z'),
-            isCompleted: true,
+            title: 'Frontend Developer',
+            description: 'Looking for a skilled frontend developer.',
+            location: 'San Francisco, CA',
+            salary: '100000',
+            company: 'Web Solutions',
+            link: 'https://websolutions.com/jobs/2',
+            requirements: ['HTML', 'CSS', 'JavaScript'],
+            startDate: new Date('2023-08-01T00:00:00Z'),
+            endDate: new Date('2023-08-31T00:00:00Z'),
         },
     });
 
-    const interview3 = await prisma.interviewPairing.create({
+    // Create Email Logs
+    await prisma.emailLog.create({
         data: {
-            user1Id: user3.id,
-            user2Id: user1.id,
-            scheduledAt: new Date('2023-05-01T11:00:00Z'),
-            isCompleted: true,
+            interviewId: interview1.id,
+            emailSentAt: new Date('2023-06-10T12:00:00Z'),
+        },
+    });
+
+    await prisma.emailLog.create({
+        data: {
+            interviewId: interview2.id,
+            emailSentAt: new Date('2023-06-11T16:00:00Z'),
+        },
+    });
+
+    // handbooks
+    const handbook1 = await prisma.handbook.create({
+        data: {
+            title: 'JavaScript Handbook',
+            description: 'A comprehensive guide to JavaScript.',
+            link: 'b30b884e53514b13b09b562fc02ad1a3',
         },
     })
 
-    // Create Email Logs
-    await prisma.emailLog.createMany({
-        data: [
-            {
-                interviewPairingId: interview1.id,
-                emailSentAt: new Date('2023-04-01T09:00:00Z'),
-            },
-            {
-                interviewPairingId: interview2.id,
-                emailSentAt: new Date('2023-05-01T10:00:00Z'),
-            },
-            {
-                interviewPairingId: interview3.id,
-                emailSentAt: new Date('2023-06-01T11:00:00Z'),
-            },
-        ],
-    });
+    const handbook2 = await prisma.handbook.create({
+        data: {
+            title: 'React Handbook',
+            description: 'A comprehensive guide to React.',
+            link: '0b97a34530e64029a5c3022a29476fed',
+        },
+    })
+
+
 }
 
 main()
     .then(() => {
-        console.log('Seeding complete!');
+        console.log('Seeded successfully');
     })
-    .catch(e => {
+    .catch((e) => {
         console.error(e);
         process.exit(1);
     })
