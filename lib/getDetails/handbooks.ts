@@ -46,11 +46,10 @@ export const getHandbooks = async ({ page = 1, limit = 2, searchQuery = '', crea
     }
 };
 
-export const getHandbookById = async (id: string): Promise<HandbookType[] | null> => {
+export const getHandbookById = async (id: string): Promise<HandbookType | null> => {
     try {
         console.log("Fetching handbook with id:", id);
-        const handbook = await prisma.handbook.findMany();
-        console.log("handbook", handbook);
+        const handbook = await prisma.handbook.findUnique({ where: { id } });
         return handbook;
     } catch (error) {
         console.error("Error fetching handbook:", error);

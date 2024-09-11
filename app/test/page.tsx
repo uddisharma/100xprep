@@ -23,7 +23,6 @@ export default function Home({
 
   const start = (Number(page) - 1) * Number(per_page) 
   const end = start + Number(per_page) 
-
   const entries = data.slice(start, end)
 
   return (

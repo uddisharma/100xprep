@@ -23,7 +23,7 @@ const Actions = ({ handbook }: { handbook: HandbookType }) => {
                 <IconEye className="h-4 w-4 cursor-pointer" />
             </Link>
 
-            <Link href={`/admin/handbooks/${handbook?.id}/edit`}>
+            <Link href={`/admin/handbooks/edit?notionId=${handbook?.id}`}>
                 <IconPencil className="h-4 w-4 cursor-pointer" />
             </Link>
 

@@ -10,9 +10,15 @@ import { getHandbooks } from '@/lib/getDetails/handbooks'
 import { HandbookType } from '@/types'
 import Actions from '@/components/others/hanbook/actions'
 
-const Page = async () => {
+export default async function Home({
+    searchParams,
+}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) {
+    const page = searchParams['page'] ?? '1'
+    const per_page = searchParams['per_page'] ?? '1'
 
-    const handbooks = await getHandbooks({ page: 1, limit: 1 });
+    const handbooks = await getHandbooks({ page: Number(page), limit: Number(per_page) });
 
     return (
         <main className="flex flex-1">
@@ -75,4 +81,3 @@ const Page = async () => {
     )
 }
 
-export default Page

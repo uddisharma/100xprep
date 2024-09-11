@@ -1,19 +1,32 @@
-"use server"
 
-import { prisma } from "@/db/db"
-import { HandbookType } from "@/types"
+"use server";
 
-export const UpdateHandbook = async ({ handbook }: { handbook: HandbookType }): Promise<HandbookType | string | null> => {
-    try {
-        const data = await prisma.handbook.update({
-            where: { id: handbook?.id },
-            data: handbook
-        })
-        return data
+import { prisma } from "@/db/db";
+import { NEXT_AUTH_CONFIG } from "@/lib/auth";
+import { actionClient } from "@/lib/safe-action";
+import { handbookSchema } from "@/types";
+import { getServerSession } from "next-auth";
 
-    } catch (error) {
-        return null
-    }
-}
+export const UpdateHandbook = actionClient
+    .schema(handbookSchema)
+    .action(async ({ parsedInput }) => {
+        const { id, title, description, link } = parsedInput;
 
+        const sessions = await getServerSession(NEXT_AUTH_CONFIG)
 
+        if (!sessions?.user?.email) return { error: "You must be logged in to perform this action" }
+
+        if (!process.env.ADMINS?.split(',').includes(sessions.user.email!)) return { error: "You must be an admin to perform this action" }
+
+        await prisma.handbook.update({
+            where: { id },
+            data: {
+                title,
+                description,
+                link,
+            },
+        });
+        return {
+            message: "Handbook updated successfully",
+        };
+    });
