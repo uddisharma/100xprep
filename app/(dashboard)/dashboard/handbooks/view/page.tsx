@@ -3,11 +3,15 @@ import { notFound } from 'next/navigation'
 import { NotionAPI } from 'notion-client'
 import React from 'react'
 
-const page1 = async () => {
+export default async function ViewHandBook({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
 
   const notion = new NotionAPI()
 
-  const recordMap = await notion.getPage('c81958a9184244feac0499a7d3fec79b')
+  const recordMap = await notion.getPage(searchParams['notionId'] as string)
 
   if (!recordMap) return notFound()
 
@@ -16,4 +20,3 @@ const page1 = async () => {
   )
 }
 
-export default page1

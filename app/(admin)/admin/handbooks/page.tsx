@@ -9,16 +9,42 @@ import { PaginationDemo } from '@/components/others/Pagination'
 import { getHandbooks } from '@/lib/getDetails/handbooks'
 import { HandbookType } from '@/types'
 import Actions from '@/components/others/hanbook/actions'
+import Searchbar from '@/components/others/Searchbar'
+import Sorting from '@/components/others/Sorting'
 
-export default async function Home({
+export default async function Hanbooks({
     searchParams,
 }: {
     searchParams: { [key: string]: string | string[] | undefined }
 }) {
     const page = searchParams['page'] ?? '1'
-    const per_page = searchParams['per_page'] ?? '1'
+    const per_page = searchParams['per_page'] ?? '2'
+    const query = searchParams['query']?.toString() ?? '';
+    const sort = searchParams['sort']?.toString() ?? '';
+    const title = sort?.split('-')[1] ?? 'desc';
+    const createdAt = sort?.split('-')[1] ?? 'desc';
 
-    const handbooks = await getHandbooks({ page: Number(page), limit: Number(per_page) });
+    const result = await getHandbooks({ page: Number(page), limit: Number(per_page), searchQuery: query, createdAt, title });
+    const { handbooks, count }: { handbooks: HandbookType[], count: number } = result ?? { handbooks: [], count: 0 };
+
+    const fields = [
+        {
+            name: 'Title A to Z',
+            value: 'name-asc'
+        },
+        {
+            name: 'Title Z to A',
+            value: 'name-desc'
+        },
+        {
+            name: "Newest",
+            value: 'createdAt-desc'
+        },
+        {
+            name: "Oldest",
+            value: 'createdAt-asc'
+        }
+    ]
 
     return (
         <main className="flex flex-1">
@@ -38,7 +64,14 @@ export default async function Home({
                         </Link>
                     </div>
                 </div>
-
+                <div className="grid grid-cols-1 lg:grid-cols-2 w-full items-center gap-5">
+                    <div className="md:justify-self-start">
+                        <Searchbar />
+                    </div>
+                    <div className="md:justify-self-end">
+                        <Sorting fields={fields} />
+                    </div>
+                </div>
                 <Card className="my-4">
                     <CardContent>
                         <Table>
@@ -59,7 +92,7 @@ export default async function Home({
                                         </TableCell>
 
                                         <TableCell>
-                                            {handbook?.description?.slice(0, 20)}{handbook?.description?.length > 50 ? "..." : ""}
+                                            {handbook?.description?.slice(0, 20)}{handbook?.description?.length > 20 ? "..." : ""}
                                         </TableCell>
 
                                         <TableCell>
@@ -74,7 +107,7 @@ export default async function Home({
                             </TableBody>
                         </Table>
                     </CardContent>
-                    <PaginationDemo />
+                    <PaginationDemo count={count} />
                 </Card>
             </div>
         </main >
