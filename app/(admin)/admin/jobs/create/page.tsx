@@ -1,17 +1,10 @@
-'use client'
-
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { IconCalendar } from '@tabler/icons-react'
+import { IconBriefcase } from '@tabler/icons-react'
 import { Cover } from '@/components/ui/cover'
+import BottomGradient from '@/components/others/BottomGradient'
+import Link from 'next/link'
+import JobCreateForm from "@/components/others/jobs.tsx/JobCreateForm"
 
-export default function UpdateInterview() {
-    const [date, setDate] = useState<Date>()
-    const [isRemote, setIsRemote] = useState(true)
+export default function CreateJob() {
 
     return (
         <div className='w-full'>
@@ -19,71 +12,22 @@ export default function UpdateInterview() {
                 <div className="flex justify-between items-center mt-2 lg:mt-0 lg:mb-5 flex-wrap gap-2">
                     <h2 className="text-3xl font-bold text-white">
                         <Cover>
-                            Edit Job
+                            Job Post
                         </Cover>
                     </h2>
-                    <div className="grid grid-cols-2 gap-2 lg:flex lg:space-x-2">
-                        <Button>
-                            <IconCalendar className="mr-2 h-4 w-4" /> View All Interviews
-                        </Button>
-
+                    <div className="w-full md:w-[200px]">
+                        <Link href="/admin/jobs">
+                            <div
+                                className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 dark:bg-zinc-800 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] px-2 w-full mt-5 lg:mt-0 flex items-center justify-center gap-2 cursor-pointer"
+                            >
+                                <IconBriefcase className="w-4 h-4" />
+                                <span className="flex-shrink-0">All Jobs</span>
+                                <BottomGradient />
+                            </div>
+                        </Link>
                     </div>
                 </div>
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Interview Details</CardTitle>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="interviewer">Interviewer</Label>
-                                    <Input id="interviewer" placeholder="John Doe" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="interviewee">Interviewee</Label>
-                                    <Input
-                                        id="date"
-                                        type="date"
-                                        onChange={(e) => setDate(new Date(e.target.value))}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="job-title">Job Title</Label>
-                                    <Input id="job-title" placeholder="Senior React Developer" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="company">Company</Label>
-                                    <Input id="company" placeholder="Tech Corp" />
-                                </div>
-                            </CardContent>
-                        </Card>
-
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Schedule</CardTitle>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="description">Interview Description</Label>
-                                    <Textarea
-                                        id="description"
-                                        placeholder="Enter any additional details about the interview..."
-                                        className="min-h-[200px]"
-                                        rows={15}
-                                    />
-                                </div>
-                            </CardContent>
-                        </Card>
-
-
-                    </div>
-
-                    <div className="mt-6 flex justify-end space-x-4">
-                        <Button variant="outline">Cancel</Button>
-                        <Button type="submit">Update Job</Button>
-                    </div>
-                </form>
+                <JobCreateForm />
             </div>
         </div>
     )
