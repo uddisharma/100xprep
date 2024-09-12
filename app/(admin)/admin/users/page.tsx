@@ -13,6 +13,7 @@ import { Cover } from "@/components/ui/cover";
 import Link from "next/link";
 import { PaginationDemo } from "@/components/others/Pagination";
 import { getAllUserDetails } from "@/lib/getDetails/user";
+import Searchbar from "@/components/others/Searchbar";
 
 const Page = async ({
   searchParams,
@@ -32,13 +33,16 @@ const Page = async ({
           <h2 className="text-3xl font-bold text-white">
             <Cover>Users</Cover>
           </h2>
+
           <div className="grid grid-cols-2 gap-2 lg:flex lg:space-x-2">
             <Button>
               <IconPlus className="mr-2 h-4 w-4" /> Post Job
             </Button>
           </div>
         </div>
-
+        <div className="md:justify-self-start">
+          <Searchbar text="Users"/>
+        </div>
         <Card className="my-4">
           <CardContent>
             <Table>
