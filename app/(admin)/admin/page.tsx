@@ -83,7 +83,7 @@ const Page = async () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Date</TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead>Interviewer</TableHead>
                   <TableHead>Interviewee</TableHead>
                   <TableHead>Status</TableHead>
