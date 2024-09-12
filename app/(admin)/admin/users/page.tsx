@@ -14,16 +14,17 @@ import Link from "next/link";
 import { PaginationDemo } from "@/components/others/Pagination";
 import { getAllUserDetails } from "@/lib/getDetails/user";
 
-const pages = (prevValue: any, operation: any) => {
-  prevValue = prevValue + 1;
-  return prevValue;
-};
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  const page = searchParams["page"] ?? 1;
+  const { users, count } = await getAllUserDetails({
+    page: Number(page),
+    limit: 1,
+  });
 
-const Page = async () => {
-  const users = await getAllUserDetails(1, 1);
-  // const users = await getAllUserDetails(prevgValue,1);
-  //FUnction async for data ==>data
-  console.log("This is the user data", users);
   return (
     <main className="flex flex-1">
       <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full overflow-y-scroll max-h-[100vh] ">
@@ -75,7 +76,7 @@ const Page = async () => {
               </TableBody>
             </Table>
           </CardContent>
-          <PaginationDemo />
+          <PaginationDemo count={count} />
         </Card>
       </div>
     </main>
