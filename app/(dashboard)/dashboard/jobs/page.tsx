@@ -61,7 +61,7 @@ export default async function Jobs({
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 w-full items-center gap-5 mt-5 md:mt-0">
                     <div className="md:justify-self-start">
-                        <Searchbar />
+                        <Searchbar text="Jobs" />
                     </div>
                     <div className="md:justify-self-end">
                         <Sorting fields={fields} />
