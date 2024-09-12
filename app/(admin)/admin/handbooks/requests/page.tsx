@@ -60,7 +60,7 @@ const Page = () => {
                             </TableBody>
                         </Table>
                     </CardContent>
-                    <PaginationDemo />
+                    <PaginationDemo count={4} />
                 </Card>
             </div>
         </main>

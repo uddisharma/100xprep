@@ -15,14 +15,16 @@ export default async function Jobs({
 }: {
     searchParams: { [key: string]: string | string[] | undefined }
 }) {
+
     const page = searchParams['page'] ?? '1'
-    const per_page = searchParams['per_page'] ?? '1'
+    const per_page = searchParams['per_page'] ?? '2'
     const query = searchParams['query']?.toString() ?? '';
     const sort = searchParams['sort']?.toString() ?? '';
-    const salary = sort?.split("-")[0] == "salary" ? sort?.split('-')[1] : 'desc';
-    const date = sort?.split("-")[0] == "date" ? sort?.split('-')[1] : 'desc';
 
-    const result = await getJobs({ page: Number(page), limit: Number(per_page), searchQuery: query, salaryOrder: salary, dateOrder: date });
+    const sortBy = sort?.split('-')[0]
+    const sortOrder = sort?.split('-')[1]
+
+    const result = await getJobs({ page: Number(page), limit: Number(per_page), searchQuery: query, sortBy: sortBy ? sortBy : "title", sortOrder: sortOrder ?? "asc" });
     const { jobs, count }: { jobs: JobType[], count: number } = result ?? { jobs: [], count: 0 };
 
     const fields = [

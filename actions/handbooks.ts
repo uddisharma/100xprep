@@ -6,6 +6,7 @@ import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 import { actionClient } from "@/lib/safe-action";
 import { handbookSchema } from "@/types";
 import { getServerSession } from "next-auth";
+import { revalidateTag } from "next/cache";
 
 export const UpdateHandbook = actionClient
     .schema(handbookSchema)
@@ -26,6 +27,7 @@ export const UpdateHandbook = actionClient
                 link,
             },
         });
+        revalidateTag("handbooks")
         return {
             message: "Handbook updated successfully",
         };
@@ -50,6 +52,7 @@ export const CreateHandbook = actionClient
                 link,
             },
         });
+        revalidateTag("handbooks")
         return {
             message: "Handbook created successfully",
         };

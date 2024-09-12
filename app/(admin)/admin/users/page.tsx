@@ -56,7 +56,7 @@ const Page = () => {
                             </TableBody>
                         </Table>
                     </CardContent>
-                    <PaginationDemo />
+                    <PaginationDemo count={5} />
                 </Card>
             </div>
         </main>

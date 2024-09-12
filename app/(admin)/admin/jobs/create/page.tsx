@@ -2,7 +2,7 @@ import { IconBriefcase } from '@tabler/icons-react'
 import { Cover } from '@/components/ui/cover'
 import BottomGradient from '@/components/others/BottomGradient'
 import Link from 'next/link'
-import JobCreateForm from "@/components/others/jobs.tsx/JobCreateForm"
+import JobCreateForm from "@/components/others/jobs/JobCreateForm"
 
 export default function CreateJob() {
 

@@ -1,52 +1,61 @@
 import { prisma } from "@/db/db";
 import { HandbookType } from "@/types";
+import { unstable_cache } from 'next/cache'
 
-export const getHandbooks = async ({ page = 1, limit = 2, searchQuery = '', createdAt = "desc", title = "desc" }: { page?: number, limit?: number, searchQuery?: string, createdAt?: string, title?: string }): Promise<{ handbooks: HandbookType[], count: number } | null> => {
+enum SortBy {
+    title = "title",
+    createdAt = "createdAt"
+}
 
-    try {
-        const where = searchQuery
-            ? {
-                OR: [
-                    {
-                        description: {
-                            contains: searchQuery,
-                            mode: 'insensitive',
+export const getHandbooks = unstable_cache(
+    async ({ page = 1, limit = 2, searchQuery = '', sortBy = SortBy.title, sortOrder = "asc" }: { page?: number, limit?: number, searchQuery?: string, sortBy?: string, sortOrder?: string }): Promise<{ handbooks: HandbookType[], count: number } | null> => {
+
+        try {
+            const where = searchQuery
+                ? {
+                    OR: [
+                        {
+                            description: {
+                                contains: searchQuery,
+                                mode: 'insensitive',
+                            },
                         },
-                    },
-                    {
-                        title: {
-                            contains: searchQuery,
-                            mode: 'insensitive',
+                        {
+                            title: {
+                                contains: searchQuery,
+                                mode: 'insensitive',
+                            },
                         },
-                    },
-                    {
-                        link: {
-                            contains: searchQuery,
-                            mode: 'insensitive',
+                        {
+                            link: {
+                                contains: searchQuery,
+                                mode: 'insensitive',
+                            },
                         },
-                    },
-                ],
-            }
-            : {} as any;
+                    ],
+                }
+                : {} as any;
 
-        const handbooks = await prisma.handbook.findMany({
-            where,
-            orderBy: [
-                { createdAt: createdAt === "desc" ? "desc" : "asc" },
-                { title: title === "desc" ? "desc" : "asc" },
-            ],
-            skip: (page - 1) * limit,
-            take: limit,
-        });
-        const count = await prisma.handbook.count();
+            const handbooks = await prisma.handbook.findMany({
+                where,
+                orderBy: { [sortBy]: sortOrder === 'desc' ? 'desc' : 'asc' },
+                skip: (page - 1) * limit,
+                take: limit,
+            });
 
-        return { handbooks, count };
+            const count = await prisma.handbook.count();
 
-    } catch (error) {
-        return null;
+            return { handbooks, count };
 
-    }
-};
+        } catch (error) {
+            return null;
+
+        }
+    },
+    ['handbooks'],
+    { revalidate: 3600, tags: ['handbooks'] }
+)
+
 
 export const getHandbookById = async (id: string): Promise<HandbookType | null> => {
     try {
