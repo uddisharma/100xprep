@@ -20,7 +20,7 @@ const Searchbar = ({ text }: { text: string }) => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(query);
-    }, 500); // 500ms delay
+    }, 300); // 500ms delay
 
     // Cleanup function to clear the timeout if the query changes
     return () => {
@@ -44,7 +44,6 @@ const Searchbar = ({ text }: { text: string }) => {
         inputRef.current?.focus();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
