@@ -1,9 +1,9 @@
 import { prisma } from "@/db/db";
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "../auth";
+import { UserProfileType } from "@/types/user";
 
 export const getUserDetails = async () => {
-
   const session = await getServerSession(NEXT_AUTH_CONFIG);
   const user = await prisma.user.findFirst({
     where: {
@@ -12,10 +12,14 @@ export const getUserDetails = async () => {
   });
   return user;
 };
-export const getAllUserDetails = async (
-  page: number = 1,
-  limit: number = 1
-) => {
+export const getAllUserDetails = async ({
+  page = 1,
+  limit = 1,
+}: {
+  page?: number;
+  limit?: number;
+}): Promise<{ users: UserProfileType[]; count: number } | null> => {
+  console.log("THis is api page",page);
   const pageNumber = page < 1 ? 1 : page;
   const itemsPerPage = limit < 1 ? 1 : limit;
 
@@ -28,15 +32,7 @@ export const getAllUserDetails = async (
     take: itemsPerPage,
   });
 
-  return users;
-};
-=======
-    const session = await getServerSession(NEXT_AUTH_CONFIG)
-    const user = await prisma.user.findFirst({
-        where: {
-            id: session?.user?.id
-        },
-    });
-    return user;
-}; 
+  const count = await prisma.user.count();
 
+  return users ? { users, count } : null;
+};

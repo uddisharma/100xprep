@@ -7,8 +7,7 @@ export async function middleware(request: NextRequest) {
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
-  console.log("token", token);
-
+  // console.log("token", token);
   const { pathname } = request.nextUrl;
 
   if (token && (pathname === "/login" || pathname === "/register")) {
