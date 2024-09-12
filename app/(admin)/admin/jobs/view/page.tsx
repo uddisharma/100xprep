@@ -2,7 +2,7 @@ import BottomGradient from "@/components/others/BottomGradient";
 import { Spotlight } from "@/components/ui/Spotlight";
 import { getJobById } from "@/lib/getDetails/jobs";
 import { JobType } from "@/types/jobs";
-import { IconBuilding, IconCash, IconMapPin } from "@tabler/icons-react";
+import { IconBuilding, IconCalendar, IconCash, IconMapPin } from "@tabler/icons-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -41,6 +41,9 @@ export default async function ViewJob({
                         {job?.salary}
                     </p>
 
+                    <p className="text-white mb-4 flex gap-2 items-center"> <IconCalendar className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+                        {job?.startDate?.toLocaleDateString()} - {job?.endDate?.toLocaleDateString()}
+                    </p>
 
                     <div className="border-t pt-4">
                         <h2 className="text-xl font-semibold mb-2">Job Description</h2>

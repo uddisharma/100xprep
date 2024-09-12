@@ -25,6 +25,38 @@ export default async function Hanbooks({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+
+
+    const page = searchParams['page'] ?? '1'
+    const per_page = searchParams['per_page'] ?? '2'
+    const query = searchParams['query']?.toString() ?? '';
+    const sort = searchParams['sort']?.toString() ?? '';
+
+    const sortBy = sort?.split('-')[0]
+    const sortOrder = sort?.split('-')[1]
+
+    const result = await getHandbooks({ page: Number(page), limit: Number(per_page), searchQuery: query, sortBy: sortBy ? sortBy : "title", sortOrder: sortOrder ?? "asc" });
+    const { handbooks, count }: { handbooks: HandbookType[], count: number } = result ?? { handbooks: [], count: 0 };
+
+    const fields = [
+        {
+            name: 'Title A to Z',
+            value: 'title-asc'
+        },
+        {
+            name: 'Title Z to A',
+            value: 'title-desc'
+        },
+        {
+            name: "Newest",
+            value: 'createdAt-desc'
+        },
+        {
+            name: "Oldest",
+            value: 'createdAt-asc'
+        }
+    ]
+=======
   const page = searchParams["page"] ?? "1";
   const per_page = searchParams["per_page"] ?? "2";
   const query = searchParams["query"]?.toString() ?? "";
@@ -95,6 +127,7 @@ export default async function Hanbooks({
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
+
 
               {handbooks?.length ? (
                 <TableBody>

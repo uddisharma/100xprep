@@ -2,8 +2,13 @@ import { prisma } from "@/db/db";
 import { JobType } from "@/types/jobs";
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "../auth";
+import { unstable_cache } from 'next/cache'
 
-export const getJobs = async ({ page = 1, limit = 2, searchQuery = '', dateOrder = "desc", salaryOrder = "desc" }: { page?: number, limit?: number, searchQuery?: string, dateOrder?: string, salaryOrder?: string }): Promise<{ jobs: JobType[], count: number } | null> => {
+enum SortBy {
+    title = "title",
+    createdAt = "createdAt"
+}
+export const getJobs = unstable_cache(async ({ page = 1, limit = 2, searchQuery = '', sortBy = SortBy.title, sortOrder = "asc" }: { page?: number, limit?: number, searchQuery?: string, sortBy?: string, sortOrder?: string }): Promise<{ jobs: JobType[], count: number } | null> => {
     try {
         const where = searchQuery
             ? {
@@ -37,10 +42,7 @@ export const getJobs = async ({ page = 1, limit = 2, searchQuery = '', dateOrder
 
         const jobs = await prisma.job.findMany({
             where,
-            orderBy: [
-                { endDate: dateOrder === "desc" ? "desc" : "asc" },
-                { salary: salaryOrder === "desc" ? "desc" : "asc" },
-            ],
+            orderBy: { [sortBy]: sortOrder === 'desc' ? 'desc' : 'asc' },
             skip: (page - 1) * limit,
             take: limit,
         });
@@ -52,7 +54,8 @@ export const getJobs = async ({ page = 1, limit = 2, searchQuery = '', dateOrder
     } catch (error) {
         return null;
     }
-};
+}, ['jobs'],
+    { revalidate: 3600, tags: ['jobs'] })
 
 
 const getRecommendedJobs = async (): Promise<JobType[]> => {

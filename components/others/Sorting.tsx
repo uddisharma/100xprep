@@ -20,6 +20,7 @@ const Sorting = ({ fields }: { fields: { name: string, value: string }[] }) => {
     )
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if (e.target.value === "sortby") return
         const newSortValue = e.target.value
         const newQueryString = createQueryString('sort', newSortValue)
         router.push(`${path}?${newQueryString}`)
@@ -32,7 +33,7 @@ const Sorting = ({ fields }: { fields: { name: string, value: string }[] }) => {
                 handleChange(e)
             }}
             id="working" className=" min-h-[40px] w-[95%] m-auto md:w-[200px]">
-            <option>Sort By</option>
+            <option value="sortby">Sort By</option>
             {fields.map((field) => (
                 <option key={field?.value} value={field?.value}>{field?.name}</option>
             ))}

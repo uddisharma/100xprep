@@ -87,4 +87,27 @@ const Page = async ({
   );
 };
 
-export default Page;
+
+                                        <TableCell>2023-06-13</TableCell>
+                                        <TableCell>Emma Brown</TableCell>
+                                        <TableCell>Michael Davis</TableCell>
+                                        <TableCell>Cancelled</TableCell>
+                                        <TableCell>John Doe</TableCell>
+                                        <TableCell>
+                                            <Link href="/admin/users/1/edit">Edit</Link>
+                                        </TableCell>
+                                      
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+                    <PaginationDemo count={5} />
+                </Card>
+            </div>
+        </main>
+    )
+}
+
+export default Page
+

@@ -5,7 +5,6 @@ import {
     IconArrowLeft,
     IconBrandTabler,
     IconBriefcase,
-    IconDeviceDesktop,
     IconDeviceDesktopCheck,
     IconNotes,
     IconUserShield,
@@ -28,15 +27,8 @@ const DashboardLayout = ({ user, children }: { user: UserProfile, children: Reac
             ),
         },
         {
-            label: "Interviews Given",
+            label: "Interviews",
             href: "/dashboard/interviews",
-            icon: (
-                <IconDeviceDesktop className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-            ),
-        },
-        {
-            label: "Interviews Taken",
-            href: "/dashboard/interviews-taken",
             icon: (
                 <IconDeviceDesktopCheck className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),

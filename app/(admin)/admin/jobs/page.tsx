@@ -9,7 +9,7 @@ import { getJobs } from '@/lib/getDetails/jobs'
 import { JobType } from '@/types/jobs'
 import Searchbar from '@/components/others/Searchbar'
 import Sorting from '@/components/others/Sorting'
-import JobActions from '@/components/others/jobs.tsx/actions'
+import JobActions from '@/components/others/jobs/actions'
 import BottomGradient from '@/components/others/BottomGradient'
 import NotFound from './_notFound'
 
@@ -22,20 +22,21 @@ export default async function Jobs({
     const per_page = searchParams['per_page'] ?? '2'
     const query = searchParams['query']?.toString() ?? '';
     const sort = searchParams['sort']?.toString() ?? '';
-    const salary = sort?.split("-")[0] == "salary" ? sort?.split('-')[1] : 'desc';
-    const date = sort?.split("-")[0] == "date" ? sort?.split('-')[1] : 'desc';
 
-    const result = await getJobs({ page: Number(page), limit: Number(per_page), searchQuery: query, salaryOrder: salary, dateOrder: date });
+    const sortBy = sort?.split('-')[0]
+    const sortOrder = sort?.split('-')[1]
+
+    const result = await getJobs({ page: Number(page), limit: Number(per_page), searchQuery: query, sortBy: sortBy ? sortBy : "title", sortOrder: sortOrder ?? "asc" });
     const { jobs, count }: { jobs: JobType[], count: number } = result ?? { jobs: [], count: 0 };
 
     const fields = [
         {
             name: 'Newest',
-            value: 'date-desc'
+            value: 'startDate-desc'
         },
         {
             name: 'Oldest',
-            value: 'date-asc'
+            value: 'startDate-asc'
         }
     ]
 
@@ -91,7 +92,9 @@ export default async function Jobs({
                                             <TableCell>{job?.title}</TableCell>
                                             <TableCell>{job?.location}</TableCell>
                                             <TableCell>{job?.salary}</TableCell>
-                                            <TableCell>{job?.endDate?.toISOString().split('T')[0]}</TableCell>
+                                            <TableCell>
+                                                {job?.endDate ? new Date(job.endDate).toISOString().split('T')[0] : 'N/A'}
+                                            </TableCell>
                                             <TableCell>
                                                 <Link target='_blank' className='underline' href={job?.link}>Link</Link>
                                             </TableCell>

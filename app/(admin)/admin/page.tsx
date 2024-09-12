@@ -10,8 +10,12 @@ import { GlowingStarsDescription, GlowingStarsTitle } from '@/components/ui/glob
 import { getGreeting } from '@/app/(dashboard)/dashboard/page'
 import { RequestInterview } from '@/components/others/RequestInterview'
 import Link from 'next/link'
+import { getServerSession } from 'next-auth'
 
-const Page = () => {
+const Page = async () => {
+
+  const sessions = await getServerSession()
+
   return (
     <main className="flex flex-1">
       <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full overflow-y-scroll max-h-[100vh] ">
@@ -40,7 +44,7 @@ const Page = () => {
           <div className="">
             <div className='mt-4'>
               <GlowingStarsTitle>
-                {getGreeting() + '👋 Deepak Sharma'}
+                {getGreeting() + '👋 ' + sessions?.user?.name}
               </GlowingStarsTitle>
 
               <GlowingStarsDescription className="text-[14px] font-normal w-full text-[#71717a]">

@@ -1,21 +1,30 @@
 'use client'
-import { prisma } from '@/db/db'
 import { HandbookType } from '@/types'
 import { IconEye, IconPencil, IconTrash } from '@tabler/icons-react'
+import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
 import React from 'react'
 import { toast } from 'sonner'
 
 const Actions = ({ handbook }: { handbook: HandbookType }) => {
 
-    const handledelete = () => {
-        prisma.handbook.delete({ where: { id: handbook.id } }).then(() => {
-            return toast.success("Handbook deleted successfully")
-        }).catch(() => {
-            return toast.error("Error deleting handbook")
-        })
-    }
+    const handledelete = async () => {
+        try {
+            const res = await fetch(`/api/handbook/${handbook?.id}`, {
+                method: "DELETE"
+            })
+            const data = await res.json()
 
+            if (data.message) {
+                toast.success(data.message)
+                location.reload()
+                // revalidatePath('/admin/handbooks')
+            }
+
+        } catch (error: any) {
+            return toast.error(error.message || "Error deleting handbook")
+        }
+    }
     return (
         <div className='flex justify-start gap-4'>
 

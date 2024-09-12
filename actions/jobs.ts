@@ -5,6 +5,7 @@ import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 import { actionClient } from "@/lib/safe-action";
 import { jobSchema } from "@/types";
 import { getServerSession } from "next-auth";
+import { revalidateTag } from "next/cache";
 
 export const AddJob = actionClient
     .schema(jobSchema)
@@ -30,6 +31,7 @@ export const AddJob = actionClient
                 link
             }
         })
+        revalidateTag("jobs")
         return { message: "Job created successfully" }
     })
 

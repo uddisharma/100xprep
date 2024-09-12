@@ -59,7 +59,7 @@ const Page = () => {
                             </TableBody>
                         </Table>
                     </CardContent>
-                    <PaginationDemo />
+                    <PaginationDemo count={3} />
                 </Card>
 
 

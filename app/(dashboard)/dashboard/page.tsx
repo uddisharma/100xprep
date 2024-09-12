@@ -4,6 +4,7 @@ import RecommandedJobs from '@/components/others/RecommandedJobs'
 import { RequestInterview } from '@/components/others/RequestInterview'
 import UpcomingInterviews from '@/components/others/UpcomingInterviews'
 import { GlowingStarsDescription, GlowingStarsTitle } from '@/components/ui/globalstars'
+import { getServerSession } from 'next-auth'
 import Image from 'next/image'
 import React from 'react'
 
@@ -26,16 +27,18 @@ export function getGreeting() {
 
 const Page = async () => {
 
-    return (
+    const sessions = await getServerSession()
+
+  return (
         <div className="flex flex-1">
             <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full overflow-y-scroll max-h-[100vh] ">
                 <div
                     className='relative flex items-center justify-between h-[300px] bg-[linear-gradient(110deg,#333_0.6%,#222)] p-4  max-h-[20rem] w-full rounded-xl border border-[#eaeaea] dark:border-neutral-600 mb-0 lg:mb-3 md:mb-3 mt-3 lg:mt-0 md:mt-0'
                 >
-                    <div  className="">
+                    <div className="">
                         <div className='mt-4'>
                             <GlowingStarsTitle>
-                                {getGreeting() + '👋 Deepak Sharma'}
+                                {getGreeting() + '👋 ' + sessions?.user?.name}
                             </GlowingStarsTitle>
 
                             <GlowingStarsDescription className="text-[14px] font-normal w-full text-[#71717a]">
