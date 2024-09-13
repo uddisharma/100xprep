@@ -22,7 +22,7 @@ const Searchbar = ({ text }: { text: string }) => {
       setDebouncedQuery(query);
     }, 300); // 500ms delay
 
-    // Cleanup function to clear the timeout if the query changes
+    
     return () => {
       clearTimeout(handler);
     };
