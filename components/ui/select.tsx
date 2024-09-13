@@ -3,7 +3,8 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {}
+export interface SelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {}
 
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, children, ...props }, ref) => {
@@ -37,7 +38,6 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         className="p-[2px] rounded-lg transition duration-300 group/select"
       >
         <select
-          
           className={cn(
             `flex w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm
             file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600
@@ -45,7 +45,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             disabled:cursor-not-allowed disabled:opacity-50
             dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
             group-hover/select:shadow-none transition duration-400 appearance-none`,
-            className
+            className,
           )}
           ref={ref}
           {...props}
@@ -62,7 +62,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         `}</style>
       </motion.div>
     );
-  }
+  },
 );
 Select.displayName = "Select";
 

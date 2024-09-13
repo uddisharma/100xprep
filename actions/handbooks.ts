@@ -1,4 +1,3 @@
-
 "use server";
 
 import { prisma } from "@/db/db";
@@ -9,51 +8,54 @@ import { getServerSession } from "next-auth";
 import { revalidateTag } from "next/cache";
 
 export const UpdateHandbook = actionClient
-    .schema(handbookSchema)
-    .action(async ({ parsedInput }) => {
-        const { id, title, description, link } = parsedInput;
+  .schema(handbookSchema)
+  .action(async ({ parsedInput }) => {
+    const { id, title, description, link } = parsedInput;
 
-        const sessions = await getServerSession(NEXT_AUTH_CONFIG)
+    const sessions = await getServerSession(NEXT_AUTH_CONFIG);
 
-        if (!sessions?.user?.email) return { message: "You must be logged in to perform this action" }
+    if (!sessions?.user?.email)
+      return { message: "You must be logged in to perform this action" };
 
-        if (!process.env.ADMINS?.split(',').includes(sessions.user.email!)) return { message: "You must be an admin to perform this action" }
+    if (!process.env.ADMINS?.split(",").includes(sessions.user.email!))
+      return { message: "You must be an admin to perform this action" };
 
-        await prisma.handbook.update({
-            where: { id },
-            data: {
-                title,
-                description,
-                link,
-            },
-        });
-        revalidateTag("handbooks")
-        return {
-            message: "Handbook updated successfully",
-        };
+    await prisma.handbook.update({
+      where: { id },
+      data: {
+        title,
+        description,
+        link,
+      },
     });
-
+    revalidateTag("handbooks");
+    return {
+      message: "Handbook updated successfully",
+    };
+  });
 
 export const CreateHandbook = actionClient
-    .schema(handbookSchema)
-    .action(async ({ parsedInput }) => {
-        const { title, description, link } = parsedInput;
+  .schema(handbookSchema)
+  .action(async ({ parsedInput }) => {
+    const { title, description, link } = parsedInput;
 
-        const sessions = await getServerSession(NEXT_AUTH_CONFIG)
+    const sessions = await getServerSession(NEXT_AUTH_CONFIG);
 
-        if (!sessions?.user?.email) return { message: "You must be logged in to perform this action" }
+    if (!sessions?.user?.email)
+      return { message: "You must be logged in to perform this action" };
 
-        if (!process.env.ADMINS?.split(',').includes(sessions.user.email!)) return { message: "You must be an admin to perform this action" }
+    if (!process.env.ADMINS?.split(",").includes(sessions.user.email!))
+      return { message: "You must be an admin to perform this action" };
 
-        await prisma.handbook.create({
-            data: {
-                title,
-                description,
-                link,
-            },
-        });
-        revalidateTag("handbooks")
-        return {
-            message: "Handbook created successfully",
-        };
-    })
+    await prisma.handbook.create({
+      data: {
+        title,
+        description,
+        link,
+      },
+    });
+    revalidateTag("handbooks");
+    return {
+      message: "Handbook created successfully",
+    };
+  });

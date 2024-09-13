@@ -25,52 +25,20 @@ export default async function Hanbooks({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-
-
-    const page = searchParams['page'] ?? '1'
-    const per_page = searchParams['per_page'] ?? '2'
-    const query = searchParams['query']?.toString() ?? '';
-    const sort = searchParams['sort']?.toString() ?? '';
-
-    const sortBy = sort?.split('-')[0]
-    const sortOrder = sort?.split('-')[1]
-
-    const result = await getHandbooks({ page: Number(page), limit: Number(per_page), searchQuery: query, sortBy: sortBy ? sortBy : "title", sortOrder: sortOrder ?? "asc" });
-    const { handbooks, count }: { handbooks: HandbookType[], count: number } = result ?? { handbooks: [], count: 0 };
-
-    const fields = [
-        {
-            name: 'Title A to Z',
-            value: 'title-asc'
-        },
-        {
-            name: 'Title Z to A',
-            value: 'title-desc'
-        },
-        {
-            name: "Newest",
-            value: 'createdAt-desc'
-        },
-        {
-            name: "Oldest",
-            value: 'createdAt-asc'
-        }
-    ]
-=======
   const page = searchParams["page"] ?? "1";
   const per_page = searchParams["per_page"] ?? "2";
   const query = searchParams["query"]?.toString() ?? "";
   const sort = searchParams["sort"]?.toString() ?? "";
-  const title = sort?.split("-")[0] == "title" ? sort?.split("-")[1] : "asc";
-  const createdAt =
-    sort?.split("-")[0] == "createdAt" ? sort?.split("-")[1] : "desc";
+
+  const sortBy = sort?.split("-")[0];
+  const sortOrder = sort?.split("-")[1];
 
   const result = await getHandbooks({
     page: Number(page),
     limit: Number(per_page),
     searchQuery: query,
-    createdAt,
-    title,
+    sortBy: sortBy ? sortBy : "title",
+    sortOrder: sortOrder ?? "asc",
   });
   const { handbooks, count }: { handbooks: HandbookType[]; count: number } =
     result ?? { handbooks: [], count: 0 };
@@ -78,11 +46,11 @@ export default async function Hanbooks({
   const fields = [
     {
       name: "Title A to Z",
-      value: "name-asc",
+      value: "title-asc",
     },
     {
       name: "Title Z to A",
-      value: "name-desc",
+      value: "title-desc",
     },
     {
       name: "Newest",
@@ -93,6 +61,7 @@ export default async function Hanbooks({
       value: "createdAt-asc",
     },
   ];
+
   return (
     <main className="flex flex-1">
       <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full overflow-y-scroll max-h-[100vh] ">
@@ -127,7 +96,6 @@ export default async function Hanbooks({
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
-
 
               {handbooks?.length ? (
                 <TableBody>

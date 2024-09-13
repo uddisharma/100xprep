@@ -1,4 +1,3 @@
-
 import { BASE_URL } from "@/config/site-config";
 import { MetadataRoute } from "next";
 

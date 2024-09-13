@@ -3,27 +3,23 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-} from "@tabler/icons-react";
 import BottomGradient from "./BottomGradient";
 import Link from "next/link";
-import { signIn } from 'next-auth/react';
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { registerSchema, RegisterType } from "@/types/auth";
+import SocialLogin from "./SocialLogin";
 
 export function Register() {
-
   const [loading, setLoading] = React.useState<Boolean>(false);
 
   const [credentials, setCredentials] = React.useState<RegisterType>({
     name: "",
     username: "",
     password: "",
-    confirmPassword: ""
-  })
+    confirmPassword: "",
+  });
 
   const router = useRouter();
 
@@ -33,42 +29,40 @@ export function Register() {
     const parsed_data = registerSchema.safeParse(credentials);
 
     if (!parsed_data.success) {
-      return toast.error(parsed_data.error.errors[0].message)
-    };
-
-    if (parsed_data?.data?.password !== parsed_data?.data?.confirmPassword) {
-      return toast.error("Passwords do not match")
+      return toast.error(parsed_data.error.errors[0].message);
     }
 
-    setLoading(true)
+    if (parsed_data?.data?.password !== parsed_data?.data?.confirmPassword) {
+      return toast.error("Passwords do not match");
+    }
+
+    setLoading(true);
     const res = await signIn("credentials", {
       name: parsed_data?.data?.name,
       username: parsed_data?.data?.username,
       password: parsed_data?.data?.password,
       confirmPassword: parsed_data?.data?.confirmPassword,
-      redirect: false
-    })
+      redirect: false,
+    });
 
     if (res?.ok) {
-      toast.success("Registration Successful")
-      router.push("/dashboard")
-      setLoading(false)
+      toast.success("Registration Successful");
+      router.push("/dashboard");
+      setLoading(false);
     }
 
     if (res?.error) {
-      toast.error(res.error || "Something went wrong")
-      setLoading(false)
+      toast.error(res.error || "Something went wrong");
+      setLoading(false);
     }
-  }
-
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     setCredentials({
       ...credentials,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black mt-20 lg:mt-5">
@@ -76,7 +70,6 @@ export function Register() {
         Welcome to 100x Prep
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-
         Register to 100x Prep and start your journey
       </p>
 
@@ -84,17 +77,35 @@ export function Register() {
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="name">Name</Label>
-            <Input id="name" placeholder="Name" type="text" onChange={handleChange} name="name" />
+            <Input
+              id="name"
+              placeholder="Name"
+              type="text"
+              onChange={handleChange}
+              name="name"
+            />
           </LabelInputContainer>
           <LabelInputContainer className="mb-4">
             <Label htmlFor="email">Email Address</Label>
-            <Input id="email" placeholder="name@example.com" type="email" onChange={handleChange} name="username" />
+            <Input
+              id="email"
+              placeholder="name@example.com"
+              type="email"
+              onChange={handleChange}
+              name="username"
+            />
           </LabelInputContainer>
         </div>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer className="mb-4">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" placeholder="••••••••" type="password" onChange={handleChange} name="password" />
+            <Input
+              id="password"
+              placeholder="••••••••"
+              type="password"
+              onChange={handleChange}
+              name="password"
+            />
           </LabelInputContainer>
           <LabelInputContainer className="mb-8">
             <Label htmlFor="confirmPassword">Confirm password</Label>
@@ -137,50 +148,10 @@ export function Register() {
         </div>
       </form>
       <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-4 h-[1px] w-full" />
-      <div className="flex flex-col space-y-4">
-        <button
-          className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-          onClick={() => {
-            signIn('github').then((res) => {
-              toast.success("Signed in successfully !")
-
-            })
-              .catch((error) => {
-                toast.error(error.message || "Something went wrong !")
-              })
-          }}
-        >
-          <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-          <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-            GitHub
-          </span>
-          <BottomGradient />
-        </button>
-        <button
-          className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-          onClick={() => {
-            signIn('google').then((res) => {
-
-              toast.success("Signed in successfully !")
-            })
-              .catch((error) => {
-                toast.error(error.message || "Something went wrong !")
-              })
-          }}
-        >
-          <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-          <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-            Google
-          </span>
-          <BottomGradient />
-        </button>
-      </div>
-
+      <SocialLogin />
     </div>
   );
 }
-
-
 
 const LabelInputContainer = ({
   children,

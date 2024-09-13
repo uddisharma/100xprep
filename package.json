@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsc prisma/seed.ts && node prisma/seed.js"
+    "seed": "tsc prisma/seed.ts && node prisma/seed.js",
+    "prepare": "husky",
+    "prettier": "npx prettier . --write",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "prisma": {
     "seed": "tsc prisma/seed.ts"
@@ -82,7 +85,9 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "git-format-staged": "^3.1.1",
     "postcss": "^8",
+    "prettier": "3.3.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

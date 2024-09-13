@@ -1,21 +1,21 @@
-import { Html } from '@react-email/html';
-import { Body } from '@react-email/body';
-import { Container } from '@react-email/container';
-import { Column } from '@react-email/column';
-import { Head } from '@react-email/head';
-import { Img } from '@react-email/img';
-import { Link } from '@react-email/link';
-import { Preview } from '@react-email/preview';
-import { Row } from '@react-email/row';
-import { Text } from '@react-email/text';
-import { Heading } from '@react-email/heading';
-import { Section } from '@react-email/section';
-import { Hr } from '@react-email/hr';
+import { Html } from "@react-email/html";
+import { Body } from "@react-email/body";
+import { Container } from "@react-email/container";
+import { Column } from "@react-email/column";
+import { Head } from "@react-email/head";
+import { Img } from "@react-email/img";
+import { Link } from "@react-email/link";
+import { Preview } from "@react-email/preview";
+import { Row } from "@react-email/row";
+import { Text } from "@react-email/text";
+import { Heading } from "@react-email/heading";
+import { Section } from "@react-email/section";
+import { Hr } from "@react-email/hr";
 
 export default function InterviewConfirmation(
-  userEmail: string = 'user@example.com',
-  username: string = 'user',
-  demoLink: string = 'link'
+  userEmail: string = "user@example.com",
+  username: string = "user",
+  demoLink: string = "link",
 ) {
   const previewText = `${username} `;
 
@@ -25,12 +25,12 @@ export default function InterviewConfirmation(
       <Preview>{previewText}</Preview>
       <Body style={body}>
         <Container style={container}>
-          <Section style={{ marginTop: '32px' }}>
+          <Section style={{ marginTop: "32px" }}>
             <Img
               src="https://isomorphic-furyroad.vercel.app/logo.svg"
               alt="isomorphic furyroad logo"
               style={{
-                margin: '0 auto',
+                margin: "0 auto",
               }}
             />
           </Section>
@@ -47,8 +47,8 @@ export default function InterviewConfirmation(
           </Text>
           <Section
             style={{
-              textAlign: 'center',
-              margin: '32px 0',
+              textAlign: "center",
+              margin: "32px 0",
             }}
           >
             <Link style={global.button} href={demoLink}>
@@ -60,8 +60,8 @@ export default function InterviewConfirmation(
             <br />
             <Link href={demoLink}>{demoLink}</Link>
           </Text>
-          <Hr style={{ ...global.hr, marginTop: '26px' }} />
-          <Section style={{ paddingTop: '22px' }}>
+          <Hr style={{ ...global.hr, marginTop: "26px" }} />
+          <Section style={{ paddingTop: "22px" }}>
             <Row style={footer.policy}>
               <Column>
                 <Link href={demoLink} style={footer.link}>
@@ -91,18 +91,18 @@ export default function InterviewConfirmation(
 }
 
 const paddingX = {
-  paddingLeft: '40px',
-  paddingRight: '40px',
+  paddingLeft: "40px",
+  paddingRight: "40px",
 };
 
 const paddingY = {
-  paddingTop: '22px',
-  paddingBottom: '22px',
+  paddingTop: "22px",
+  paddingBottom: "22px",
 };
 
 const paragraph = {
-  margin: '0',
-  lineHeight: '2',
+  margin: "0",
+  lineHeight: "2",
 };
 
 const global = {
@@ -112,78 +112,78 @@ const global = {
     ...paddingX,
     ...paddingY,
   },
-  paragraphWithBold: { ...paragraph, fontWeight: 'bold' },
+  paragraphWithBold: { ...paragraph, fontWeight: "bold" },
   heading: {
-    fontSize: '32px',
-    lineHeight: '1.3',
-    fontWeight: '700',
-    textAlign: 'center',
-    letterSpacing: '-1px',
+    fontSize: "32px",
+    lineHeight: "1.3",
+    fontWeight: "700",
+    textAlign: "center",
+    letterSpacing: "-1px",
   } as React.CSSProperties,
   text: {
     ...paragraph,
-    color: '#747474',
-    fontWeight: '500',
+    color: "#747474",
+    fontWeight: "500",
   },
   button: {
-    backgroundColor: '#111',
-    fontSize: '14px',
+    backgroundColor: "#111",
+    fontSize: "14px",
     border: 0,
     borderRadius: 6,
-    textDecoration: 'none',
-    padding: '14px 24px',
-    display: 'inline-block',
-    textAlign: 'center',
+    textDecoration: "none",
+    padding: "14px 24px",
+    display: "inline-block",
+    textAlign: "center",
     fontWeight: 500,
-    color: '#fff',
+    color: "#fff",
   } as React.CSSProperties,
   hr: {
-    borderColor: '#E5E5E5',
-    margin: '0',
+    borderColor: "#E5E5E5",
+    margin: "0",
   },
 };
 const body = {
-  backgroundColor: '#ffffff',
+  backgroundColor: "#ffffff",
   fontFamily:
     '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
 };
 const container = {
-  borderRadius: '4px',
-  border: '1px solid #eaeaea',
+  borderRadius: "4px",
+  border: "1px solid #eaeaea",
   padding: 20,
   width: 465,
-  margin: '40px auto',
+  margin: "40px auto",
 };
 const heading = {
   padding: 0,
-  margin: '30px 0',
+  margin: "30px 0",
   fontWeight: 400,
-  textAlign: 'center',
-  color: '#111',
-  fontSize: '24px',
+  textAlign: "center",
+  color: "#111",
+  fontSize: "24px",
 } as React.CSSProperties;
 const subheading = {
-  color: '#000000',
-  fontSize: '14px',
+  color: "#000000",
+  fontSize: "14px",
   lineHeight: 1.5,
-  margin: '16px 0',
+  margin: "16px 0",
 };
 const footer = {
   policy: {
-    width: '166px',
-    margin: 'auto',
+    width: "166px",
+    margin: "auto",
   },
   text: {
-    margin: '0',
-    color: '#AFAFAF',
-    fontSize: '13px',
-    textAlign: 'center',
+    margin: "0",
+    color: "#AFAFAF",
+    fontSize: "13px",
+    textAlign: "center",
   } as React.CSSProperties,
   link: {
-    margin: '0',
-    color: '#AFAFAF',
-    fontSize: '13px',
-    textAlign: 'center',
-    textDecoration: 'underline',
+    margin: "0",
+    color: "#AFAFAF",
+    fontSize: "13px",
+    textAlign: "center",
+    textDecoration: "underline",
   } as React.CSSProperties,
 };
