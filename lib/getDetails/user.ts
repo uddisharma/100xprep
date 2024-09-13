@@ -19,7 +19,7 @@ export const getAllUserDetails = async ({
   page?: number;
   limit?: number;
 }): Promise<{ users: UserProfileType[]; count: number } | null> => {
-  console.log("THis is api page",page);
+  console.log("THis is api page", page);
   const pageNumber = page < 1 ? 1 : page;
   const itemsPerPage = limit < 1 ? 1 : limit;
 

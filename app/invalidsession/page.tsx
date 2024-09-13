@@ -1,20 +1,18 @@
-'use client';
+"use client";
 
-import { signOut } from 'next-auth/react';
-import React, { useEffect } from 'react';
-import { toast } from 'sonner';
+import { signOut } from "next-auth/react";
+import React, { useEffect } from "react";
+import { toast } from "sonner";
 
 const Page = () => {
   useEffect(() => {
     signOut({
-      callbackUrl: '/login',
+      callbackUrl: "/login",
     });
-    toast('Logging out!');
+    toast("Logging out!");
   }, []);
 
-  return (
-    <div>Invalid session</div>
-  );
+  return <div>Invalid session</div>;
 };
 
 export default Page;

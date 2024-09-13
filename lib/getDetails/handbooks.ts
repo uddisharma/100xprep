@@ -1,72 +1,79 @@
 import { prisma } from "@/db/db";
 import { HandbookType } from "@/types";
-import { unstable_cache } from 'next/cache'
-
+import { unstable_cache } from "next/cache";
 
 enum SortBy {
-    title = "title",
-    createdAt = "createdAt"
+  title = "title",
+  createdAt = "createdAt",
 }
 
 export const getHandbooks = unstable_cache(
-    async ({ page = 1, limit = 2, searchQuery = '', sortBy = SortBy.title, sortOrder = "asc" }: { page?: number, limit?: number, searchQuery?: string, sortBy?: string, sortOrder?: string }): Promise<{ handbooks: HandbookType[], count: number } | null> => {
+  async ({
+    page = 1,
+    limit = 2,
+    searchQuery = "",
+    sortBy = SortBy.title,
+    sortOrder = "asc",
+  }: {
+    page?: number;
+    limit?: number;
+    searchQuery?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  }): Promise<{ handbooks: HandbookType[]; count: number } | null> => {
+    try {
+      const where = searchQuery
+        ? {
+            OR: [
+              {
+                description: {
+                  contains: searchQuery,
+                  mode: "insensitive",
+                },
+              },
+              {
+                title: {
+                  contains: searchQuery,
+                  mode: "insensitive",
+                },
+              },
+              {
+                link: {
+                  contains: searchQuery,
+                  mode: "insensitive",
+                },
+              },
+            ],
+          }
+        : ({} as any);
 
-        try {
-            const where = searchQuery
-                ? {
-                    OR: [
-                        {
-                            description: {
-                                contains: searchQuery,
-                                mode: 'insensitive',
-                            },
-                        },
-                        {
-                            title: {
-                                contains: searchQuery,
-                                mode: 'insensitive',
-                            },
-                        },
-                        {
-                            link: {
-                                contains: searchQuery,
-                                mode: 'insensitive',
-                            },
-                        },
-                    ],
-                }
-                : {} as any;
+      const handbooks = await prisma.handbook.findMany({
+        where,
+        orderBy: { [sortBy]: sortOrder === "desc" ? "desc" : "asc" },
+        skip: (page - 1) * limit,
+        take: limit,
+      });
 
-            const handbooks = await prisma.handbook.findMany({
-                where,
-                orderBy: { [sortBy]: sortOrder === 'desc' ? 'desc' : 'asc' },
-                skip: (page - 1) * limit,
-                take: limit,
-            });
+      const count = await prisma.handbook.count();
 
-            const count = await prisma.handbook.count();
-
-            return { handbooks, count };
-
-        } catch (error) {
-            return null;
-
-        }
-    },
-    ['handbooks'],
-    { revalidate: 3600, tags: ['handbooks'] }
-)
-
+      return { handbooks, count };
+    } catch (error) {
+      return null;
+    }
+  },
+  ["handbooks"],
+  { revalidate: 3600, tags: ["handbooks"] },
+);
 
 export const getHandbookById = async (
-    id: string
+  id: string,
 ): Promise<HandbookType | null> => {
-    try {
-        console.log("Fetching handbook with id:", id);
-        const handbook = await prisma.handbook.findUnique({ where: { id } });
-        return handbook;
-    } catch (error) {
-        console.error("Error fetching handbook:", error);
-        return null;
-    }
+  try {
+    console.log("Fetching handbook with id:", id);
+    const handbook = await prisma.handbook.findUnique({ where: { id } });
+    return handbook;
+  } catch (error) {
+    console.error("Error fetching handbook:", error);
+    return null;
+  }
 };

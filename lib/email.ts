@@ -1,9 +1,9 @@
-import 'server-only';
+import "server-only";
 
-import nodemailer from 'nodemailer';
-import { env } from '@/env.mjs';
-import { MAIL } from '@/config/index';
-import { messages } from '@/config/messages';
+import nodemailer from "nodemailer";
+import { env } from "@/env.mjs";
+import { MAIL } from "@/config/index";
+import { messages } from "@/config/messages";
 
 type EmailPayload = {
   to: string;

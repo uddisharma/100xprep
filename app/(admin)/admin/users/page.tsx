@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -21,7 +21,7 @@ const Page = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const page = searchParams["page"] ?? 1;
-  const { users, count } = await getAllUserDetails({
+  const { users, count }: any = await getAllUserDetails({
     page: Number(page),
     limit: 1,
   });
@@ -41,7 +41,7 @@ const Page = async ({
           </div>
         </div>
         <div className="md:justify-self-start">
-          <Searchbar text="Users"/>
+          <Searchbar text="Users" />
         </div>
         <Card className="my-4">
           <CardContent>
@@ -57,7 +57,7 @@ const Page = async ({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users?.map((i, index) => (
+                {users?.map((i: any, index: any) => (
                   <TableRow
                     key={index}
                     style={{
@@ -87,27 +87,4 @@ const Page = async ({
   );
 };
 
-
-                                        <TableCell>2023-06-13</TableCell>
-                                        <TableCell>Emma Brown</TableCell>
-                                        <TableCell>Michael Davis</TableCell>
-                                        <TableCell>Cancelled</TableCell>
-                                        <TableCell>John Doe</TableCell>
-                                        <TableCell>
-                                            <Link href="/admin/users/1/edit">Edit</Link>
-                                        </TableCell>
-                                      
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                    <PaginationDemo count={5} />
-                </Card>
-            </div>
-        </main>
-    )
-}
-
-export default Page
-
+export default Page;

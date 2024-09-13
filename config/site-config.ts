@@ -2,7 +2,8 @@ import { Metadata } from "next";
 
 const TITLE = "100xPrep";
 const DESCRIPTION = "A product of 100xDevs";
-const PREVIEW_IMAGE_URL = "https://framerusercontent.com/images/XUh6mGebzVy9F66ZtVIImQFfR4.png?scale-down-to=512";
+const PREVIEW_IMAGE_URL =
+  "https://framerusercontent.com/images/XUh6mGebzVy9F66ZtVIImQFfR4.png?scale-down-to=512";
 const ALT_TITLE = "Prepare your next interview with 100xPrep";
 export const BASE_URL = "http://localhost:3000";
 
