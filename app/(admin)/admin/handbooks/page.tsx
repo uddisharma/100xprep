@@ -117,7 +117,12 @@ export default async function Hanbooks({
                       <TableCell>{handbook?.link}</TableCell>
 
                       <TableCell>
-                        <Actions handbook={handbook} />
+                        <Actions
+                          view={`/dashboard/handbooks/view?notionId=${handbook?.link}`}
+                          deleteLink={`/api/handbook/${handbook?.id}`}
+                          edit={`/admin/handbooks/edit?notionId=${handbook?.id}`}
+                        
+                        />
                       </TableCell>
                     </TableRow>
                   ))}
