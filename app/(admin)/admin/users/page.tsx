@@ -15,6 +15,7 @@ import { PaginationDemo } from "@/components/others/Pagination";
 import { getAllUserDetails } from "@/lib/getDetails/user";
 import Searchbar from "@/components/others/Searchbar";
 import Sorting from "@/components/others/Sorting";
+import Actions from "@/components/others/hanbook/actions";
 
 const Page = async ({
   searchParams,
@@ -34,7 +35,6 @@ const Page = async ({
     sortOrder: sortOrder ?? "asc",
   });
 
-
   const fields = [
     {
       name: "Title A to Z",
@@ -53,6 +53,7 @@ const Page = async ({
       value: "createdAt-asc",
     },
   ];
+
   return (
     <main className="flex flex-1">
       <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full overflow-y-scroll max-h-[100vh] ">
@@ -60,7 +61,6 @@ const Page = async ({
           <h2 className="text-3xl font-bold text-white">
             <Cover>Users</Cover>
           </h2>
-
           <div className="grid grid-cols-2 gap-2 lg:flex lg:space-x-2">
             <Button>
               <IconPlus className="mr-2 h-4 w-4" /> Post Job
@@ -85,7 +85,9 @@ const Page = async ({
                   <TableHead>Interview taken</TableHead>
                   <TableHead>Interview given</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Edit</TableHead>
+                  <TableHead className="flex items-center justify-center">
+                    Edit
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -102,9 +104,13 @@ const Page = async ({
                     <TableCell>0</TableCell>
                     <TableCell>0</TableCell>
                     <TableCell>Online</TableCell>
-                    <TableCell>
+                    <TableCell className="flex items-center justify-center">
                       <Link href="/admin/users/1/edit">
-                        <IconEdit size={24} stroke={1.5} />
+                        <Actions
+                          view={`/dashboard/handbooks/view?notionId=${i?.link}`}
+                          deleteLink={`/api/handbook/${i?.id}`}
+                          edit={`/admin/users/edit?user=${i?.id}`}
+                        />
                       </Link>
                     </TableCell>
                   </TableRow>

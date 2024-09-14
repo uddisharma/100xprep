@@ -6,10 +6,19 @@ import Link from "next/link";
 import React from "react";
 import { toast } from "sonner";
 
-const Actions = ({ handbook }: { handbook: HandbookType }) => {
+const Actions = ({
+
+  view,
+  deleteLink,
+  edit,
+}: {
+  view: any;
+  deleteLink: any;
+  edit: any;
+}) => {
   const handledelete = async () => {
     try {
-      const res = await fetch(`/api/handbook/${handbook?.id}`, {
+      const res = await fetch(deleteLink, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -25,11 +34,11 @@ const Actions = ({ handbook }: { handbook: HandbookType }) => {
   };
   return (
     <div className="flex justify-start gap-4">
-      <Link href={`/dashboard/handbooks/view?notionId=${handbook?.link}`}>
+      <Link href={view}>
         <IconEye className="h-4 w-4 cursor-pointer" />
       </Link>
 
-      <Link href={`/admin/handbooks/edit?notionId=${handbook?.id}`}>
+      <Link href={edit}>
         <IconPencil className="h-4 w-4 cursor-pointer" />
       </Link>
 
