@@ -2,7 +2,6 @@ import { type NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/db/db";
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "@/lib/auth";
-import { revalidatePath } from "next/cache";
 
 export async function DELETE(
   req: NextRequest,
@@ -15,16 +14,23 @@ export async function DELETE(
       return NextResponse.redirect(new URL("/invalidsession", req.url));
     }
 
-    await prisma.handbook.delete({ where: { id: params.id } });
-    revalidatePath("/admin/handbooks");
-
+    await prisma.handbookRequest.deleteMany();
+    await prisma.handbook.deleteMany();
+    await prisma.job.deleteMany();
+    const emailres = await prisma.emailLog.deleteMany();
+    if (emailres) {
+      const intervierres = await prisma.interviews.deleteMany();
+      if (intervierres) {
+        await prisma.user.deleteMany();
+      }
+    }
     return NextResponse.json({
-      message: "Handbook deleted successfully",
+      message: "DB deleted successfully",
     });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json(
       {
-        message: "An error occurred while deleting the handbook",
+        message: error?.message || "An error occurred while deleting the DB",
       },
       {
         status: 500,

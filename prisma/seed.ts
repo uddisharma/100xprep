@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcrypt";
+import { title } from "process";
 
 const prisma = new PrismaClient();
 
@@ -48,6 +49,24 @@ async function main() {
       incomingInterviewReqs: 15,
       accepted: 10,
       rejected: 5,
+    },
+  });
+
+  // Accounts
+  await prisma.account.create({
+    data: {
+      userId: user1.id,
+      provider: "github",
+      providerAccountId: "723489",
+      expiresAt: 324123234,
+    },
+  });
+
+  await prisma.account.create({
+    data: {
+      userId: user2?.id,
+      provider: "credentials",
+      providerAccountId: "",
     },
   });
 
@@ -133,7 +152,7 @@ async function main() {
   });
 
   // handbooks
-  const handbook1 = await prisma.handbook.create({
+  await prisma.handbook.create({
     data: {
       title: "JavaScript Handbook",
       description: "A comprehensive guide to JavaScript.",
@@ -141,11 +160,26 @@ async function main() {
     },
   });
 
-  const handbook2 = await prisma.handbook.create({
+  await prisma.handbook.create({
     data: {
       title: "React Handbook",
       description: "A comprehensive guide to React.",
       link: "0b97a34530e64029a5c3022a29476fed",
+    },
+  });
+
+  // handbook requests
+  await prisma.handbookRequest.create({
+    data: {
+      title: "Next JS",
+      description: "Add some notes regarding SSR , CSR",
+    },
+  });
+
+  await prisma.handbookRequest.create({
+    data: {
+      title: "React JS",
+      description: "Add notes about lazy loading ",
     },
   });
 }

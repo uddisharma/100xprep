@@ -100,6 +100,8 @@ const Inputs = ({ user }: { user: UserProfile }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // console.log(data)
+
     if (selectedFile?.photo) {
       profilebuttonRef.current?.focus();
       if (profilebuttonRef.current) {
@@ -145,8 +147,8 @@ const Inputs = ({ user }: { user: UserProfile }) => {
   };
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
+    <div>
+      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4 ">
         <LabelInputContainer>
           <Label htmlFor="fullName">Full Name</Label>
           <Input
@@ -365,7 +367,7 @@ const Inputs = ({ user }: { user: UserProfile }) => {
 
         <BottomGradient />
       </button>
-    </>
+    </div>
   );
 };
 

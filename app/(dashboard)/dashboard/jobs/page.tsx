@@ -1,4 +1,3 @@
-import BottomGradient from "@/components/others/BottomGradient";
 import JobCard from "@/components/others/JobCard";
 import Searchbar from "@/components/others/Searchbar";
 import Sorting from "@/components/others/Sorting";
@@ -9,9 +8,9 @@ import {
 } from "@/components/ui/globalstars";
 import { getJobs } from "@/lib/getDetails/jobs";
 import { JobType } from "@/types/jobs";
-import Link from "next/link";
 import NotFound from "./_notFound";
 import { PaginationDemo } from "@/components/others/Pagination";
+import { Per_page } from "@/config/site-config";
 
 export default async function Jobs({
   searchParams,
@@ -19,7 +18,7 @@ export default async function Jobs({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const page = searchParams["page"] ?? "1";
-  const per_page = searchParams["per_page"] ?? "2";
+  const per_page = searchParams["per_page"] ?? Per_page;
   const query = searchParams["query"]?.toString() ?? "";
   const sort = searchParams["sort"]?.toString() ?? "";
 

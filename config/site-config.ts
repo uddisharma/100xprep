@@ -6,6 +6,7 @@ const PREVIEW_IMAGE_URL =
   "https://framerusercontent.com/images/XUh6mGebzVy9F66ZtVIImQFfR4.png?scale-down-to=512";
 const ALT_TITLE = "Prepare your next interview with 100xPrep";
 export const BASE_URL = "http://localhost:3000";
+export const Per_page = "1";
 
 export const siteConfig: Metadata = {
   title: {

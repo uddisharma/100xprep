@@ -7,6 +7,7 @@ import { HandbookType } from "@/types";
 import Searchbar from "@/components/others/Searchbar";
 import Sorting from "@/components/others/Sorting";
 import NotFound from "./_notFound";
+import { Per_page } from "@/config/site-config";
 
 export default async function Home({
   searchParams,
@@ -14,7 +15,7 @@ export default async function Home({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const page = searchParams["page"] ?? "1";
-  const per_page = searchParams["per_page"] ?? "2";
+  const per_page = searchParams["per_page"] ?? Per_page;
   const query = searchParams["query"]?.toString() ?? "";
   const sort = searchParams["sort"]?.toString() ?? "";
 

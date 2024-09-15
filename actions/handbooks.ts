@@ -3,7 +3,7 @@
 import { prisma } from "@/db/db";
 import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 import { actionClient } from "@/lib/safe-action";
-import { handbookSchema } from "@/types";
+import { HandbookRequestSchema, handbookSchema } from "@/types";
 import { getServerSession } from "next-auth";
 import { revalidateTag } from "next/cache";
 
@@ -55,7 +55,30 @@ export const CreateHandbook = actionClient
       },
     });
     revalidateTag("handbooks");
+
     return {
       message: "Handbook created successfully",
+    };
+  });
+
+export const CreateHandbookRequest = actionClient
+  .schema(HandbookRequestSchema)
+  .action(async ({ parsedInput }) => {
+    const { title, description } = parsedInput;
+
+    const sessions = await getServerSession(NEXT_AUTH_CONFIG);
+
+    if (!sessions?.user?.email)
+      return { message: "You must be logged in to perform this action" };
+
+    await prisma.handbookRequest.create({
+      data: {
+        title,
+        description,
+      },
+    });
+    revalidateTag("handbookRequests");
+    return {
+      message: "Handbook Request created successfully",
     };
   });

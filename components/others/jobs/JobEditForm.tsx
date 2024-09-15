@@ -16,7 +16,6 @@ const JobEditForm = ({ job }: { job: JobType | null }) => {
   return (
     <>
       <DisplayServerActionResponse result={result} />
-
       <form action={execute}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5 md:mt-0">
           <Card>

@@ -15,7 +15,8 @@ export function PaginationDemo({ count }: { count: number }) {
   const searchParams = useSearchParams();
   const path = usePathname();
   const page = searchParams.get("page") ?? "1";
-  const per_page = searchParams.get("per_page") ?? "1";
+  const per_page = Number(searchParams.get("per_page") ?? "1");
+  const totalPages = Math.ceil(count / per_page);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -27,7 +28,7 @@ export function PaginationDemo({ count }: { count: number }) {
   );
 
   const handlePageIncrement = () => {
-    if (Number(page) + 1 > count) {
+    if (Number(page) + 1 > totalPages) {
       return;
     }
     const pageNo = Number(page) + 1;
@@ -61,7 +62,7 @@ export function PaginationDemo({ count }: { count: number }) {
         </PaginationItem>
 
         <PaginationItem
-          className={` ${Number(page) == count ? "cursor-not-allowed" : "cursor-pointer"}`}
+          className={` ${Number(page) >= totalPages ? "cursor-not-allowed" : "cursor-pointer"}`}
           onClick={handlePageIncrement}
         >
           <PaginationNext />

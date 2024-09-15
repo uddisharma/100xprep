@@ -11,6 +11,14 @@ export const handbookSchema = zfd.formData({
 
 export type HandbookType = z.infer<typeof handbookSchema>;
 
+export const HandbookRequestSchema = zfd?.formData({
+  id: zfd.text(z.string().optional()),
+  title: zfd.text(z.string().min(1, { message: messages.titleRequired })),
+  description: zfd.text(z.string().min(1, { message: messages.description })),
+});
+
+export type HandbookRequestType = z.infer<typeof HandbookRequestSchema>;
+
 export const jobSchema = zfd.formData({
   title: zfd.text(z.string().min(1, { message: messages.titleRequired })),
   description: zfd.text(z.string().min(1, { message: messages.description })),

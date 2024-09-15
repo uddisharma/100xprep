@@ -55,7 +55,7 @@ const AdminDashboardLayout = ({ children }: { children: React.ReactNode }) => {
     },
     {
       label: "Handbook Requests",
-      href: "/admin/handbook/requests",
+      href: "/admin/handbooks/requests",
       icon: (
         <IconPencil className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
