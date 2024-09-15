@@ -6,7 +6,6 @@ import { actionClient } from "@/lib/safe-action";
 import { UserProfile, userProfileSchema } from "@/types/user";
 import { getServerSession } from "next-auth";
 
-
 export async function updateUser(
   newData: UserProfile,
 ): Promise<UserProfile | string | null> {
@@ -64,7 +63,7 @@ export const editUser = actionClient
 
     await prisma.user.update({
       where: { id },
-      data: {  fullName , phoneNumber, role },
+      data: { fullName, phoneNumber, role },
     });
     return {
       message: "Handbook updated successfully",

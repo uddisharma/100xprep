@@ -22,7 +22,6 @@ const Searchbar = ({ text }: { text: string }) => {
       setDebouncedQuery(query);
     }, 300); // 500ms delay
 
-    
     return () => {
       clearTimeout(handler);
     };
