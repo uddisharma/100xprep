@@ -1,10 +1,7 @@
 import BottomGradient from "@/components/others/BottomGradient";
-import HandbookEditForm from "@/components/others/hanbook/EditForm";
 import UserEditForm from "@/components/others/user/UserEditForm";
 import { Cover } from "@/components/ui/cover";
-import { getHandbookById } from "@/lib/getDetails/handbooks";
 import { getUserById } from "@/lib/getDetails/user";
-import { HandbookType } from "@/types";
 import { UserProfile } from "@/types/user";
 import { IconNotes } from "@tabler/icons-react";
 import Image from "next/image";
