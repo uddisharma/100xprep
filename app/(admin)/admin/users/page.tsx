@@ -1,4 +1,5 @@
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -7,41 +8,49 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { IconPlus, IconEdit } from "@tabler/icons-react";
 import { Cover } from "@/components/ui/cover";
-import Link from "next/link";
 import { PaginationDemo } from "@/components/others/Pagination";
-import { getAllUserDetails } from "@/lib/getDetails/user";
 import Searchbar from "@/components/others/Searchbar";
 import Sorting from "@/components/others/Sorting";
-import Actions from "@/components/others/hanbook/actions";
+import NotFound from "./_notFound";
+import { getUsers } from "@/lib/getDetails/user";
+import { UserProfile1 } from "@/types/user";
+import { Per_page } from "@/config/site-config";
+import TableActions from "@/components/others/TableActions";
 
-const Page = async ({
+export default async function Users({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
-}) => {
-  const page = searchParams["page"] ?? 1;
-  const searchQuery = searchParams["query"]?.toString() ?? "";
+}) {
+  const page = searchParams["page"] ?? "1";
+  const per_page = searchParams["per_page"] ?? Per_page;
+  const query = searchParams["query"]?.toString() ?? "";
   const sort = searchParams["sort"]?.toString() ?? "";
+
   const sortBy = sort?.split("-")[0];
   const sortOrder = sort?.split("-")[1];
-  const { users, count }: any = await getAllUserDetails({
+
+  const result = await getUsers({
     page: Number(page),
-    limit: 1,
-    searchQuery,
+    limit: Number(per_page),
+    searchQuery: query,
     sortBy: sortBy ? sortBy : "fullName",
     sortOrder: sortOrder ?? "asc",
   });
 
+  const { users, count }: { users: UserProfile1[]; count: number } = result ?? {
+    users: [],
+    count: 0,
+  };
+
   const fields = [
     {
-      name: "Title A to Z",
+      name: "Name A to Z",
       value: "fullName-asc",
     },
     {
-      name: "Title Z to A",
+      name: "Name Z to A",
       value: "fullName-desc",
     },
     {
@@ -61,15 +70,10 @@ const Page = async ({
           <h2 className="text-3xl font-bold text-white">
             <Cover>Users</Cover>
           </h2>
-          <div className="grid grid-cols-2 gap-2 lg:flex lg:space-x-2">
-            <Button>
-              <IconPlus className="mr-2 h-4 w-4" /> Post Job
-            </Button>
-          </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full items-center gap-5">
           <div className="md:justify-self-start">
-            <Searchbar text="Users" />
+            <Searchbar text="users" />
           </div>
           <div className="md:justify-self-end">
             <Sorting fields={fields} />
@@ -81,48 +85,62 @@ const Page = async ({
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableHead>Tech stacks</TableHead>
-                  <TableHead>Interview taken</TableHead>
-                  <TableHead>Interview given</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="flex items-center justify-center">
-                    Edit
-                  </TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Phone</TableHead>
+                  <TableHead>Interview Given</TableHead>
+                  <TableHead>Interview Received</TableHead>
+                  <TableHead>Resume</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                {users?.map((i: any, index: any) => (
-                  <TableRow
-                    key={index}
-                    style={{
-                      borderBottom: "1px solid #525252",
-                      borderTop: index == 0 ? "1px solid #525252" : "none",
-                    }}
-                  >
-                    <TableCell>{i?.fullName}</TableCell>
-                    <TableCell>Html,CSS</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>Online</TableCell>
-                    <TableCell className="flex items-center justify-center">
-                      <Link href="/admin/users/1/edit">
-                        <Actions
-                          view={`/dashboard/handbooks/view?notionId=${i?.link}`}
-                          deleteLink={`/api/handbook/${i?.id}`}
-                          edit={`/admin/users/edit?user=${i?.id}`}
+
+              {users?.length ? (
+                <TableBody>
+                  {users?.map((user: UserProfile1, index) => (
+                    <TableRow
+                      key={index}
+                      style={{
+                        borderBottom: "1px solid #525252",
+                        borderTop: index == 0 ? "1px solid #525252" : "none",
+                      }}
+                    >
+                      <TableCell>{user?.fullName}</TableCell>
+
+                      <TableCell>{user?.email}</TableCell>
+
+                      <TableCell>{user?.phoneNumber ?? "-"}</TableCell>
+                      <TableCell>8</TableCell>
+                      <TableCell>10</TableCell>
+                      <TableCell>
+                        {user?.resume ? (
+                          <a
+                            target="_blank"
+                            className="underline cursor-pointer"
+                            href={user?.resume}
+                          >
+                            View
+                          </a>
+                        ) : (
+                          "No Resume"
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <TableActions
+                          edit={`/admin/users/edit?id=${user?.id}`}
+                          deleteLink={`/api/user/${user?.id}`}
+                          revalidatetag="users"
                         />
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              ) : null}
             </Table>
+            {!users.length ? <NotFound /> : null}
           </CardContent>
-          <PaginationDemo count={count} />
+          {users.length ? <PaginationDemo count={count} /> : null}
         </Card>
       </div>
     </main>
   );
-};
-
-export default Page;
+}

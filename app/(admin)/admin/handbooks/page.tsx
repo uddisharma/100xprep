@@ -15,10 +15,11 @@ import Link from "next/link";
 import { PaginationDemo } from "@/components/others/Pagination";
 import { getHandbooks } from "@/lib/getDetails/handbooks";
 import { HandbookType } from "@/types";
-import Actions from "@/components/others/hanbook/actions";
 import Searchbar from "@/components/others/Searchbar";
 import Sorting from "@/components/others/Sorting";
 import NotFound from "./_notFound";
+import TableActions from "@/components/others/TableActions";
+import { Per_page } from "@/config/site-config";
 
 export default async function Hanbooks({
   searchParams,
@@ -26,7 +27,7 @@ export default async function Hanbooks({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const page = searchParams["page"] ?? "1";
-  const per_page = searchParams["per_page"] ?? "2";
+  const per_page = searchParams["per_page"] ?? Per_page;
   const query = searchParams["query"]?.toString() ?? "";
   const sort = searchParams["sort"]?.toString() ?? "";
 
@@ -117,11 +118,11 @@ export default async function Hanbooks({
                       <TableCell>{handbook?.link}</TableCell>
 
                       <TableCell>
-                        <Actions
+                        <TableActions
                           view={`/dashboard/handbooks/view?notionId=${handbook?.link}`}
-                          deleteLink={`/api/handbook/${handbook?.id}`}
                           edit={`/admin/handbooks/edit?notionId=${handbook?.id}`}
-                        
+                          deleteLink={`/api/handbook/${handbook?.id}`}
+                          revalidatetag="handbooks"
                         />
                       </TableCell>
                     </TableRow>

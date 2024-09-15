@@ -1,12 +1,9 @@
 import { prisma } from "@/db/db";
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "../auth";
-import { UserProfileType } from "@/types/user";
+import { UserProfile, UserProfile1 } from "@/types/user";
+import { unstable_cache } from "next/cache";
 
-enum SortBy {
-  title = "fullName",
-  createdAt = "createdAt",
-}
 export const getUserDetails = async () => {
   const session = await getServerSession(NEXT_AUTH_CONFIG);
   const user = await prisma.user.findFirst({
@@ -16,75 +13,89 @@ export const getUserDetails = async () => {
   });
   return user;
 };
-export const getAllUserDetails = async ({
-  page = 1,
-  limit = 1,
-  searchQuery = "",
-  sortBy = SortBy.title,
-  sortOrder = "asc",
-}: {
-  page?: number;
-  limit?: number;
-  searchQuery?: string;
-  sortBy?: string;
-  sortOrder?: string;
-}): Promise<{ users: UserProfileType[]; count: number } | null> => {
-  console.log("THis is api page", page);
-  const pageNumber = page < 1 ? 1 : page;
-  const itemsPerPage = limit < 1 ? 1 : limit;
-  // Calculate the number of records to skip
-  const skip = (pageNumber - 1) * itemsPerPage;
 
-  const where = searchQuery
-    ? {
-        OR: [
-          {
-            fullName: {
-              contains: searchQuery,
-              mode: "insensitive",
-            },
-          },
-          {
-            email: {
-              contains: searchQuery,
-              mode: "insensitive",
-            },
-          },
-          {
-            company: {
-              contains: searchQuery,
-              mode: "insensitive",
-            },
-          },
-        ],
-      }
-    : ({} as any);
-  // Fetch users with pagination
-  console.log("This is order", sortBy);
-  const users = await prisma.user.findMany({
-    where,
-    orderBy: { [sortBy]: sortOrder === "desc" ? "desc" : "asc" },
-    skip: skip,
-    take: limit,
-  });
-
-  // const users = await prisma.user.findMany({
-  //   skip: skip,
-  //   take: itemsPerPage,
-  // });
-
-  const count = await prisma.user.count();
-
-  // console.log("This is user",users)
-
-  return users ? { users, count } : null;
+export const getUserById = async (id: string): Promise<UserProfile | null> => {
+  try {
+    const handbook = await prisma.user.findUnique({
+      where: { id },
+    });
+    return handbook as UserProfile;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return null;
+  }
 };
 
-export const getIndividualUserDetails = async (id: any) => {
-  const user = await prisma.user.findFirst({
-    where: {
-      id,
-    },
-  });
-  return user;
-};
+enum SortBy {
+  name = "fullName",
+  createdAt = "createdAt",
+}
+
+export const getUsers = unstable_cache(
+  async ({
+    page = 1,
+    limit = 2,
+    searchQuery = "",
+    sortBy = SortBy.name,
+    sortOrder = "asc",
+  }: {
+    page?: number;
+    limit?: number;
+    searchQuery?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  }): Promise<{ users: UserProfile1[]; count: number } | null> => {
+    try {
+      if (limit < 1) limit = 1;
+      if (page < 1) page = 1;
+
+      const where = searchQuery
+        ? {
+            OR: [
+              {
+                fullName: {
+                  contains: searchQuery,
+                  mode: "insensitive",
+                },
+              },
+              {
+                email: {
+                  contains: searchQuery,
+                  mode: "insensitive",
+                },
+              },
+              {
+                phoneNumber: {
+                  contains: searchQuery,
+                  mode: "insensitive",
+                },
+              },
+            ],
+          }
+        : ({} as any);
+
+      const users = await prisma.user.findMany({
+        where,
+        select: {
+          id: true,
+          fullName: true,
+          email: true,
+          phoneNumber: true,
+          resume: true,
+          createdAt: true,
+        },
+        orderBy: { [sortBy]: sortOrder === "desc" ? "desc" : "asc" },
+        skip: (page - 1) * limit,
+        take: limit,
+      });
+
+      const count = await prisma.user.count();
+
+      return { users, count };
+    } catch (error) {
+      return null;
+    }
+  },
+  ["users"],
+  { revalidate: 3600, tags: ["users"] },
+);

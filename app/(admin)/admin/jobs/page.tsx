@@ -16,9 +16,10 @@ import { getJobs } from "@/lib/getDetails/jobs";
 import { JobType } from "@/types/jobs";
 import Searchbar from "@/components/others/Searchbar";
 import Sorting from "@/components/others/Sorting";
-import JobActions from "@/components/others/jobs/actions";
 import BottomGradient from "@/components/others/BottomGradient";
 import NotFound from "./_notFound";
+import TableActions from "@/components/others/TableActions";
+import { Per_page } from "@/config/site-config";
 
 export default async function Jobs({
   searchParams,
@@ -26,7 +27,7 @@ export default async function Jobs({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const page = searchParams["page"] ?? "1";
-  const per_page = searchParams["per_page"] ?? "2";
+  const per_page = searchParams["per_page"] ?? Per_page;
   const query = searchParams["query"]?.toString() ?? "";
   const sort = searchParams["sort"]?.toString() ?? "";
 
@@ -124,7 +125,12 @@ export default async function Jobs({
                         </Link>
                       </TableCell>
                       <TableCell>
-                        <JobActions job={job} />
+                        <TableActions
+                          view={`/admin/jobs/view?id=${job?.id}`}
+                          edit={`/admin/jobs/edit?id=${job?.id}`}
+                          deleteLink={`/api/job/${job?.id}`}
+                          revalidatetag="handbooks"
+                        />
                       </TableCell>
                     </TableRow>
                   ))}

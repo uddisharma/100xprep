@@ -23,6 +23,9 @@ export const getJobs = unstable_cache(
     sortOrder?: string;
   }): Promise<{ jobs: JobType[]; count: number } | null> => {
     try {
+      if (limit < 1) limit = 1;
+      if (page < 1) page = 1;
+
       const where = searchQuery
         ? {
             OR: [

@@ -138,17 +138,7 @@ var bcrypt = require("bcrypt");
 var prisma = new client_1.PrismaClient();
 function main() {
   return __awaiter(this, void 0, void 0, function () {
-    var user1,
-      _a,
-      _b,
-      user2,
-      _c,
-      _d,
-      interview1,
-      interview2,
-      job1,
-      handbook1,
-      handbook2;
+    var user1, _a, _b, user2, _c, _d, interview1, interview2, job1;
     var _e, _f, _g, _h;
     return __generator(this, function (_j) {
       switch (_j.label) {
@@ -221,6 +211,34 @@ function main() {
           ];
         case 4:
           user2 = _j.sent();
+          // Accounts
+          return [
+            4 /*yield*/,
+            prisma.account.create({
+              data: {
+                userId: user1.id,
+                provider: "github",
+                providerAccountId: "723489",
+                expiresAt: 324123234,
+              },
+            }),
+          ];
+        case 5:
+          // Accounts
+          _j.sent();
+          return [
+            4 /*yield*/,
+            prisma.account.create({
+              data: {
+                userId: user2 === null || user2 === void 0 ? void 0 : user2.id,
+                provider: "credentials",
+                providerAccountId: "",
+              },
+            }),
+            // Create Interviews
+          ];
+        case 6:
+          _j.sent();
           return [
             4 /*yield*/,
             prisma.interviews.create({
@@ -241,7 +259,7 @@ function main() {
               },
             }),
           ];
-        case 5:
+        case 7:
           interview1 = _j.sent();
           return [
             4 /*yield*/,
@@ -263,7 +281,7 @@ function main() {
               },
             }),
           ];
-        case 6:
+        case 8:
           interview2 = _j.sent();
           return [
             4 /*yield*/,
@@ -281,7 +299,7 @@ function main() {
               },
             }),
           ];
-        case 7:
+        case 9:
           job1 = _j.sent();
           return [
             4 /*yield*/,
@@ -299,7 +317,7 @@ function main() {
               },
             }),
           ];
-        case 8:
+        case 10:
           _j.sent();
           // Create Email Logs
           return [
@@ -311,7 +329,7 @@ function main() {
               },
             }),
           ];
-        case 9:
+        case 11:
           // Create Email Logs
           _j.sent();
           return [
@@ -323,8 +341,9 @@ function main() {
               },
             }),
           ];
-        case 10:
+        case 12:
           _j.sent();
+          // handbooks
           return [
             4 /*yield*/,
             prisma.handbook.create({
@@ -335,8 +354,9 @@ function main() {
               },
             }),
           ];
-        case 11:
-          handbook1 = _j.sent();
+        case 13:
+          // handbooks
+          _j.sent();
           return [
             4 /*yield*/,
             prisma.handbook.create({
@@ -347,8 +367,32 @@ function main() {
               },
             }),
           ];
-        case 12:
-          handbook2 = _j.sent();
+        case 14:
+          _j.sent();
+          // handbook requests
+          return [
+            4 /*yield*/,
+            prisma.handbookRequest.create({
+              data: {
+                title: "Next JS",
+                description: "Add some notes regarding SSR , CSR",
+              },
+            }),
+          ];
+        case 15:
+          // handbook requests
+          _j.sent();
+          return [
+            4 /*yield*/,
+            prisma.handbookRequest.create({
+              data: {
+                title: "React JS",
+                description: "Add notes about lazy loading ",
+              },
+            }),
+          ];
+        case 16:
+          _j.sent();
           return [2 /*return*/];
       }
     });

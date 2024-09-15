@@ -17,10 +17,16 @@ export async function updateUser(
       return "User not logged in";
     }
 
+    let sessionID = session?.user?.id;
+    if (session?.user?.role == "admin") {
+      sessionID = newData.id;
+    }
+
     const updatedUser = await prisma.user.update({
-      where: { id: session?.user?.id },
+      where: { id: sessionID },
       data: newData,
     });
+
     return updatedUser as UserProfile;
   } catch (error: any) {
     console.error("Error updating user:", error);
