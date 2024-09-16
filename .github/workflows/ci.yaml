@@ -1,0 +1,36 @@
+# name: Continuous Integration
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       - name: Use Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '20.9.0'
+
+#       - name: Install dependencies
+#         run: npm install
+
+#       - name: Run lint
+#         run: npm run lint
+
+#       - name: Run format check
+#         run: npm run check
+
+#       - name: Run format fix if check fails
+#         if: ${{ failure() }}
+#         run: npm run format
+      
+#       - name: Run build
+#         run: npm run build
