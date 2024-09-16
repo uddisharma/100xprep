@@ -35,8 +35,8 @@ export default async function Users({
     page: Number(page),
     limit: Number(per_page),
     searchQuery: query,
-    sortBy: sortBy ? sortBy : "fullName",
-    sortOrder: sortOrder ?? "asc",
+    sortBy: sortBy ? sortBy : "createdAt",
+    sortOrder: sortOrder ?? "desc",
   });
 
   const { users, count }: { users: UserProfile1[]; count: number } = result ?? {

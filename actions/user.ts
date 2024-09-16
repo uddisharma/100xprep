@@ -34,23 +34,11 @@ export async function updateUser(
     await prisma.$disconnect();
   }
 }
-// export async function editUser(id: any, newData: any) {
-//   try {
-//     const updatedUser = await prisma.user.update({
-//       where: { id },
-//       data: newData,
-//     });
-//     return updatedUser as UserProfile;
-//   } catch (error: any) {
-//     console.error("Error updating user:", error);
-//     return error.message?.toString() || null;
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// }
+
 export const editUser = actionClient
   .schema(userProfileSchema)
   .action(async ({ parsedInput }) => {
+    
     const { id, fullName, phoneNumber, role } = parsedInput;
 
     const sessions = await getServerSession(NEXT_AUTH_CONFIG);

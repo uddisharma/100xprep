@@ -38,8 +38,8 @@ export default async function Jobs({
     page: Number(page),
     limit: Number(per_page),
     searchQuery: query,
-    sortBy: sortBy ? sortBy : "title",
-    sortOrder: sortOrder ?? "asc",
+    sortBy: sortBy ? sortBy : "createdAt",
+    sortOrder: sortOrder ?? "desc",
   });
   const { jobs, count }: { jobs: JobType[]; count: number } = result ?? {
     jobs: [],
