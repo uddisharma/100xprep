@@ -100,8 +100,6 @@ const Inputs = ({ user }: { user: UserProfile }) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // console.log(data)
-
     if (selectedFile?.photo) {
       profilebuttonRef.current?.focus();
       if (profilebuttonRef.current) {

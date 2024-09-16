@@ -9,10 +9,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { IconCalendar } from "@tabler/icons-react";
+import { IconCalendar, IconPlus } from "@tabler/icons-react";
 import { Cover } from "@/components/ui/cover";
 import Link from "next/link";
 import { PaginationDemo } from "@/components/others/Pagination";
+import BottomGradient from "@/components/others/BottomGradient";
 
 const Page = () => {
   return (
@@ -22,10 +23,14 @@ const Page = () => {
           <h2 className="text-3xl font-bold text-white">
             <Cover>Recent Interviews</Cover>
           </h2>
-          <div className="grid grid-cols-2 gap-2 lg:flex lg:space-x-2">
-            <Button>
-              <IconCalendar className="mr-2 h-4 w-4" /> Schedule Interview
-            </Button>
+          <div className="w-full md:w-[200px]">
+            <Link href="/admin/interviews/schedule">
+              <div className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 dark:bg-zinc-800 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] px-2 w-full mt-5 lg:mt-0 flex items-center justify-center gap-2 cursor-pointer">
+                <IconPlus className="w-4 h-4" />
+                <span className="flex-shrink-0">Schedule Interview</span>
+                <BottomGradient />
+              </div>
+            </Link>
           </div>
         </div>
 

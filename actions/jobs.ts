@@ -82,5 +82,6 @@ export const UpdateJob = actionClient
         link,
       },
     });
+    revalidateTag("jobs");
     return { message: "Job updated successfully" };
   });

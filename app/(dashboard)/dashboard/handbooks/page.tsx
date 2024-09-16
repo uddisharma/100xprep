@@ -26,8 +26,8 @@ export default async function Home({
     page: Number(page),
     limit: Number(per_page),
     searchQuery: query,
-    sortBy: sortBy ? sortBy : "title",
-    sortOrder: sortOrder ?? "asc",
+    sortBy: sortBy ? sortBy : "createdAt",
+    sortOrder: sortOrder ?? "desc",
   });
   const { handbooks, count }: { handbooks: HandbookType[]; count: number } =
     result ?? { handbooks: [], count: 0 };

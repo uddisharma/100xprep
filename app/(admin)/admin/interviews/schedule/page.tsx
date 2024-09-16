@@ -6,9 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { IconCalendar } from "@tabler/icons-react";
+import { IconCalendar, IconDeviceDesktop } from "@tabler/icons-react";
 import { Cover } from "@/components/ui/cover";
 import { Select } from "@/components/ui/select";
+import Link from "next/link";
+import BottomGradient from "@/components/others/BottomGradient";
 
 export default function UpdateInterview() {
   const [date, setDate] = useState<Date>();
@@ -21,10 +23,14 @@ export default function UpdateInterview() {
           <h2 className="text-3xl font-bold text-white">
             <Cover>Interview Update</Cover>
           </h2>
-          <div className="grid grid-cols-2 gap-2 lg:flex lg:space-x-2">
-            <Button>
-              <IconCalendar className="mr-2 h-4 w-4" /> View All Interviews
-            </Button>
+          <div className="w-full md:w-[200px]">
+            <Link href="/admin/interviews">
+              <div className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 dark:bg-zinc-800 text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] px-2 w-full mt-5 lg:mt-0 flex items-center justify-center gap-2 cursor-pointer">
+                <IconDeviceDesktop className="w-4 h-4" />
+                <span className="flex-shrink-0">All Interviews</span>
+                <BottomGradient />
+              </div>
+            </Link>
           </div>
         </div>
         <form onSubmit={(e) => e.preventDefault()}>
