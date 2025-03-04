@@ -19,7 +19,7 @@ export type UserProfile = {
   techstacks: string[];
 };
 
-export const userProfileSchema=zfd?.formData({
+export const userProfileSchema = zfd?.formData({
   id: zfd.text(z.string().optional()),
   fullName: zfd.text(z.string().min(1, { message: "Full Name is required" })),
   email: zfd.text(z.string().min(1, { message: "Email is required" })),
@@ -34,7 +34,7 @@ export const userProfileSchema=zfd?.formData({
   experience: zfd.text(z.string().optional()),
   company: zfd.text(z.string().optional()),
   isWorking: zfd.text(z.string().optional()),
-})
+});
 
 export type UserProfile1 = {
   id: string;
@@ -44,4 +44,3 @@ export type UserProfile1 = {
   resume: string | null;
   createdAt: Date;
 };
-

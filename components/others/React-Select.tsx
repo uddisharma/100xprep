@@ -1,4 +1,5 @@
 import { options, OptionType } from "@/data/interviewfor";
+import { InterviewRequest } from "@/types/interviews";
 import React from "react";
 import Select, { StylesConfig } from "react-select";
 import makeAnimated from "react-select/animated";
@@ -69,17 +70,29 @@ const customStyles: StylesConfig<OptionType, true> = {
   }),
 };
 
-const ReactSelect: React.FC = () => {
+type TechStacksProps = {
+  data: InterviewRequest;
+  setData: React.Dispatch<React.SetStateAction<InterviewRequest>>;
+};
+
+const TechStacks: React.FC<TechStacksProps> = ({ data, setData }) => {
   return (
     <Select
+      placeholder="Select your tech stacks"
       closeMenuOnSelect={false}
       components={animatedComponents}
-      // defaultValue={options}
+      defaultValue={data.techstacks?.map((techstack) => ({
+        label: techstack,
+        value: techstack,
+      }))}
       isMulti
       options={options}
       styles={customStyles}
+      onChange={(e) =>
+        setData({ ...data, techstacks: e.map((option) => option.value) })
+      }
     />
   );
 };
 
-export default ReactSelect;
+export default TechStacks;

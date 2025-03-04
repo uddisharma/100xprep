@@ -10,3 +10,11 @@ export type InterviewType = {
   feedback?: string;
   allRating?: JSON;
 };
+
+export type InterviewRequest = {
+  date: string
+  startTime: string
+  endTime: string
+  techstacks: string[]
+  experience: string
+}

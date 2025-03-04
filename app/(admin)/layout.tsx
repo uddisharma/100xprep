@@ -20,6 +20,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 
   return <AdminDashboardLayout>{children}</AdminDashboardLayout>;
 };
+
 export default Layout;
 
 // all access ( online , offline , score , user login/not )
@@ -29,3 +30,15 @@ export default Layout;
 // interview content
 //  welcome email ,
 //  interview request mail to opposite person , after reject/accept send to same person , interview completed with rating with the interviewer name
+// forgot password with mail delivery
+
+
+// Interview Schedule 
+// ask the interviewee for how much experience interviewer have 
+// let the interviewee select the time slots in which he or she is available
+// user can schedule only 1 interview in 1 day 
+// keep one thing in mind that interviewer assigned with 1 interview in 1 day
+// first match the techstack from all users that interviewee asked for 
+// select the users from them those have max experience from interviewee
+// select the random user from them 
+// interviwer must have to accpect or decline the interview within 24 hours

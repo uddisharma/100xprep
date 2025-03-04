@@ -38,7 +38,6 @@ export async function updateUser(
 export const editUser = actionClient
   .schema(userProfileSchema)
   .action(async ({ parsedInput }) => {
-    
     const { id, fullName, phoneNumber, role } = parsedInput;
 
     const sessions = await getServerSession(NEXT_AUTH_CONFIG);
