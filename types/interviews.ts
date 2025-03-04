@@ -12,9 +12,9 @@ export type InterviewType = {
 };
 
 export type InterviewRequest = {
-  date: string
-  startTime: string
-  endTime: string
-  techstacks: string[]
-  experience: string
-}
+  date: string;
+  startTime: string;
+  endTime: string;
+  techstacks: string[];
+  experience: string;
+};

@@ -19,18 +19,17 @@ import { InterviewRequest } from "@/types/interviews";
 import { MatchInterviewer } from "@/actions/interview";
 
 export function RequestInterview() {
-
   const [data, setData] = useState<InterviewRequest>({
     date: "",
     startTime: "",
     endTime: "",
     techstacks: [],
-    experience: ""
-  })
+    experience: "",
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.id]: e.target.value });
-  }
+  };
 
   const isEndTimeDisabled = (time: any) => {
     const startIndex = times.indexOf(data?.startTime);
@@ -56,7 +55,14 @@ export function RequestInterview() {
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="date">Date</Label>
-              <Input id="date" onChange={(e: any) => { handleChange(e) }} type="date" placeholder="Select Date" />
+              <Input
+                id="date"
+                onChange={(e: any) => {
+                  handleChange(e);
+                }}
+                type="date"
+                placeholder="Select Date"
+              />
             </LabelInputContainer>
             <LabelInputContainer className="mb-4 w-full">
               <Label htmlFor="time">Time Slot in which you are free</Label>
@@ -64,10 +70,14 @@ export function RequestInterview() {
                 <Select
                   id="startTime"
                   value={data.startTime}
-                  onChange={(e: any) => { handleChange(e) }}
+                  onChange={(e: any) => {
+                    handleChange(e);
+                  }}
                   className="min-h-[40px]"
                 >
-                  <option value="" disabled>Select start time</option>
+                  <option value="" disabled>
+                    Select start time
+                  </option>
                   {times.map((time) => (
                     <option key={time} value={time}>
                       {time}
@@ -78,12 +88,20 @@ export function RequestInterview() {
                   className="min-h-[40px]"
                   id="endTime"
                   value={data?.endTime}
-                  onChange={(e: any) => { handleChange(e) }}
+                  onChange={(e: any) => {
+                    handleChange(e);
+                  }}
                   disabled={!data?.startTime}
                 >
-                  <option value="" disabled>Select end time</option>
+                  <option value="" disabled>
+                    Select end time
+                  </option>
                   {times.map((time) => (
-                    <option key={time} value={time} disabled={isEndTimeDisabled(time)}>
+                    <option
+                      key={time}
+                      value={time}
+                      disabled={isEndTimeDisabled(time)}
+                    >
                       {time}
                     </option>
                   ))}
@@ -91,18 +109,34 @@ export function RequestInterview() {
               </div>
             </LabelInputContainer>
             <LabelInputContainer className="mb-3 lg:mb-0">
-              <Label htmlFor="experience">Years of Experience of Interviewer you want </Label>
+              <Label htmlFor="experience">
+                Years of Experience of Interviewer you want{" "}
+              </Label>
               <Select
                 id="experience"
-                onChange={(e: any) => { handleChange(e) }}
+                onChange={(e: any) => {
+                  handleChange(e);
+                }}
                 className="min-h-[40px] "
               >
-                <option className="text-[12px]" value="1">1 year</option>
-                <option className="text-[12px]" value="2">2 years</option>
-                <option className="text-[12px]" value="3">3 years</option>
-                <option className="text-[12px]" value="4">4 years</option>
-                <option className="text-[12px]" value="5">5 years</option>
-                <option className="text-[12px]" value="5+">5+ years</option>
+                <option className="text-[12px]" value="1">
+                  1 year
+                </option>
+                <option className="text-[12px]" value="2">
+                  2 years
+                </option>
+                <option className="text-[12px]" value="3">
+                  3 years
+                </option>
+                <option className="text-[12px]" value="4">
+                  4 years
+                </option>
+                <option className="text-[12px]" value="5">
+                  5 years
+                </option>
+                <option className="text-[12px]" value="5+">
+                  5+ years
+                </option>
               </Select>
             </LabelInputContainer>
           </ModalContent>
@@ -121,7 +155,7 @@ export function RequestInterview() {
               onClick={async () => {
                 // console.log(data)
                 const res = await MatchInterviewer(data);
-                console.log(res)
+                console.log(res);
               }}
             >
               <span className="text-neutral-700 dark:text-neutral-300 text-sm">
