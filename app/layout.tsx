@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { siteConfig } from "@/config/site-config";
 import { SessionRootLayout } from "@/lib/providers/session";
+import { ModalProvider } from "@/components/ui/modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +19,10 @@ export default function RootLayout({
     <html lang="en" className="dark ">
       <body className={inter.className}>
         <SessionRootLayout>
-          <Toaster />
-          {children}
+          <ModalProvider>
+            <Toaster />
+            {children}
+          </ModalProvider>
         </SessionRootLayout>
       </body>
     </html>
