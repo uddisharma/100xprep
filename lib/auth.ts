@@ -135,7 +135,7 @@ export const NEXT_AUTH_CONFIG = {
           const newUser = await prisma.user.create({
             data: {
               email: credentials.username,
-              fullName: credentials.name,
+              fullName: credentials.name ?? "User",
               password: hashedPassword,
               accounts: {
                 create: {
