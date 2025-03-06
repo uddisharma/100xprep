@@ -99,7 +99,7 @@ const getRecommendedJobs = async (): Promise<JobType[]> => {
     });
 
     const sortedJobs = jobs
-      .map((job) => ({
+      .map((job: JobType) => ({
         ...job,
         matchCount: job.requirements.filter((req) =>
           user.techstacks.includes(req),

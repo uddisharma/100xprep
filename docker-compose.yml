@@ -9,7 +9,7 @@ services:
       - '3000:3000'
     environment:
       DATABASE_URL: 'postgresql://postgres:password@db:5432/100xprep'
-      REDIS_URL: 'redis://redis:6379'
+      REDIS_HOST: 'redis://redis:6379'
       NEXTAUTH_URL: 'http://localhost:3000'
       NEXTAUTH_SECRET: '100xprep_@!_secret'
     depends_on:

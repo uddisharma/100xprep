@@ -7,9 +7,9 @@ class RedisClient {
 
   public static getInstance(): Redis {
     if (!RedisClient.instance) {
-      const redisUrl = process.env.REDIS_URL;
+      const redisUrl = process.env.REDIS_HOST;
       if (!redisUrl) {
-        throw new Error("REDIS_URL environment variable is not set");
+        throw new Error("REDIS_HOST environment variable is not set");
       }
 
       RedisClient.instance = new Redis(redisUrl);
