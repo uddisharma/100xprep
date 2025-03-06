@@ -8,6 +8,8 @@ import {
   IconDeviceDesktopCheck,
   IconNotes,
   IconUserShield,
+  IconChevronsLeft,
+  IconChevronsRight,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -71,7 +73,24 @@ const DashboardLayout = ({
         <Sidebar open={open} setOpen={setOpen}>
           <SidebarBody className="justify-between gap-10">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-              {open ? <Logo /> : <LogoIcon />}
+              {open ? (
+                <div className="flex align-center items-center justify-between">
+                  <Logo />
+                  <IconChevronsLeft
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setOpen(false)}
+                  />
+                </div>
+              ) : (
+                <>
+                  <LogoIcon />
+                  <IconChevronsRight
+                    className="w-6 h-6 flex-none"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setOpen(true)}
+                  />
+                </>
+              )}
               <div className="mt-8 flex flex-col gap-2">
                 {links.map((link, idx) => (
                   <SidebarLink key={idx} link={link} setOpen={setOpen} />
@@ -138,10 +157,10 @@ export const LogoIcon = () => {
   return (
     <Link
       href="/"
-      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
+      className="w-full font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
     >
       <Image
-        className="h-7 w-7 flex-shrink-0 rounded-full"
+        className="h-7 w-7 flex-shrink-1 rounded-full"
         src="/logo.jpg"
         width={50}
         height={50}
