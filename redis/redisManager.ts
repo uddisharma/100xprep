@@ -1,4 +1,7 @@
 import Redis from "ioredis";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 class RedisClient {
   private static instance: Redis;
@@ -7,7 +10,12 @@ class RedisClient {
 
   public static getInstance(): Redis {
     if (!RedisClient.instance) {
-      RedisClient.instance = new Redis();
+      const redisUrl = process.env.REDIS_HOST;
+      if (!redisUrl) {
+        throw new Error("REDIS_HOST environment variable is not set");
+      }
+
+      RedisClient.instance = new Redis(redisUrl);
 
       RedisClient.instance.on("error", (err) => {
         console.error("Redis error:", err);
