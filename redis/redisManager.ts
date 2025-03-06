@@ -10,7 +10,7 @@ class RedisClient {
 
   public static getInstance(): Redis {
     if (!RedisClient.instance) {
-      const redisUrl = process.env.REDIS_HOST;
+      const redisUrl = "redis://redis:6379";
       if (!redisUrl) {
         throw new Error("REDIS_HOST environment variable is not set");
       }
