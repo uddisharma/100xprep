@@ -15,6 +15,11 @@ services:
     depends_on:
       - db
       - redis
+    command: >
+      sh -c "
+      npx prisma migrate deploy &&
+      npm start
+      "
 
   db:
     image: postgres:13
